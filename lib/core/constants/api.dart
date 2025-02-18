@@ -8,3 +8,6 @@ const String defaultSources = '';
 const String categoriesApi = '/api/categories/';
 const String postsApi = '/api/posts';
 const String forgotPasswordApi = '/api/posts';
+const String countriesApi = '/api/countries/';
+const String logoutApi = '/api/auth/logout/';
+

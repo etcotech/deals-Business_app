@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deals_and_business/features/home/view/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +23,8 @@ class _DashboardState extends State<Dashboard> {
 
       HomeScreen(asGuest: widget.asGuest,),
       Container(), 
+            Container(),  //white
+
       Container(),
       Container()
     ];
@@ -52,7 +56,14 @@ child: Center(child: Icon(Icons.add , color: Colors.white,),
 ),
 bottomNavigationBar: BottomNavigationBar(
   onTap: (index){
-    _selectedPage = index;
+
+    log(index.toString());
+    if (index==2) {
+      return;
+    }
+         _selectedPage = index;
+
+    
     setState(() {
       
     });
@@ -61,6 +72,7 @@ bottomNavigationBar: BottomNavigationBar(
   selectedItemColor: Theme.of(context).primaryColor,
   unselectedItemColor: Colors.black,
   showUnselectedLabels: true,
+
   currentIndex: _selectedPage,
   selectedLabelStyle: TextStyle(
     color:Theme.of(context).primaryColor ,
@@ -70,7 +82,7 @@ bottomNavigationBar: BottomNavigationBar(
     color: Colors.grey ,
     fontSize: 12
   ),
-  unselectedFontSize: 12,
+  // unselectedFontSize: 12,
   items: [
 
 

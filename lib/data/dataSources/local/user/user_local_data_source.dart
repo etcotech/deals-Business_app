@@ -15,6 +15,9 @@ abstract class UserLocalDataSource {
   Future<void> clearCache();
 void saveLoggedInStatus(bool value);
  bool isTokenAvailable();
+
+  int? getUserId();
+void saveUserId(int userId);
 }
 const cachedToken = 'TOKEN';
 const cachedUser = 'USER';
@@ -28,12 +31,12 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
 String? getToken()  {
-   return '' ;
+   return sharedPreferences.getString(Strings.token) ;
   }
 
   @override
   Future<void> saveToken(String token) async {
-   
+   sharedPreferences.setString(Strings.token, token);
   }
 
  
@@ -51,11 +54,23 @@ String? getToken()  {
   Future<void> clearCache() async {
     // await secureStorage.deleteAll();
   //  await sharedPreferences.remove(cachedCart);
+  await sharedPreferences.remove(Strings.isLoggedIn);
+  await sharedPreferences.remove(Strings.isGuestMode);
     await sharedPreferences.remove(cachedUser);
   }
   
   @override
   void saveLoggedInStatus(bool value) {
    sharedPreferences.setBool(Strings.isLoggedIn, value);
+  }
+  
+  @override
+  int? getUserId() {
+    return sharedPreferences.getInt(Strings.userId);
+  }
+  
+  @override
+  void saveUserId(int userId) {
+    sharedPreferences.setInt(Strings.userId, userId);
   }
 }

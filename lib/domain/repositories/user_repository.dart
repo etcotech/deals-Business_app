@@ -8,4 +8,7 @@ abstract class UserRepository {
   // Future<Either<Failure, User>> signUp(SignUpParams params);
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();
+
+    Future<Either<Failure, String?>> signOut();
+
 }

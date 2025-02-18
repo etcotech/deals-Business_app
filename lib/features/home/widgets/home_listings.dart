@@ -1,3 +1,4 @@
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +10,53 @@ class HomeListings extends StatefulWidget {
 }
 
 class _HomeListingsState extends State<HomeListings> {
+  bool isList= true;
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 18), 
+      child: Column(
+        children: [
+      
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(getTranslated('last_ads', context)!,
+                    
+                    style: TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold
+                    ),
+                    ),
+
+
+            AnimatedCrossFade(
+              
+              firstCurve: Curves.bounceIn,
+              secondCurve: Curves.bounceOut,
+              firstChild: 
+
+            IconButton(onPressed: (){
+isList = false;
+setState(() {
+  
+});
+            }, icon: Icon(Icons.list, color: Colors.grey,))
+            , secondChild: IconButton(onPressed: (){
+isList = true;
+setState(() {
+  
+});
+            }, icon: Icon(Icons.widgets, color: Colors.grey,)) 
+            , crossFadeState: isList?
+            CrossFadeState.showFirst:CrossFadeState.showSecond
+            , duration: Duration(
+microseconds: 500
+            ))
+            ],
+          ), 
+        ],
+      ),
+    );
   }
 }
 class HomePost extends StatelessWidget {

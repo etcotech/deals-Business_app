@@ -80,7 +80,28 @@ class UserRepositoryImpl implements UserRepository {
         // localDataSource.saveToken(remoteResponse.token);
         // localDataSource.saveUser(remoteResponse.user);
         localDataSource.saveLoggedInStatus(true);
-        
+        localDataSource.saveToken(remoteResponse.extraAuthModel.authToken!);
+        localDataSource.saveUserId(remoteResponse.user.id!);
+        return Right(remoteResponse);
+      } on Failure catch (failure) {
+        return Left(failure);
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+  
+  @override
+  Future<Either<Failure, String?>> signOut()async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteResponse = await remoteDataSource.signOut(
+          localDataSource.getToken(), 
+          localDataSource.getUserId()!
+        );
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+      localDataSource.clearCache();
         return Right(remoteResponse);
       } on Failure catch (failure) {
         return Left(failure);

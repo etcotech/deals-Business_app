@@ -1,5 +1,6 @@
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/features/dashboard/view/dashboard.dart';
+import 'package:deals_and_business/features/splash/view/splash_screen.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -57,4 +58,24 @@ showSuccessMessage(context, 'Login success');
 
 
   }
+
+
+Future<void> signOut(BuildContext context)async{
+  isLoading= true;
+  notifyListeners();
+
+  try {
+    await userRepository!.signOut();
+showSuccessMessage(context, 'you signed out');
+  Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    SplashScreen()));
+  } catch (e) {
+    showErrorMessage(context, e.toString());
+  }
+    isLoading= false;
+  notifyListeners();
+
+}
+
 }

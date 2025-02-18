@@ -1,4 +1,5 @@
 import 'package:deals_and_business/core/constants/images.dart';
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/shared/widgets/input_field.dart';
@@ -6,7 +7,6 @@ import 'package:deals_and_business/shared/widgets/main_button.dart';
 import 'package:deals_and_business/shared/widgets/password_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -68,28 +68,33 @@ bool showAcceptError = false;
           , 
            SizedBox(height: 50,),
            InputField(controller:nameController ,
-            hintText:AppLocalizations.of(context)!.name, 
+            hintText:            getTranslated('name', context)!
+,
           iconData: Icons.person_outline,
           validator: nameValidator,
           
           ), 
           SizedBox(height: 16,),
           InputField(controller:emailController , 
-          hintText:AppLocalizations.of(context)!.email, 
+          hintText:            getTranslated('email', context)!
+          , 
           iconData: Icons.email_outlined,
           
                     validator: emailValidator,
 
           ), 
           SizedBox(height: 16,),
-          PasswordField(controller:passwordController , hintText: AppLocalizations.of(context)!.password, 
+          PasswordField(controller:passwordController ,
+           hintText:             getTranslated('password', context)!
+, 
           iconData: Icons.lock_outline,
           validator: passwordValidator,
           
           ), 
            SizedBox(height: 16,),
           PasswordField(controller:confirmPasswordController , hintText:
-           AppLocalizations.of(context)!.password_confirm, 
+                      getTranslated('password_confirm', context)!
+, 
           iconData: Icons.lock_outline,
           validator: (value){
 
@@ -129,7 +134,7 @@ bool showAcceptError = false;
               
               
               TextSpan( 
-          text:AppLocalizations.of(context)!.i_read ,
+          text:getTranslated('i_read', context)! ,
            style: TextStyle(
             
               fontWeight: FontWeight.bold ,fontSize: 18
@@ -137,7 +142,7 @@ bool showAcceptError = false;
               children: [
           TextSpan(
           
-            text: ' ${AppLocalizations.of(context)!.terms_and_conditions}', 
+            text: ' ${getTranslated('terms_and_conditions', context)!}', 
             
             style: TextStyle(
             
@@ -158,7 +163,10 @@ bool showAcceptError = false;
             ],
            ),
 showAcceptError?
-           Text(AppLocalizations.of(context)!.terms_must_accept , 
+           Text(
+            getTranslated('terms_must_accept', context)!
+            
+            , 
            
            style: TextStyle(
             color: Colors.red ,
@@ -182,7 +190,9 @@ showAcceptError?
               }
             },
             color: Theme.of(context).primaryColor,
-            title: AppLocalizations.of(context)!.login,
+            title: 
+                        getTranslated('login', context)!
+
           )
           , 
                 
@@ -192,7 +202,8 @@ showAcceptError?
           
           Center(
             child: Text.rich(TextSpan( 
-          text:AppLocalizations.of(context)!.have_no_account ,
+          text:            getTranslated('have_no_account', context)!
+ ,
           
            style: TextStyle(
             
@@ -200,7 +211,8 @@ showAcceptError?
              ),
               children: [
           TextSpan(
-            text: ' ${AppLocalizations.of(context)!.login_now}', 
+            text: ' ${            getTranslated('login_now', context)!
+}', 
             recognizer: TapGestureRecognizer()
           
           ..onTap =(){

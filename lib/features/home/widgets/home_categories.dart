@@ -14,10 +14,27 @@ class HomeCategories extends StatelessWidget {
 Text(getTranslated('browse_by_category', context)!,
 
 style: TextStyle(
-  fontSize: 20, fontWeight: FontWeight.bold
+  fontSize: 16, fontWeight: FontWeight.bold
 ),
 ), 
+SizedBox(height: 16,), 
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    HomeCategory(
+      title: 'المشاريع التجارية',
+      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+    ), 
 
+      HomeCategory(
+      title: 'المشاريع التجارية',
+      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+    ),   HomeCategory(
+      title: 'المشاريع التجارية',
+      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+    ), 
+  ],
+)
 
 
     ],),
@@ -55,12 +72,13 @@ class HomeCategory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-                Image.network(image!,                   color: Theme.of(context).primaryColor, 
+                Image.network(image!,              
+                    //  color: Theme.of(context).primaryColor, 
 ), 
                 Text(title! , 
                 
                 style: TextStyle(
-                  color: Theme.of(context).primaryColor, 
+                 fontWeight: FontWeight.bold, 
                   fontSize: 12
                 ),
                 )

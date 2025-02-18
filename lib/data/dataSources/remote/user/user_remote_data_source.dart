@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 
 abstract class UserRemoteDataSource {
   Future<LoginResponseModel> signIn(String email, String password);
+    Future<String?> signOut(String? token ,  int userId);
+
   // Future<AuthenticationResponseModel> signUp(SignUpParams params);
 }
 
@@ -40,6 +42,35 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else {
       throw ServerException();
     }
+  }
+  
+  @override
+  Future<String?> signOut(String? token, int userId) async{
+  try {
+      final response =
+        await client.get(Uri.parse('$baseUrl$logoutApi${userId}'),
+            headers: {
+              'Content-Type': 'application/json',
+              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+              'Authorization': token!
+            },
+            
+            );
+    if (response.statusCode == 200) {
+      log(response.body);
+      return response.body;
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      throw CredentialFailure(
+        message: 'Wrong email/password'
+      );
+    } else {
+      log(response.statusCode.toString());
+      throw ServerException();
+    }
+  } catch (e) {
+    log(e.toString());
+    rethrow;
+  }
   }
 
 

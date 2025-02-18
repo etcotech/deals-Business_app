@@ -1,4 +1,5 @@
 import 'package:deals_and_business/core/constants/images.dart';
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
 import 'package:deals_and_business/features/auth/views/signup_screen.dart';
@@ -9,7 +10,6 @@ import 'package:deals_and_business/shared/widgets/main_button.dart';
 import 'package:deals_and_business/shared/widgets/password_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -66,13 +66,15 @@ var formKey =  GlobalKey<FormState>();
           )
           , 
            SizedBox(height: 50,),
-          InputField(controller:emailController , hintText:AppLocalizations.of(context)!.name_or_email, 
+          InputField(controller:emailController ,
+           hintText:getTranslated('name_or_email', context)!, 
           iconData: Icons.email_outlined,
           
           validator: emailValidator,
           ), 
           SizedBox(height: 16,),
-          PasswordField(controller:passwordController , hintText: AppLocalizations.of(context)!.password, 
+          PasswordField(controller:passwordController , 
+          hintText: getTranslated('password', context)!, 
           iconData: Icons.lock_outline,
          validator:  passwordValidator
           
@@ -91,7 +93,7 @@ var formKey =  GlobalKey<FormState>();
           }
             },
             color: Theme.of(context).primaryColor,
-            title: AppLocalizations.of(context)!.login,
+            title: getTranslated('login', context)!,
           )
           , 
            SizedBox(height: 24,),
@@ -99,7 +101,7 @@ var formKey =  GlobalKey<FormState>();
           TextButton(onPressed: (){
          
           }, child: Text(
-             AppLocalizations.of(context)!.forgot_password, 
+            getTranslated('forgot_password', context)!, 
              style: TextStyle(
               color: Theme.of(context).primaryColor ,
               fontWeight: FontWeight.bold ,fontSize: 18
@@ -110,14 +112,14 @@ var formKey =  GlobalKey<FormState>();
             child:
             
              Text.rich(TextSpan( 
-          text:AppLocalizations.of(context)!.have_no_account ,
+          text:getTranslated('have_no_account', context)!,
            style: TextStyle(
             
               fontWeight: FontWeight.bold ,fontSize: 18
              ),
               children: [
           TextSpan(
-            text: ' ${AppLocalizations.of(context)!.register_now}', 
+            text: ' ${getTranslated('register_now', context)!}', 
           recognizer: TapGestureRecognizer()
           
           ..onTap =(){
@@ -146,7 +148,7 @@ var formKey =  GlobalKey<FormState>();
               )));
          },
             color: Colors.grey[400],
-            title: AppLocalizations.of(context)!.continue_as_guest,
+            title:getTranslated('continue_as_guest', context)!,
           )
           
           

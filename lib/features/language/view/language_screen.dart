@@ -1,9 +1,9 @@
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/language/providers/language_provider.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +31,10 @@ appBar: AppBar(
   ),
   
   //  SizedBox(),
-  title: Text( AppLocalizations.of(context)!.language),
+  title: Text( 
+    widget.fromSplash!?
+    getTranslated('language', context)!:
+    getTranslated('change_language', context)!),
 centerTitle: true,
 elevation: 0.0,
         backgroundColor: Colors.white,
@@ -80,9 +83,9 @@ if (!widget.fromSplash!) {
     Text(
 
       lang['key']=="ar"?
-      AppLocalizations.of(context)!.arabic
+       getTranslated('arabic', context)!
       :
-            AppLocalizations.of(context)!.english
+            getTranslated('english', context)!
 
 
 , style: TextStyle(
