@@ -1,0 +1,117 @@
+import 'package:deals_and_business/features/auth/views/login_screen.dart';
+import 'package:deals_and_business/features/language/providers/language_provider.dart';
+import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
+import 'package:deals_and_business/shared/widgets/back_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+
+class LanguageScreen extends StatefulWidget {
+  final bool? fromSplash;
+  const LanguageScreen({super.key, this.fromSplash=false});
+
+  @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+appBar: AppBar(
+  leading:
+  widget.fromSplash!?
+  SizedBox():
+  MyBackButton(
+    onTap:(){
+      Navigator.pop(context);
+    },
+  ),
+  
+  //  SizedBox(),
+  title: Text( AppLocalizations.of(context)!.language),
+centerTitle: true,
+elevation: 0.0,
+        backgroundColor: Colors.white,
+
+),
+
+body: SizedBox.expand(
+  child: Consumer<LanguageProvider>(
+    builder: (context, locale , child) {
+      return ListView(
+        children:  locale.getLanguages().map((lang){
+
+return   GestureDetector(
+  onTap: (){
+    locale.setCurrentLocale(lang['key']);
+
+    setState(() {
+      
+    });
+      var provider = Provider.of<SplashProvider>(context ,listen: false);
+
+
+      
+provider.setISFistTime(false);
+
+if (!widget.fromSplash!) {
+  Navigator.pop(context);
+  return;
+}
+  Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
+
+
+  },
+  child: Container(
+    height: 50,
+    width: MediaQuery.sizeOf(context).width,
+    padding: const EdgeInsets.symmetric(
+  
+      vertical: 12,
+      
+        horizontal: 25
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+    Text(
+
+      lang['key']=="ar"?
+      AppLocalizations.of(context)!.arabic
+      :
+            AppLocalizations.of(context)!.english
+
+
+, style: TextStyle(
+  fontWeight: FontWeight.bold
+),
+      // lang['translate']
+    ), 
+
+
+
+    Visibility(
+      visible: lang['key']==locale.loadCurrentLocal(context),
+      child: 
+    Icon(Icons.check ,color: Colors.green,)
+    )
+      ],
+    ),
+  ),
+)
+;
+        }).toList()
+      
+      
+      );
+    }
+  )
+),
+
+
+    );
+  }
+}

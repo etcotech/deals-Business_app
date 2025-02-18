@@ -1,0 +1,52 @@
+{
+    "app_name": "مرحبا بالعالم!", 
+    "language":"اللغة",
+    "arabic":"عربي",
+    "english":"English", 
+    "password":"كلمة المرور" , 
+    "password_confirm":"تأكيد كلمة المرور", 
+    "email":"البريد الالكتروني" , 
+    "password_required":"الرجاء ادخال كلمة المرور" ,
+    "email_required":  "هذا الحقل مطلوب" ,
+    "name_requied":"الاسم مطلوب" ,
+    "name_or_email":"البريد الالكتروني او اسم المستخدم" ,
+    "register":"التسجيل" ,
+    "name":"الاسم"  ,
+    "i_read":"لقد قرأت و وافقت علي" ,
+    "terms_and_conditions":"الشروط والاحكام" ,
+    "login_now":"سجل دخولك" ,
+    "terms_must_accept":"يجب الموافقة على الشروط و الاحكام" ,
+    "register_now":"سجل الان" 
+     ,
+     "login":"تسجيل الدخول" ,
+     "continue_as_guest":"المواصلة كضيف", 
+  
+     "have_account":"لديك حساب بالفعل؟" ,
+     "have_no_account":"ليس لديك حساب؟" ,
+     "forgot_password":"هل نسيت كلمة المرور؟", 
+     "promote_text1":"استكسف الفرص التجارية و المشاريع الاستثمارية على منصة صفقات و أعمال",
+     "promote_text2":"اكتشف,اتصل,واستثمر" ,
+     "search_now":"اكتب شيئا للبحث عنه" ,
+     "browse_by_category":"التصفح عن طريق الفئة"  ,
+     "last_ads":"اخر الاعلانات" ,
+     "home":"الرئيسية" , 
+     "favourite":"المفضلة" ,
+     "advacnce_search":"بحث متقدم" ,
+     "messages":"الرسائل" 
+     , 
+
+     "profile":"الملف الشخصي",
+     "add_post":"نشر إعلان",
+     "favourite_posts":"الاعلانات المفضلة",
+    "pending_posts":"الاعلانات الموافقة",
+    "archive_posts":"الاعلانات المورشفة",
+    "contact_with_admins":"تواصل مع الادارة",
+    "change_language":"تغيير اللغة",
+    "settings":"الإعدادات",
+    "logout":"تسجيل الخروج",
+    "share_app":"مشاركة التطبيق", 
+    "rate_ape":"تقييم التطبيق"
+   
+
+  }
+  

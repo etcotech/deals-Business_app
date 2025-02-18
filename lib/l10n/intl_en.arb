@@ -1,0 +1,30 @@
+{
+  "app_name": "Hello World!", 
+   "language":"Language",
+  "arabic":"عربي",
+  "english":"English"
+,
+  "password":"Password" , 
+  "password_confirm":"Confirm password", 
+  "email":"Your em" , 
+  "password_required":"The password field is required" ,
+  "email_required":  "This field is required" ,
+  "name_requied":"The name field is required" ,
+  "name_or_email":"You email or username" ,
+  "register":"Register" ,
+  "name":"Name"  ,
+  "i_read":"I have read and accept",
+  "terms_and_conditions":"Terms and conditions" ,
+  "login_now":"Sign in" ,
+  "terms_must_accept":"Terms and conditions must be accepted" ,
+  "register_now":"Register now" 
+   ,
+   "login":"Login" ,
+   "continue_as_guest":"Continue as guest" 
+, 
+
+   "have_account":"Already registed?" ,
+   "have_no_account":"You don't have an account?" ,
+   "forgot_password":"Forgot password?"
+
+}
