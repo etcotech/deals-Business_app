@@ -1,7 +1,11 @@
 import 'dart:developer';
 
 import 'package:deals_and_business/features/home/view/home_screen.dart';
+import 'package:deals_and_business/features/messages/views/messages_screen.dart';
+import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
+import 'package:deals_and_business/features/search/views/advance_search_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Dashboard extends StatefulWidget {
   final bool? asGuest;
@@ -22,11 +26,13 @@ class _DashboardState extends State<Dashboard> {
     _screens =[
 
       HomeScreen(asGuest: widget.asGuest,),
-      Container(), 
+
+Container(),
             Container(),  //white
 
-      Container(),
-      Container()
+          AdvanceSearchScreen(asGuest: widget.asGuest,), 
+
+      MessagesScreen(asGuest: widget.asGuest,)
     ];
   }
 
@@ -47,6 +53,9 @@ floatingActionButton: FloatingActionButton(
   shape:CircleBorder(),
   backgroundColor: Theme.of(context).primaryColor,
   onPressed: (){
+                 Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    AddPostScreen()));
 
 }, 
 child: Center(child: Icon(Icons.add , color: Colors.white,),

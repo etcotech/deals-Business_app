@@ -82,6 +82,8 @@ class UserRepositoryImpl implements UserRepository {
         localDataSource.saveLoggedInStatus(true);
         localDataSource.saveToken(remoteResponse.extraAuthModel.authToken!);
         localDataSource.saveUserId(remoteResponse.user.id!);
+                localDataSource.saveUserName(remoteResponse.user.name!);
+
         return Right(remoteResponse);
       } on Failure catch (failure) {
         return Left(failure);
@@ -109,6 +111,12 @@ class UserRepositoryImpl implements UserRepository {
     } else {
       return Left(NetworkFailure());
     }
+  }
+  
+  @override
+  String getUserName() {
+    // TODO: implement getUserName
+    return localDataSource.getUserName()??'';
   }
 
 }

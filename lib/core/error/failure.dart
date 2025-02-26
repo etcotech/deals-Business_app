@@ -17,7 +17,11 @@ class ServerFailure extends Failure {
 
 class CacheFailure extends Failure {}
 
-class NetworkFailure extends Failure {}
+class NetworkFailure extends Failure {
+  final String? message;
+  NetworkFailure({ this.message}):super(message: message);
+
+}
 
 class ExceptionFailure extends Failure {}
 
@@ -25,6 +29,10 @@ class CredentialFailure extends Failure {
     final String? message;
   CredentialFailure({ this.message}):super(message: message);
 }
-class TimeoutFailure extends Failure {}
+class TimeoutFailure extends Failure {
+   final String? message;
+  TimeoutFailure({ this.message}):super(message: message);
+}
 
 class AuthenticationFailure extends Failure {}
+

@@ -47,6 +47,62 @@
     "settings":"Settings",
     "logout":"Logout",
     "share_app":"Share app", 
-    "rate_ape":"Rate app"
+    "rate_app":"Rate app"
+     , 
+     "filter_by":"Filter by",
+   "all_categories":"All categories",
+   "category":"Category" ,
+   "apply":"Apply" ,
+   "delete":"Delete" ,
+   "filter_by_price":"Price filter" ,
+   "filter_by_city":"City filter" ,
+   "sort_by":"Sort by" ,
+   "no_data":"No data" ,
+   "please_choose_value":"Please,choose a value",
+   "sort_by_price":"Sort by price" ,
+   "sort_by_aplh":"Sort alphabetically",
+"sort_price_desc":"Sort by price in descending order",
+"sort_price_asc":"Sort by price in ascending order"
+,
+"sort_alph_az":"Sort alphabetically A-Z",
+"sort_alph_za":"Sort alphabetically Z-A",
+"all_cieties_in":"All cities in",
+"start_price":"Start price",
+"end_price":"End price" ,
+"contact_with_seller":"Contact with seller",
+"you_have_to_login":"You have to login to continue" ,
+"contact_us":"Contact us",
+"location":"Location" ,
+"details":"Details" ,
+"similar_posts":"Similar posts"
+
+, 
+"posts":"Posts" ,
+"region":"Region" ,
+"user_name":"Username" ,
+"statics":"Statics" ,
+"edit_my_profile":"Edit my profile" ,
+"published":"published" ,
+"pending_post":"Pending" ,
+"archived":"Archived" ,
+"all":"All" ,
+"number_of_visits":"Nummber of visits" ,
+"threads":"Threads" ,
+"general":"General" ,
+"first_name":"First name" ,
+"last_name":"Last name" ,
+"message_to_us":"Type what you want to tell the admins about"
+,
+"send":"Send"
+, 
+
+"no_posts":"No posts yet", 
+
+"account_settings":"Account settings" ,
+"faq":"Frequently asked questions",
+"privacy_policy":"Privacy policy"
+,
+"terms_and_condtions":"Terms and condtions" ,
+"scam_policy":"Anti scam policy"
   }
   

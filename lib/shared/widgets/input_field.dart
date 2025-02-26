@@ -6,13 +6,13 @@ class InputField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator; // Validator function as a parameter
   final IconData? iconData;
-
+final Function(String?)? onTextChange;
   const InputField({
     super.key,
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator,  this.iconData, // Nullable validator function
+    this.validator,  this.iconData, this.onTextChange, // Nullable validator function
   });
 
   @override
@@ -20,7 +20,7 @@ class InputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
-
+onChanged: onTextChange,
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(

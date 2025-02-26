@@ -1,5 +1,9 @@
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeCategories extends StatelessWidget {
   const HomeCategories({super.key});
@@ -8,36 +12,88 @@ class HomeCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(padding: EdgeInsets.symmetric(horizontal: 18), 
     
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-Text(getTranslated('browse_by_category', context)!,
-
-style: TextStyle(
-  fontSize: 16, fontWeight: FontWeight.bold
-),
-), 
-SizedBox(height: 16,), 
-Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    HomeCategory(
-      title: 'المشاريع التجارية',
-      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
-    ), 
-
-      HomeCategory(
-      title: 'المشاريع التجارية',
-      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
-    ),   HomeCategory(
-      title: 'المشاريع التجارية',
-      image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
-    ), 
-  ],
-)
-
-
-    ],),
+    child: 
+    
+    Consumer<HomeProvider>(
+     builder: (context, provider, child)=> Builder(
+        builder: (context) {
+if (provider.isCategoryLoading) {
+   return  
+          
+          
+          
+           Skeletonizer(
+            enabled: true,
+             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                       Text(getTranslated('browse_by_category', context)!,
+                       
+                       style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.bold
+                       ),
+                       ), 
+                       SizedBox(height: 16,), 
+                       Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                       HomeCategory(
+              title: 'المشاريع التجارية',
+              image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+                       ), 
+                       
+              HomeCategory(
+              title: 'المشاريع التجارية',
+              image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+                       ),   HomeCategory(
+              title: 'المشاريع التجارية',
+              image: "https://dealsandbusiness.com/storage/app/categories/custom/thumb-70x70-803d1851ab38ff79dc55aff7e40e3466.jpeg",
+                       ), 
+              ],
+                       )
+                       
+                       
+                       ],),
+           );
+        
+}
+else{
+ return  
+          
+          
+          
+           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          Text(getTranslated('browse_by_category', context)!,
+          
+          style: TextStyle(
+            fontSize: 16, fontWeight: FontWeight.bold
+          ),
+          ), 
+          SizedBox(height: 16,), 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children:
+            
+             provider.categoris.map((category)=>
+             
+             HomeCategory(
+            title: category.name,
+            image: category.iconClass,
+          ), 
+              ).toList()
+          )
+          
+          
+          ],);
+        
+}
+         
+        
+        }
+      ),
+    ),
     );
   }
 }
@@ -45,13 +101,15 @@ Row(
 class HomeCategory extends StatelessWidget {
   final String? title;
   final String? image;
+  
   const HomeCategory({super.key, this.title, this.image});
 
   @override
   Widget build(BuildContext context) {
     return  Container(
 
-        width: MediaQuery.sizeOf(context).width*.28, height: MediaQuery.sizeOf(context).width*.28,
+        width: MediaQuery.sizeOf(context).width*.28,
+         height: MediaQuery.sizeOf(context).width*.28,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8), 
             color: Colors.white, 
@@ -72,19 +130,41 @@ class HomeCategory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-                Image.network(image!,              
-                    //  color: Theme.of(context).primaryColor, 
+               Icon(getIcon(image , ),              
+                     color: Theme.of(context).primaryColor, 
 ), 
-                Text(title! , 
-                
-                style: TextStyle(
-                 fontWeight: FontWeight.bold, 
-                  fontSize: 12
-                ),
+SizedBox(height: 8,),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width*.25,
+                  child: Text(title! , 
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                   fontWeight: FontWeight.bold, 
+                    fontSize: 12
+                  ),
+                  ),
                 )
               ],
             ),
           ),
     );
+  }
+
+
+  getIcon(String? icon){
+    switch (icon) {
+      case  "fas fa-store":
+         return  FontAwesomeIcons.store;
+        case  "fas fa-cog":
+         return  FontAwesomeIcons.gear;
+         case  "fas fa-users":
+         return  FontAwesomeIcons.users;
+
+
+      default:
+               return  Icons.category;
+
+    }
   }
 }

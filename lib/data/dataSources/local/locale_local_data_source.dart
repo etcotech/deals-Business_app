@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class LocaleLocalDataSource {
   
-  String getCurrentLocale(BuildContext context);
+  String getCurrentLocale();
   void setCurrentLocale(String key);
 
   List<Map<String,dynamic>> getLanguages();
@@ -18,7 +18,7 @@ class LocaleLocalDataSourceImpl implements LocaleLocalDataSource {
 
   LocaleLocalDataSourceImpl({required this.sharedPreferences});
   @override
-  String getCurrentLocale(BuildContext context) {
+  String getCurrentLocale() {
     return sharedPreferences.getString(Strings.currentLanguage)??'ar';
   }
 

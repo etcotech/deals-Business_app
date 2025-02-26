@@ -45,8 +45,59 @@
     "settings":"الإعدادات",
     "logout":"تسجيل الخروج",
     "share_app":"مشاركة التطبيق", 
-    "rate_ape":"تقييم التطبيق"
-   
+    "rate_app":"تقييم التطبيق"
+   , 
 
-  }
+   "filter_by":"تصفية حسب",
+   "all_categories":"جميع الفئات",
+   "category":"الفئة" ,
+   "apply":"تطبيق" ,
+   "delete":"حذف" ,
+   "filter_by_price":"فلترة بالسعر" ,
+   "filter_by_city":"فلترة بالمدينة" ,
+   "sort_by":"ترتيب حسب",
+   "no_data":"لا توجد بيانات" ,
+   "please_choose_value":"اختر قيمة",
+   "sort_by_price":"ترتيب بالسعر" ,
+   "sort_by_aplh":"ترتيب بالحروف",
+"sort_price_desc":"ترتيب من السعر الاعلى إلى الاقل",
+"sort_price_asc":"ترتيب من السعر الاقل إلى الاعلى"
+,
+"sort_alph_az":"ترتيب الحروف من أ إلى ي",
+"sort_alph_za":"ترتيب الحروف من ي إلى أ",
+"all_cieties_in":"كل المدن في",
+"start_price":"ادنى سعر",
+"end_price":"اقل سعر" ,
+"contact_with_seller":"اتصال بالبائع",
+"you_have_to_login":"يجب تسجيل الدخول للمواصلة" ,
+"contact_us":"اتصل بنا",
+"location":"الموقع" ,
+"details":"التفاصيل" ,
+"similar_posts":"اعلانات مشابهة"
+, 
+"posts":"الاعلانات" ,
+"region":"الدولة" ,
+"user_name":"اسم المستخدم" ,
+"statics":"الاحصائيات" ,
+"edit_my_profile":"تعديل الملف الشخصي" ,
+"published":"الاعلانات المنشورة" ,
+"pending_post":"الاعلانات المعلقة" ,
+"archived":"  الاعلانات المورشفة" ,
+"all":"الكل" ,
+"number_of_visits":"عدد مرات الزيارة" ,
+"threads":"المواضيع" ,
+"general":"عام", 
+"first_name":"الاسم الاول" ,
+"last_name":"اسم العائلة" ,
+"message_to_us":"اكتب ما تريد ايصاله للادارة!",
+"send":"ارسال", 
+
+"no_posts":"لا توجد اي منشورات بعد", 
+"account_settings":"اعدادات الحساب" ,
+"faq":"الاسئلة الشائعة",
+"privacy_policy":"سياسة الخصوصية"
+,
+"terms_and_condtions":"الاحكام و الشروط" ,
+"scam_policy":"سياسة مكافحة الغش"
+}
   

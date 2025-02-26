@@ -23,7 +23,11 @@ class HomeSearchContainer extends StatelessWidget {
         spacing: 5,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-Text(getTranslated('promote_text1', context)!,  style: TextStyle(
+Text(getTranslated('promote_text1', context)!,
+
+textAlign: TextAlign.center,
+
+  style: TextStyle(
   color: Theme.of(context).primaryColor
 ),)
 , 

@@ -3,32 +3,43 @@ import 'dart:developer';
 import 'package:deals_and_business/configs/app_localization.dart';
 import 'package:deals_and_business/configs/custom_delegate.dart';
 import 'package:deals_and_business/configs/theme.dart';
-import 'package:deals_and_business/di/di.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/language/providers/language_provider.dart';
+import 'package:deals_and_business/features/search/providers/search_provider.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
+import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import './di/di.dart' as di;
+
+  late SharedPreferences globalSharedPrefs;
+
 void main()async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
+    globalSharedPrefs= await SharedPreferences.getInstance();
    await di.init();
   } catch (e) {
-    log("///////////////////////////////////   ${e}");
+    log("///////////////////////////////////   $e");
   }
   runApp(MultiProvider(
     providers: [
+     ChangeNotifierProvider(create: (_)=> di.sl<SplashProvider>()),
+
       ChangeNotifierProvider(create: (_)=>  di.sl<AuthProvider>()) , 
 
-            ChangeNotifierProvider(create: (_)=> di.sl<SplashProvider>()),
-            ChangeNotifierProvider(create: (_)=>  di.sl<LanguageProvider>())
+     ChangeNotifierProvider(create: (_)=>  di.sl<LanguageProvider>()) , 
+     ChangeNotifierProvider(create: (_)=>  di.sl<PostProvider>()),
+     ChangeNotifierProvider(create: (_)=>  di.sl<HomeProvider>()),
+     ChangeNotifierProvider(create: (_)=>  di.sl<SearchProvider>())
+
 
     ],
     child: const MyApp()));

@@ -10,5 +10,6 @@ abstract class UserRepository {
   // Future<Either<Failure, User>> getCachedUser();
 
     Future<Either<Failure, String?>> signOut();
+    String getUserName();
 
 }

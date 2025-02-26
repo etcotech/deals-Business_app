@@ -16,6 +16,30 @@
     return null;
   }
 
+  String? titleValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Title cannot be empty';
+    } 
+    return null;
+  }
+
+  String? descValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Description cannot be empty';
+    } 
+    return null;
+  }
+
+  String? priceValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Price cannot be empty';
+    } 
+    
+    return null;
+  }
+
+
+
   // Email Validator
   String? emailValidator(String? value) {
     if (value == null || value.isEmpty) {

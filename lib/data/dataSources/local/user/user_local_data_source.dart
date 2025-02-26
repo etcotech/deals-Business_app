@@ -18,6 +18,14 @@ void saveLoggedInStatus(bool value);
 
   int? getUserId();
 void saveUserId(int userId);
+
+void saveCountryCode(String code);
+void saveCounryFlag(String flag);
+void saveUserName(String name);
+String? getUserName();
+
+String getCountryCode();
+String getCountryFlag();
 }
 const cachedToken = 'TOKEN';
 const cachedUser = 'USER';
@@ -72,5 +80,35 @@ String? getToken()  {
   @override
   void saveUserId(int userId) {
     sharedPreferences.setInt(Strings.userId, userId);
+  }
+  
+  @override
+  String getCountryCode() {
+    return  sharedPreferences.getString(Strings.countryCode)??'sa';
+  }
+  
+  @override
+  String getCountryFlag() {
+   return sharedPreferences.getString(Strings.countryFlag)??'';
+  }
+  
+  @override
+  void saveCounryFlag(String flag) {
+    sharedPreferences.setString(Strings.countryFlag, flag);
+  }
+  
+  @override
+  void saveCountryCode(String code) {
+    sharedPreferences.setString(Strings.countryCode, code);
+  }
+  
+  @override
+  String? getUserName() {
+    return sharedPreferences.getString(Strings.userName)??'';
+  }
+  
+  @override
+  void saveUserName(String name) {
+    sharedPreferences.setString(Strings.userName, name);
   }
 }

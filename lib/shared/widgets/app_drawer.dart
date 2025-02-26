@@ -1,7 +1,10 @@
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
+import 'package:deals_and_business/features/contact/views/contact_with_admins_screen.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
+import 'package:deals_and_business/features/profile/views/profile_screen.dart';
+import 'package:deals_and_business/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -75,14 +78,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const MyHomePage(
-                  //       title: 'Houses',
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    ProfileScreen()));
                 },
               ),
 
@@ -186,14 +184,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const MyHomePage(
-                  //       title: 'Houses',
-                  //     ),
-                  //   ),
-                  // );
+                 Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    ContactWithAdminsScreen()));
                 },
               ),
 
@@ -226,14 +219,9 @@ class _AppDrawerState extends State<AppDrawer> {
                 
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const MyHomePage(
-                  //       title: 'Houses',
-                  //     ),
-                  //   ),
-                  // );
+                   Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    SettingsScreen()));
                 },
               ),
 authProvider.isLoading?

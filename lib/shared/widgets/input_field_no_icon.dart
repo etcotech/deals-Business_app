@@ -23,7 +23,7 @@ class InputFieldNoIcon extends StatelessWidget {
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
-  vertical: 15
+  vertical: 15 , horizontal: 8
 ),
 
         filled: true,

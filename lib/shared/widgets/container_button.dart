@@ -27,7 +27,9 @@ Text(
 
   title!=null? title!: hint!,
   style: TextStyle(
-          color: Colors.grey ,
+          color:
+          title!=null? Colors.black:
+           Colors.grey ,
           fontSize: 15
         ),
 )

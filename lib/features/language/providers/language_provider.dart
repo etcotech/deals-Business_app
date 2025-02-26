@@ -7,7 +7,7 @@ class LanguageProvider extends ChangeNotifier {
   LanguageProvider({required this.localeLocalDataSource});
   
 
-String loadCurrentLocal(BuildContext context)=>   localeLocalDataSource.getCurrentLocale(context);
+String loadCurrentLocal(BuildContext context)=>   localeLocalDataSource.getCurrentLocale();
 
 List<Map<String, dynamic>> getLanguages()=> localeLocalDataSource.getLanguages();
 
