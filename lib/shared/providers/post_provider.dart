@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:deals_and_business/data/models/category/category_model.dart';
@@ -5,6 +6,7 @@ import 'package:deals_and_business/data/models/country/city_model.dart';
 import 'package:deals_and_business/data/models/country/country_model.dart';
 import 'package:deals_and_business/data/models/post/new_post_model.dart';
 import 'package:deals_and_business/data/models/post/post_details_model.dart';
+import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
@@ -17,12 +19,13 @@ class PostProvider extends ChangeNotifier {
   PostProvider({required this.postRepository , required this.userRepository , });
   
 bool isLoading = false;
-
+bool isFavourite= false;
 CityModel? selectedCity;
 CategoryModel? selectedCat;
 CountryModel? selectedCountry;
 List<XFile> files =[];
 PostDetailsModel? postDetailsModel;
+List<PostModel> favouritePosts=[];
 
 String? error;
 void addFile(XFile file){
@@ -75,13 +78,14 @@ pictures: files.map((file)=> File(file.path)).toList()
   var result = await  postRepository!.addPost(newPost);
 
   result.fold((failure){
-showErrorMessage(context, failure.toString());
-selectedCat=null;
+showErrorMessage(context, failure.message.toString());
+
+  }, (success){
+    selectedCat=null;
 selectedCity=null;
 selectedCountry=null;
 files=[];
 notifyListeners();
-  }, (success){
 showSuccessMessage(context, 'Post Sent!');
 Navigator.pop(context);
 
@@ -100,19 +104,22 @@ Navigator.pop(context);
 }
 
 
-Future getPost(String postId)async{
+Future getFavouritePosts()async{
     isLoading= true;
     error= null;
     notifyListeners();
   try {
-    var result = await postRepository!.getPost('', postId);
+    var result = await postRepository!.getFavouritePosts();
     result.fold((failure){
 
  error = failure.message.toString();
      notifyListeners();
 
     }, (success){
-postDetailsModel = success.postDetailsModel;
+      favouritePosts =[];
+      favouritePosts.addAll(success.postPaginateModel.posts!);
+// postDetailsModel = success.postDetailsModel;
+// isFavourite= postDetailsModel!.featured==1;
 notifyListeners();
     });
   } catch (e) {
@@ -124,5 +131,104 @@ notifyListeners();
     notifyListeners();
 }
 
+Future getPost(String postId)async{
+    isLoading= true;
+    error= null;
+    notifyListeners();
+  try {
+    var result = await postRepository!.getPost('',postId);
+    result.fold((failure){
+
+ error = failure.message.toString();
+     notifyListeners();
+
+    }, (success){
+      favouritePosts =[];
+      // favouritePosts.addAll(success.postPaginateModel.posts!);
+postDetailsModel = success.postDetailsModel;
+isFavourite= postDetailsModel!.featured==1;
+notifyListeners();
+    });
+  } catch (e) {
+     error= e.toString();
+     notifyListeners();
+    
+  }
+    isLoading= false;
+    notifyListeners();
+}
+
+
+Future refreshFavouite(String postId)async{
+   
+  try {
+    var result = await postRepository!.getPost('', postId);
+    result.fold((failure){
+
+ error = failure.message.toString();
+     notifyListeners();
+
+    }, (success){
+postDetailsModel = success.postDetailsModel;
+isFavourite= success.postDetailsModel.featured==1;
+notifyListeners();
+    });
+  } catch (e) {
+    
+    
+  }
+   
+}
+
+
+
+
+Future<void> addPostToFavourite(BuildContext context , String postId)async{
+  isFavourite= true;
+  notifyListeners();
+ try {
+    var result = await postRepository!.addPostFavourite('token', postId);
+    result.fold((failure){
+
+ error = failure.message.toString();
+     notifyListeners();
+          showErrorMessage(context, failure.toString());
+
+    }, (success){
+      showSuccessMessage(context, json.decode(success)['message']);
+
+refreshFavouite(postId);
+notifyListeners();
+    });
+  } catch (e) {
+          showErrorMessage(context, e.toString());
+
+    
+    
+  }
+}
+
+Future<void> getPosts(BuildContext context)async{
+  isLoading = true;
+notifyListeners();
+try {
+  var result = await postRepository!.getPosts();
+result.fold((failre){
+showErrorMessage(context, failre.toString());
+}, (success){
+favouritePosts =[];
+favouritePosts.addAll(success.postPaginateModel.posts!);
+});
+} catch (e) {
+  showErrorMessage(context, e.toString());
+
+  isLoading = false;
+
+notifyListeners();
+}
+
+isLoading = false;
+notifyListeners();
+}
 
 }

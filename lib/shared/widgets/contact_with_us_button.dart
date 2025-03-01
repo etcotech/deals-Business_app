@@ -10,7 +10,7 @@ final Function? onTap;
   Widget build(BuildContext context) {
     return Container(
 
-      width: MediaQuery.sizeOf(context).width*.15,
+      width: MediaQuery.sizeOf(context).width*.25,
       height: 50,
       decoration: BoxDecoration(
 borderRadius: BorderRadius.circular(15), 

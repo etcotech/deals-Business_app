@@ -215,6 +215,8 @@ physics: NeverScrollableScrollPhysics(),
     );
   }
 }
+
+
 class HomePost extends StatelessWidget {
   final bool? isList;
   final PostModel? postModel;

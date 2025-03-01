@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:deals_and_business/features/favourite/view/favourite_screen.dart';
 import 'package:deals_and_business/features/home/view/home_screen.dart';
 import 'package:deals_and_business/features/messages/views/messages_screen.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
@@ -27,8 +28,8 @@ class _DashboardState extends State<Dashboard> {
 
       HomeScreen(asGuest: widget.asGuest,),
 
+            FavouriteScreen(asGuest: widget.asGuest,),  //white
 Container(),
-            Container(),  //white
 
           AdvanceSearchScreen(asGuest: widget.asGuest,), 
 

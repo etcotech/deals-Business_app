@@ -7,6 +7,9 @@ import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 
 abstract class PostRepository {
   Future<Either<Failure, PostListResponseModel>> getPosts();
+
+    Future<Either<Failure, PostListResponseModel>> getFavouritePosts();
+
   Future<Either<Failure, Map<String,dynamic>>> addPost(
     NewPostModel new_post_model 
   );
@@ -14,7 +17,10 @@ abstract class PostRepository {
     String token,
     String postId
   );
-
+Future<Either<Failure, String>> addPostFavourite(
+    String token,
+    String postId
+  );
   // Future<Either<Failure, User>> signUp(SignUpParams params);
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();

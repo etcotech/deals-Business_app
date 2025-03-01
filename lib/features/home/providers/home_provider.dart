@@ -1,6 +1,7 @@
 import 'package:deals_and_business/data/models/category/category_model.dart';
 import 'package:deals_and_business/data/models/country/city_model.dart';
 import 'package:deals_and_business/data/models/country/country_model.dart';
+import 'package:deals_and_business/data/models/error_data.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/domain/repositories/category_repository.dart';
 import 'package:deals_and_business/domain/repositories/country_repositories.dart';
@@ -27,6 +28,7 @@ List<CategoryModel> categoris =[];
 List<PostModel> posts =[];
 List<CountryModel> countries =[];
 List<CityModel> cities =[];
+ErrorData? errorData;
 
 Future<void> getCategories(BuildContext context)async{
   isCategoryLoading = true;
@@ -56,6 +58,7 @@ isCategoryLoading = false;
 
 notifyListeners();
 }
+
 Future<void> getPosts(BuildContext context)async{
   isLoading = true;
 notifyListeners();
@@ -115,6 +118,7 @@ showErrorMessage(context, failre.toString());
 }, (success){
 cities =[];
 cities.addAll(success.cityPaginateModel.cities!);
+notifyListeners();
 });
 } catch (e) {
   showErrorMessage(context, e.toString());

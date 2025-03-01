@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
   final String? message;
+  
 
   Failure({ this.message});
   @override
@@ -23,7 +24,10 @@ class NetworkFailure extends Failure {
 
 }
 
-class ExceptionFailure extends Failure {}
+class ExceptionFailure extends Failure {
+  final String? message;
+  ExceptionFailure({ this.message}):super(message: message);
+}
 
 class CredentialFailure extends Failure {
     final String? message;
@@ -34,5 +38,8 @@ class TimeoutFailure extends Failure {
   TimeoutFailure({ this.message}):super(message: message);
 }
 
-class AuthenticationFailure extends Failure {}
+class AuthenticationFailure extends Failure {
+  final String? message;
+  AuthenticationFailure({ this.message}):super(message: message);
+}
 

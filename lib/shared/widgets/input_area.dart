@@ -20,7 +20,9 @@ class InputArea extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
 maxLines: 5,
-      
+      onTapOutside: (event){
+FocusManager.instance.primaryFocus?.unfocus();
+},
       decoration: InputDecoration(
 // contentPadding: EdgeInsets.symmetric(
 //   vertical: 15

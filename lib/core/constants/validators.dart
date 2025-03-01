@@ -27,6 +27,9 @@
     if (value == null || value.isEmpty) {
       return 'Description cannot be empty';
     } 
+    if (value.length<5) {
+      return 'too short';
+    }
     return null;
   }
 

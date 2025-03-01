@@ -22,7 +22,13 @@ class SearchInputField extends StatelessWidget {
       controller: controller,
       autofocus: false,
       keyboardType: keyboardType,
-onChanged: onChange,
+onChanged: (value){
+onChange!(value);
+},
+
+onTapOutside: (event){
+FocusManager.instance.primaryFocus?.unfocus();
+},
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(

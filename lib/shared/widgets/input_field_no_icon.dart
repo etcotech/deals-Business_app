@@ -19,7 +19,9 @@ class InputFieldNoIcon extends StatelessWidget {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
-
+onTapOutside: (event){
+FocusManager.instance.primaryFocus?.unfocus();
+},
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(

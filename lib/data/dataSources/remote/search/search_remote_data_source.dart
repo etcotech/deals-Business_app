@@ -51,6 +51,8 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
             body['category_id']=category_id;
 
           }
+
+          log("SEARH FORM$body");
          final response =
         await client.post(Uri.parse('$baseUrl$searchAPi'),
             headers: {

@@ -149,8 +149,8 @@ dynamic fbProfile;
     address = json['address'];
     cityId = json['city_id'];
 
-    // lat = json['lat'];
-    // lon = json['lon'];
+    lat = json['lat']!=null? double.parse(json['lat'].toString()):0.0  ;
+    lon = json['lon']!=null? double.parse(json['lon'].toString()):0.0;
                             
 
     createFromIp = json['create_from_ip'];

@@ -85,9 +85,9 @@ context.read<HomeProvider>().getCategories(context);
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),              SizedBox(height: 8),
                       
-                            Padding(
+                            Expanded(
+                              child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 14),
-                              child: Expanded(
                                 child: ListView.builder(
                                   itemCount: provider.categoris.length,
                                   shrinkWrap: true,
@@ -95,12 +95,12 @@ context.read<HomeProvider>().getCategories(context);
                                     var cateogory = provider.categoris[index];
                                     return ListTile(
                                       onTap: (){
-              selectedCat = cateogory.id;
-              categoryModel =cateogory;
-              setState(() {
-                
-              });
- if (widget.onSelectCategory!=null && categoryModel!=null) {
+                                            selectedCat = cateogory.id;
+                                            categoryModel =cateogory;
+                                            setState(() {
+                                              
+                                            });
+                                                             if (widget.onSelectCategory!=null && categoryModel!=null) {
                                     widget.onSelectCategory!(categoryModel!);
                                   }                                      },
                                       title: Row(
@@ -111,9 +111,9 @@ context.read<HomeProvider>().getCategories(context);
                                             
                                             
                                             ), 
-              color: selectedCat!=null? selectedCat==cateogory.id?Theme.of(context).primaryColor 
-               : Colors.grey:   Colors.grey,
-              
+                                            color: selectedCat!=null? selectedCat==cateogory.id?Theme.of(context).primaryColor 
+                                             : Colors.grey:   Colors.grey,
+                                            
                                           ), 
                                 
                                           SizedBox(width: 3,),
@@ -121,7 +121,7 @@ context.read<HomeProvider>().getCategories(context);
                                           style: TextStyle(
                                             color: selectedCat!=null?
                                              selectedCat==cateogory.id?Theme.of(context).primaryColor 
-               : Colors.grey:   Colors.grey,
+                                             : Colors.grey:   Colors.grey,
                                           ),
                                           )
                                         ],

@@ -32,6 +32,8 @@ final SearchRemoteDataSource searchRemoteDataSource;
   Future<Either<Failure, SearchResponseModel>> search(String token, {String keyword = '',
    String? lang = 'ar', double price_from = 0.0, double price_to = 0.0, 
    String? category_id , String sort_by = 'price', String sort_order = 'desc'})async {
+   
+   
     return  await _searchDataProvider((){
 
         return   searchRemoteDataSource.search(

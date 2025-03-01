@@ -11,4 +11,6 @@ const String forgotPasswordApi = '/api/posts';
 const String countriesApi = '/api/countries/';
 const String logoutApi = '/api/auth/logout/';
 const String searchAPi = '/api/search';
+const String savedPostAPi = '/api/savedPosts';
+const String sendMessageApi = '/api/contact';
 

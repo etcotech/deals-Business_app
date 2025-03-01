@@ -24,7 +24,7 @@ onChanged: onTextChange,
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
-  vertical: 15
+  vertical: 10, horizontal: 8
 ),
 
         filled: true,

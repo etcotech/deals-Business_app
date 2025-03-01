@@ -9,6 +9,7 @@ import 'package:deals_and_business/data/models/post/post_details_response_model.
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
 typedef _PostDetailsDataSource = Future<PostDetailsResponseModel> Function();
+typedef _AddToFavouriteDataSource = Future<String> Function();
 
 typedef _DataSourceChooser = Future<PostListResponseModel> Function();
 typedef _AddPost = Future<Map<String ,dynamic>> Function();
@@ -91,12 +92,28 @@ Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
       return Left(NetworkFailure());
     }
   }
- 
+ Future<Either<Failure, String>> _addPostToFavouriteProvider(
+   _AddToFavouriteDataSource getDataSource,
+      ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteResponse = await getDataSource();
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } on Failure catch (failure) {
+        return Left(failure);
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
   @override
-  Future<Either<Failure, Map<String, dynamic>>> addPost(NewPostModel new_post_model) async{
+  Future<Either<Failure, Map<String, dynamic>>> addPost(NewPostModel newPostModel) async{
     return  await _addPostProvider((){
 
-        return    postRemoteDatasource.addPost(new_post_model, localDataSource.getToken()??'');
+        return    postRemoteDatasource.addPost(newPostModel, localDataSource.getToken()??'');
     });
   }
   
@@ -105,6 +122,26 @@ Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
  return  await _getPostProvider((){
 
         return    postRemoteDatasource.getPost(int.parse(postId), localDataSource.getToken()??'');
+    });
+  }
+  
+  @override
+  Future<Either<Failure, String>> addPostFavourite(String token, String postId) async{
+    return  await _addPostToFavouriteProvider((){
+
+        return    postRemoteDatasource.addPostToFavourite(postId, 
+        localDataSource.getToken()??'' , lang: localeLocalDatasource.getCurrentLocale());
+    });
+  }
+  
+  @override
+  Future<Either<Failure, PostListResponseModel>> getFavouritePosts()async {
+    return  await _postListProvider((){
+
+        return    postRemoteDatasource.getFavouritePosts(localDataSource.getToken()!.toString(), 
+        
+        lang: localeLocalDatasource.getCurrentLocale()
+        );
     });
   }
 

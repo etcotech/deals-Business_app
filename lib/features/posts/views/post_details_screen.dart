@@ -3,10 +3,13 @@ import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/add_to_favourite_button.dart';
+import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/contact_with_us_button.dart';
-import 'package:deals_and_business/shared/widgets/main_button.dart';
+import 'package:deals_and_business/shared/widgets/main_button_with_icon.dart';
+import 'package:deals_and_business/shared/widgets/not_authenticated_alert_dialog.dart';
 import 'package:deals_and_business/shared/widgets/report_button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class PostDetailsScreen extends StatefulWidget {
@@ -59,12 +62,18 @@ context.read<PostProvider>().getPost(widget.postId!);
                 );
               }
         return Scaffold(
-        
+        backgroundColor: Colors.white,
           appBar: AppBar(
         backgroundColor: Colors.transparent,
-        leading: BackButton(),
+        leading: MyBackButton(
+          onTap: (){
+            Navigator.pop(context);
+          },
+        ),
         actions: [
-          ReportButton()
+          ReportButton(
+            
+          )
         ],
           ),
         
@@ -78,17 +87,17 @@ context.read<PostProvider>().getPost(widget.postId!);
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-SizedBox(height: 8,),
+SizedBox(height: 16,),
 ClipRRect(
   borderRadius: BorderRadius.circular(15),
 child: SizedBox(
   width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.40,
+    height: MediaQuery.sizeOf(context).height*.35,
 
   child: Image.network(provider.postDetailsModel!.picture!.url!.full!,
   
    width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.40,fit: BoxFit.fill,
+    height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
   
   
   ),
@@ -101,12 +110,20 @@ child: SizedBox(
 SizedBox(height: 8,),
 
 Container(
-  padding: EdgeInsets.all(5),
+  padding: EdgeInsets.all(8),
    width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.15,
+    height: MediaQuery.sizeOf(context).height*.18,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(15),
-    color: Colors.white
+    color: Colors.white, 
+     boxShadow: [
+             BoxShadow(
+                offset: Offset(0, 0),
+                color: Colors.grey[300]!,
+                blurRadius: 1,
+                spreadRadius: 1
+              )
+            ]
   ),
   child: Row(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,11 +138,16 @@ Expanded(
     fontSize: 20, fontWeight: FontWeight.w500
   ),
   ), 
-  Column(
+  Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-         Row(
+         Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListingIcon(
+            Row(spacing:5, children: [
+              ListingIcon(
               iconData: Icons.person_outline,
             ),
             Text(provider.postDetailsModel!.user.toString(), 
@@ -133,7 +155,14 @@ Expanded(
               color: Colors.grey
             ),
             ), 
-             ListingIcon(
+            
+            
+            ],)
+            ,
+            Row(
+
+              spacing:5,
+              children: [ ListingIcon(
               iconData: Icons.list,
             ),
             Text(provider.postDetailsModel!.categoryId.toString(), 
@@ -141,11 +170,18 @@ Expanded(
               color: Colors.grey
             ),
             ), 
+        ],
+            )
           ],
         ),
-         Row(
+         Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            ListingIcon(
+            Row(
+              spacing: 5,
+              children: [
+ListingIcon(
               iconData: Icons.schedule,
             ),
             Text(provider.postDetailsModel!.createdAtFormatted.toString(), 
@@ -153,14 +189,23 @@ Expanded(
               color: Colors.grey
             ),
             ), 
-             ListingIcon(
+            ],), 
+
+
+
+            Row(
+              spacing: 5,
+              children: [
+                 ListingIcon(
               iconData: Icons.location_on_outlined,
             ),
             Text(provider.postDetailsModel!.cityId.toString(), 
             style: TextStyle(
               color: Colors.grey
             ),
-            ), 
+            ),
+              ],
+            ) 
           ],
         )
     ],
@@ -192,7 +237,15 @@ Container(
     height: MediaQuery.sizeOf(context).height*.20,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(15),
-    color: Colors.white
+    color: Colors.white, 
+     boxShadow: [
+             BoxShadow(
+                offset: Offset(0, 0),
+                color: Colors.grey[300]!,
+                blurRadius: 1,
+                spreadRadius: 1
+              )
+            ]
   ),
   child: SizedBox(
      width: MediaQuery.sizeOf(context).width,
@@ -218,9 +271,36 @@ style: TextStyle(
 ),
 ),
 
-
+SizedBox(height: 16,),
 
 //map
+
+ClipRRect(
+  borderRadius: BorderRadius.circular(15),
+child: SizedBox(
+  width: MediaQuery.sizeOf(context).width,
+    height: MediaQuery.sizeOf(context).height*.35,
+child: GoogleMap(
+  zoomControlsEnabled: true,
+  zoomGesturesEnabled: true,
+  markers: {
+    Marker(markerId: MarkerId('city'), 
+    
+    position: LatLng(provider.postDetailsModel!.lat??0.0,
+     provider.postDetailsModel!.lon??0.0)
+    )
+  },
+  initialCameraPosition: 
+
+CameraPosition(
+  target: LatLng(provider.postDetailsModel!.lat??0.0, provider.postDetailsModel!.lon??0.0)
+)
+),
+
+)
+)
+
+
 
 
                 ],),)
@@ -238,16 +318,33 @@ height: 60,
             ),
             child: Row(
               children: [
-                MainButton(
-                  color: Theme.of(context).primaryColor,
-
-                  icon: Icons.mail_outline,
-                  title: getTranslated(Strings.contactWithSeller, context),
-                  onTap: (){},
-                  isLoading: false,
+                Expanded(
+                  child: MainButtonWithIcon(
+                    color: Theme.of(context).primaryColor,
+                  
+                    icon: Icons.mail_outline,
+                    title: getTranslated(Strings.contactWithSeller, context),
+                    onTap: (){},
+                    isLoading: false,
+                  ),
                 ),
                 SizedBox(width: 5,),
-                AddToFavouriteButton()
+
+
+                AddToFavouriteButton(
+                  isFavourite: provider.isFavourite,
+                  onTap: (){
+
+                    context.read<PostProvider>().addPostToFavourite(context,widget.postId!.toString());
+
+//                     showDialog(context: context,
+//                     barrierDismissible: true,
+//                      builder: (context){
+
+// return  NotAuthenticatedAlertDialog();
+//                      });
+                  },
+                )
               ],
             ),
           )

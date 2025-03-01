@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AddToFavouriteButton extends StatelessWidget {
   final Function? onTap;
-  const AddToFavouriteButton({super.key, this.onTap});
+  final  bool? isFavourite;
+  const AddToFavouriteButton({super.key, this.onTap, this.isFavourite=false});
 
 
   @override
@@ -22,7 +23,11 @@ class AddToFavouriteButton extends StatelessWidget {
            
           ),
           child: Center(
-            child: Icon(Icons.favorite_outline , color: Theme.of(context).primaryColor,),
+            child: Icon(
+              isFavourite!? Icons.favorite:
+              Icons.favorite_outline , 
+            
+            color: Theme.of(context).primaryColor,),
           ),
         ),
       ),

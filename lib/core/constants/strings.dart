@@ -71,7 +71,12 @@ static const String  faq = "faq";
 static const String  privacy = "privacy_policy";
 static const String  terms = "terms_and_condtions";
 static const String  scam_ploicy = "scam_policy";
+static const String  reportThePost = "report_the_post";
+static const String tokenExpireKey = "token_expire_key";
 
+static const String networkFailureKey = "internet_failure_key";
+static const String serverFailureKey = "server_failure_key";
+// static const String tokenExpireKey = "token_expire_key";
 
 
 

@@ -19,8 +19,10 @@ final IconData? iconData;
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
-maxLines: 5,
-      
+maxLines: 3,
+      onTapOutside: (event){
+FocusManager.instance.primaryFocus?.unfocus();
+},
       decoration: InputDecoration(
 // contentPadding: EdgeInsets.symmetric(
 //   vertical: 15
