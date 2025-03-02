@@ -1,0 +1,2 @@
+/media/kururu/B/flutter/business/deals_and_business/android/app/.cxx/RelWithDebInfo/8z3l3j5s/x86/CMakeFiles/edit_cache.dir
+/media/kururu/B/flutter/business/deals_and_business/android/app/.cxx/RelWithDebInfo/8z3l3j5s/x86/CMakeFiles/rebuild_cache.dir
