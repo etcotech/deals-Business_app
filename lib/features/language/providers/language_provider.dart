@@ -5,15 +5,25 @@ class LanguageProvider extends ChangeNotifier {
   final  LocaleLocalDataSource localeLocalDataSource;
 
   LanguageProvider({required this.localeLocalDataSource});
-  
+   Locale locale = Locale('ar');
 
-String loadCurrentLocal(BuildContext context)=>   localeLocalDataSource.getCurrentLocale();
+  
+String loadCurrentLocal(BuildContext context)  {
+  var locale = localeLocalDataSource.getCurrentLocale();
+  // locale= Locale(locale);
+  // notifyListeners();
+  return  locale;
+}
 
 List<Map<String, dynamic>> getLanguages()=> localeLocalDataSource.getLanguages();
 
 
 
-  void setCurrentLocale(String key)=> localeLocalDataSource.setCurrentLocale(key);
+ void setCurrentLocale(String key)  {
+   locale = Locale(key);
+   notifyListeners();
+   localeLocalDataSource.setCurrentLocale(key);
+ }
 
   
 

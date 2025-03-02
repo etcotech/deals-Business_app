@@ -31,7 +31,7 @@ class _PasswordFieldState extends State<PasswordField> {
       obscureText: visible,
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
-  vertical: 15
+  vertical: 10
 ),
 
 suffixIcon: IconButton(onPressed: (){

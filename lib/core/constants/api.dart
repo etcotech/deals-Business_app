@@ -13,4 +13,5 @@ const String logoutApi = '/api/auth/logout/';
 const String searchAPi = '/api/search';
 const String savedPostAPi = '/api/savedPosts';
 const String sendMessageApi = '/api/contact';
+const String userApi = '/api/users';
 

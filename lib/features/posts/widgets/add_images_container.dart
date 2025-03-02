@@ -71,7 +71,7 @@ selectedImage(images);
         )
         , secondChild: Container(
           width: MediaQuery.sizeOf(context).width,
-          height: provider.files.length*100/  4  + 65,
+          height: provider.files.length*100/  4  + 80,
         padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), 
@@ -84,12 +84,13 @@ child: Column(
   children: [
 SizedBox(
   //  height: provider.files.length* 120,
-          height: provider.files.length*100/  4,
+          height: provider.files.length*100/  4  ,
 
   //  width: 80,
   child: GridView.count(crossAxisCount: 4, 
   shrinkWrap: true,
   childAspectRatio: 1,
+  mainAxisSpacing:3 ,
   children: provider.files.map((image){
     return Center(
       child: Stack(
@@ -99,6 +100,7 @@ SizedBox(
             child: Image.file(File(image.path), 
             height: 100,
             width: 80,
+            fit: BoxFit.cover,
             ),),
 
             PositionedDirectional(

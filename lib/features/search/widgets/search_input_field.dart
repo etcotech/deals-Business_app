@@ -32,7 +32,7 @@ FocusManager.instance.primaryFocus?.unfocus();
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
-  vertical: 15 , horizontal: 8
+  vertical: 10 , horizontal: 8
 ),
 
         filled: true,

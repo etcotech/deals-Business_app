@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AddToFavouriteButton extends StatelessWidget {
   final Function? onTap;
   final  bool? isFavourite;
-  const AddToFavouriteButton({super.key, this.onTap, this.isFavourite=false});
+  const AddToFavouriteButton({super.key, this.onTap, 
+  this.isFavourite});
 
 
   @override

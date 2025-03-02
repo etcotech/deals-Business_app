@@ -105,6 +105,39 @@
 "terms_and_condtions":"Terms and condtions" ,
 "scam_policy":"Anti scam policy",
 
-"report_the_post":"Report the post"
+"report_the_post":"Report the post" , 
+
+"token_expire_key":"Unatuhenticated or Token Expired, Please Login" ,
+"internet_failure_key":"No intentet connection" ,
+"server_failure_key":"Problem with server" ,
+"email_already_exists":"This is email already used"
+,
+"free":"Free"  ,
+
+"report_a_post":"Report a post" , 
+
+"report_reason":"Report reason" ,
+"fraud_reason":"Fraud" ,
+"duplicate_reason":"Duplicate" ,
+"spam_reason":"Spam" ,
+"wrong_category_reason":"Wrong category" ,
+"other_reason":"Other"
+
+, 
+"sendEmail":"Send Email",
+"send_message":"Send a message using app"
+
+ ,
+"phone_number":"Phone Number"
+, 
+"upload_profile":"Upload profile image" ,
+"delete_profile":"Delete image"
+
+, 
+
+"save_changes":"Save changes"
+,
+"delete_chat":"Delete chat"
+
   }
   

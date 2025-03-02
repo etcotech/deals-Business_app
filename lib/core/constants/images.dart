@@ -7,5 +7,7 @@ class Images {
   static const String hands = "assets/images/hands.png";
   static const String pedlock = "assets/images/padlock.png";
   static const String server = "assets/images/server.png";
+  static const String currency = "assets/images/SAR.png";
+  static const String user = "assets/images/user.png";
 
 }

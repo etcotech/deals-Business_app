@@ -64,7 +64,8 @@ context.read<HomeProvider>().getCountries(context);
                   provider.isCountryLoading?
                   Expanded(child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),))
 
-                  : Expanded(
+                  :
+                   Expanded(
                     child: Column(
                       children: [
                         Text(
@@ -72,39 +73,36 @@ context.read<HomeProvider>().getCountries(context);
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),              SizedBox(height: 8),
                   
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 14),
-                          child: Expanded(
-                            child: ListView.builder(
-                              itemCount: provider.countries.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                var country = provider.countries[index];
-                                return ListTile(
-                                  onTap: (){
-countryModel=country;
-setState(() {
-  
-});
-                                     if (widget.onSelectCountry!=null && countryModel!=null) {
-                                    widget.onSelectCountry!(countryModel!);
-                                  }
-                                                              Navigator.pop(context);
-
-                                  },
-                                  title: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.network(country.flag24Url.toString()), 
-                            
-                                      SizedBox(width: 3,),
-                                      Text(country.name!)
-                                    ],
-                                  ),
-                                  trailing: Icon(Icons.check ,color: Theme.of(context).primaryColor,),
-                                );
-                              },
-                            ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: provider.countries.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              var country = provider.countries[index];
+                              return ListTile(
+                                onTap: (){
+                        countryModel=country;
+                        setState(() {
+                          
+                        });
+                                   if (widget.onSelectCountry!=null && countryModel!=null) {
+                                  widget.onSelectCountry!(countryModel!);
+                                }
+                                                            Navigator.pop(context);
+                        
+                                },
+                                title: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.network(country.flag24Url.toString()), 
+                          
+                                    SizedBox(width: 3,),
+                                    Text(country.name!)
+                                  ],
+                                ),
+                                trailing: Icon(Icons.check ,color: Theme.of(context).primaryColor,),
+                              );
+                            },
                           ),
                         ),
                       

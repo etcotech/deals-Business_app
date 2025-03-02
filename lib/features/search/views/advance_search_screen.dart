@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/search/search_post_model.dart';
@@ -8,6 +10,7 @@ import 'package:deals_and_business/features/search/providers/search_provider.dar
 import 'package:deals_and_business/features/search/widgets/search_input_field.dart';
 import 'package:deals_and_business/features/search/widgets/selected_category_widget.dart';
 import 'package:deals_and_business/shared/widgets/app_drawer.dart';
+import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/categories_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/city_filter_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/countries_bottomsheet.dart';
@@ -19,7 +22,11 @@ import 'package:provider/provider.dart';
 
 class AdvanceSearchScreen extends StatefulWidget {
   final bool? asGuest;
-  const AdvanceSearchScreen({super.key, this.asGuest=false});
+  final bool? fromDashboard;
+  const AdvanceSearchScreen({super.key, this.asGuest=false, 
+  
+  this.fromDashboard= true
+  });
 
   @override
   State<AdvanceSearchScreen> createState() => _AdvanceSearchScreenState();
@@ -47,15 +54,37 @@ class _AdvanceSearchScreenState extends State<AdvanceSearchScreen> {
   Widget build(BuildContext context) {
     return
     Scaffold(
-      appBar:  MyAppBar(context, currentCountry: 'assets/images/ksa.png',
-      title: getTranslated('advance_search', context),
+      key: scaffoldKey,
+      appBar: 
+      
+      !widget.fromDashboard!?
+      AppBar(
+        leading: MyBackButton(
+          onTap: (){
+            Navigator.pop(context);
+          },
+        ),
+        elevation:  0 , 
+        backgroundColor: Colors.white,
+        title: Text(getTranslated('advacnce_search', context)! ,
+        style: TextStyle(
+          fontWeight: FontWeight.bold
+        ),
+        ),
+
+      ):
+       MyAppBar(context, 
+      
+      
+      currentCountry: 'assets/images/ksa.png',
+      title: getTranslated('advacnce_search', context),
         onTapDrawer: (){
           scaffoldKey.currentState!.openDrawer();
         },
         onCountryTap: (){
 showModalBottomSheet(
               context: context,
-              isDismissible: false, // Prevent dismissal
+              isDismissible: true, // Prevent dismissal
               enableDrag: false, // Prevent dragging to dismiss
               backgroundColor: Colors.transparent, // Make background transparent
               builder: (context) {
@@ -74,7 +103,7 @@ body: Consumer<SearchProvider>(
   builder: (context,provider,child) {
     return SizedBox.expand(child: 
     Column(children: [
-    
+    SizedBox(height: 20,),
     
         Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -174,8 +203,10 @@ onDeleteCategory: (){
                       backgroundColor: Colors.transparent, // Make background transparent
                       builder: (context) {
 return PriceFilterBottomsheet(setPrices: (start,end){
+  log(end.toString());
 provider.setStartPrice(start);
 provider.setEndPrice(end);
+
 } , 
 apply: (){
 provider.applyCategorySearch();
@@ -778,7 +809,7 @@ class SearchPost extends StatelessWidget {
       },
       child: SizedBox(
         width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height/6,
+        height: MediaQuery.sizeOf(context).height/7,
         
         
         child: Card(
@@ -789,61 +820,80 @@ class SearchPost extends StatelessWidget {
         
           ),
         child: Container(width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height/6,
+        height: MediaQuery.sizeOf(context).height/7,
         padding: EdgeInsets.all(5),          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
           Row(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image.network(postSearchModel!.pictureUrlMedium!, 
-                        width:    MediaQuery.sizeOf(context).width*.25,
-                height: MediaQuery.sizeOf(context).height/6,
+                child: Image.network(postSearchModel!.pictureUrlBig!, 
+                        width:    MediaQuery.sizeOf(context).width*.30,
+                height: MediaQuery.sizeOf(context).height/7,
                 fit: BoxFit.cover,
                 ),
                 
                 ),
           SizedBox(width: 5,),
           
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width*.35,
-            child: Text(postSearchModel!.title!, 
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontWeight: FontWeight.bold
-            ),
-            ),
-          ), 
-          
-          
-          Row(
-            children: [
-              ListingIcon(
-                iconData: Icons.schedule,
-              ),
-              Text(postSearchModel!.createdAtFormatted!.toString(), 
-              style: TextStyle(
-                color: Colors.grey
-              ),
-              )
-            ],
-          )
-          
-      
-      
-          
-                   ,SizedBox(height: 6,)
-      
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(
+
+                  vertical: 5
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                            width: MediaQuery.sizeOf(context).width*.35,
+                            child: Text(postSearchModel!.category!.name!, 
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold
+                            ),
+                            ),
+                          ), 
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width*.35,
+                            child: Text(postSearchModel!.title!, 
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                fontWeight: FontWeight.bold
+                            ),
+                            ),
+                          ), 
+                          
+                          
+                          Row(
+                            children: [
+                ListingIcon(
+                  iconData: Icons.schedule,
+                ),
+                SizedBox(width: 3,),
+                Text(postSearchModel!.createdAtFormatted!.toString(), 
+                style: TextStyle(
+                  color: Colors.grey
+                ),
+                )
+                            ],
+                          )
+                          
+                      
+                      
+                          
+                    //  ,SizedBox(height: 6,)
+                      
+                  ],
+                ),
               )
             ],
           ), 

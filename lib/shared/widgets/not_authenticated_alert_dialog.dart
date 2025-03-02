@@ -1,7 +1,10 @@
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/features/auth/views/login_screen.dart';
+import 'package:deals_and_business/shared/widgets/mini_button.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class NotAuthenticatedAlertDialog extends StatefulWidget {
   const NotAuthenticatedAlertDialog({super.key});
@@ -32,7 +35,24 @@ class _NotAuthenticatedAlertDialogState extends State<NotAuthenticatedAlertDialo
                 ),
                 SizedBox(height: 10),
                 Text(getTranslated(Strings.youHaveToLogin, context)!),
-                // SizedBox(height: 20),
+                SizedBox(height: 20),
+
+                MiniButton(
+  color: Theme.of(context).primaryColor,
+  onTap: (){
+   
+    Navigator.pushAndRemoveUntil(context, 
+    PageTransition(type: PageTransitionType.fade  , 
+    
+    child: LoginScreen()
+    )
+    
+    , (_)=>false);
+  },
+  title: 
+  'Please login'
+  ,
+)
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                 //   children: [

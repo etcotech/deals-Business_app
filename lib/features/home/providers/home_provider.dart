@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:deals_and_business/core/error/error_handler.dart';
+import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/category/category_model.dart';
 import 'package:deals_and_business/data/models/country/city_model.dart';
 import 'package:deals_and_business/data/models/country/country_model.dart';
@@ -6,17 +10,22 @@ import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/domain/repositories/category_repository.dart';
 import 'package:deals_and_business/domain/repositories/country_repositories.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
+import 'package:deals_and_business/domain/repositories/user_repository.dart';
+import 'package:deals_and_business/features/splash/view/splash_screen.dart';
+import 'package:deals_and_business/main.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeProvider extends ChangeNotifier {
-
+final UserRepository? userRepository;
    final PostRepository? postRepository;
    final CategoryRepository? categoryRepository;
    final CountryRepository? countryRepository;
 
-  HomeProvider({required this.postRepository ,this.categoryRepository , this.countryRepository});
-  
+  HomeProvider({required this.postRepository ,this.categoryRepository , 
+  this.countryRepository, this.userRepository});
+    ErrorData? errorData;
 bool isLoading = false;
 bool isCategoryLoading = false;
 
@@ -28,17 +37,26 @@ List<CategoryModel> categoris =[];
 List<PostModel> posts =[];
 List<CountryModel> countries =[];
 List<CityModel> cities =[];
-ErrorData? errorData;
 
 Future<void> getCategories(BuildContext context)async{
   isCategoryLoading = true;
-
+errorData = null;
 notifyListeners();
 try {
   
 var result = await categoryRepository!.getCategories();
-result.fold((failre){
-showErrorMessage(context, failre.toString());
+result.fold((failure){
+  errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+if (failure is CredentialFailure) {
+  //logout
+logout();
+  
+}
 }, (success){
   categoris =[];
 
@@ -46,8 +64,12 @@ categoris.addAll(success.categoryPaginateModel.categories!);
 });
 
 } catch (e) {
-  
-showErrorMessage(context, e.toString());
+
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  notifyListeners();
 
   isCategoryLoading = false;
 
@@ -61,17 +83,35 @@ notifyListeners();
 
 Future<void> getPosts(BuildContext context)async{
   isLoading = true;
+errorData = null;
 notifyListeners();
 try {
   var result = await postRepository!.getPosts();
-result.fold((failre){
-showErrorMessage(context, failre.toString());
+result.fold((failure){
+    log("FAILURE$failure");
+
+  errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+if (failure is CredentialFailure) {
+  //logout
+logout();
+  
+}
 }, (success){
 posts =[];
 posts.addAll(success.postPaginateModel.posts!);
 });
 } catch (e) {
-  showErrorMessage(context, e.toString());
+
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  notifyListeners();
 
   isLoading = false;
 
@@ -86,6 +126,7 @@ notifyListeners();
 
 Future<void> getCountries(BuildContext context)async{
   isCountryLoading = true;
+errorData = null;
 notifyListeners();
 try {
   var result = await countryRepository!.getCountries();
@@ -110,6 +151,7 @@ notifyListeners();
 
   Future<void> getCities(BuildContext context)async{
   isCityLoading = true;
+errorData = null;
 notifyListeners();
 try {
   var result = await countryRepository!.getCities();
@@ -131,6 +173,17 @@ notifyListeners();
 isCityLoading = false;
 notifyListeners();
 }
+bool isLoggedIn()=> userRepository!.isLoggedIn();
+logout(){
+  userRepository!.logout();
+  Navigator.of(navigatorKey.currentContext!).pushAndRemoveUntil(
 
+    PageTransition(type: 
+    PageTransitionType.leftToRight ,
 
+    child: SplashScreen()
+    ), 
+    (v)=> false
+  );
+ }
 }

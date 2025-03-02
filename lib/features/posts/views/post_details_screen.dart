@@ -1,6 +1,8 @@
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
+import 'package:deals_and_business/features/report/views/report_screen.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/add_to_favourite_button.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
@@ -8,8 +10,10 @@ import 'package:deals_and_business/shared/widgets/contact_with_us_button.dart';
 import 'package:deals_and_business/shared/widgets/main_button_with_icon.dart';
 import 'package:deals_and_business/shared/widgets/not_authenticated_alert_dialog.dart';
 import 'package:deals_and_business/shared/widgets/report_button.dart';
+import 'package:deals_and_business/shared/widgets/send_options_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class PostDetailsScreen extends StatefulWidget {
@@ -72,7 +76,18 @@ context.read<PostProvider>().getPost(widget.postId!);
         ),
         actions: [
           ReportButton(
-            
+            onTap: (){
+              Navigator.of(context).push(
+        PageTransition(type: 
+        
+        PageTransitionType.leftToRight ,child: ReportScreen(
+
+                    postId: provider.postDetailsModel!.id.toString(),
+
+        )
+        )
+      );
+            },
           )
         ],
           ),
@@ -94,7 +109,8 @@ child: SizedBox(
   width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.35,
 
-  child: Image.network(provider.postDetailsModel!.picture!.url!.full!,
+  child: Image.network(
+    provider.postDetailsModel!.picture!.url!.full!,
   
    width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
@@ -150,7 +166,10 @@ Expanded(
               ListingIcon(
               iconData: Icons.person_outline,
             ),
-            Text(provider.postDetailsModel!.user.toString(), 
+            Text(
+               provider.postDetailsModel!.user != null?
+              provider.postDetailsModel!.user!.name.toString()
+              :'', 
             style: TextStyle(
               color: Colors.grey
             ),
@@ -215,7 +234,9 @@ ListingIcon(
   
     ],),
 )
-   ,ContactWithUsButton()
+   ,ContactWithUsButton(
+    price: provider.postDetailsModel!.price,
+   )
    
    
     ],
@@ -232,7 +253,7 @@ style: TextStyle(
 SizedBox(height: 16,),
 
 Container(
-  padding: EdgeInsets.all(5),
+  padding: EdgeInsets.all(8),
    width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.20,
   decoration: BoxDecoration(
@@ -286,14 +307,27 @@ child: GoogleMap(
   markers: {
     Marker(markerId: MarkerId('city'), 
     
-    position: LatLng(provider.postDetailsModel!.lat??0.0,
-     provider.postDetailsModel!.lon??0.0)
+    position: LatLng(
+    provider.postDetailsModel!.lat!=provider?
+    double.parse(provider.postDetailsModel!.lat.toString())
+    :0.0,
+     
+     provider.postDetailsModel!.lon!=null?
+     double.parse(provider.postDetailsModel!.lon.toString()):0.0)
     )
   },
   initialCameraPosition: 
 
 CameraPosition(
-  target: LatLng(provider.postDetailsModel!.lat??0.0, provider.postDetailsModel!.lon??0.0)
+  target: LatLng(
+     provider.postDetailsModel!.lat!=null?
+     double.parse( provider.postDetailsModel!.lat.toString()):
+   0.0,
+  
+
+   provider.postDetailsModel!.lon!=null?
+   double.parse( provider.postDetailsModel!.lon.toString()):
+0.0)
 )
 ),
 
@@ -310,8 +344,8 @@ CameraPosition(
           
           
           bottomNavigationBar:Container(
-height: 60,
-            padding: EdgeInsets.all(5),
+height: 100,
+            padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               // borderRadius: BorderRadius.circular(radius)
@@ -324,7 +358,25 @@ height: 60,
                   
                     icon: Icons.mail_outline,
                     title: getTranslated(Strings.contactWithSeller, context),
-                    onTap: (){},
+                    onTap: (){
+
+//
+showModalBottomSheet(
+              context: context,
+              isDismissible: true, // Prevent dismissal
+              enableDrag: false, // Prevent dragging to dismiss
+              backgroundColor: Colors.transparent, // Make background transparent
+              builder: (context) {
+                return SendOptionsBottomSheet(
+                  postEmail: provider.postDetailsModel!.email,
+                  postId: provider.postDetailsModel!.id.toString(),
+                );
+              },
+            );
+
+
+
+                    },
                     isLoading: false,
                   ),
                 ),
@@ -334,15 +386,17 @@ height: 60,
                 AddToFavouriteButton(
                   isFavourite: provider.isFavourite,
                   onTap: (){
+if (  context.read<HomeProvider>().isLoggedIn()) {
+                      context.read<PostProvider>().addPostToFavourite(context,widget.postId!.toString());
+return;
+}
 
-                    context.read<PostProvider>().addPostToFavourite(context,widget.postId!.toString());
+                    showDialog(context: context,
+                    barrierDismissible: true,
+                     builder: (context){
 
-//                     showDialog(context: context,
-//                     barrierDismissible: true,
-//                      builder: (context){
-
-// return  NotAuthenticatedAlertDialog();
-//                      });
+return  NotAuthenticatedAlertDialog();
+                     });
                   },
                 )
               ],

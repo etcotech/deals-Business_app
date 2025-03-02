@@ -1,3 +1,4 @@
+import 'package:deals_and_business/configs/typography.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
@@ -80,7 +81,7 @@ var formKey =  GlobalKey<FormState>();
           
           ), 
           
-           SizedBox(height: 24,),
+           SizedBox(height: 32,),
           MainButton(  
             
             isLoading: authProvider.isLoading,
@@ -96,7 +97,7 @@ var formKey =  GlobalKey<FormState>();
             title: getTranslated('login', context)!,
           )
           , 
-           SizedBox(height: 24,),
+           SizedBox(height: 16,),
           
           TextButton(onPressed: (){
          
@@ -104,7 +105,7 @@ var formKey =  GlobalKey<FormState>();
             getTranslated('forgot_password', context)!, 
              style: TextStyle(
               color: Theme.of(context).primaryColor ,
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
           )),
            SizedBox(height: 24,),
@@ -113,10 +114,14 @@ var formKey =  GlobalKey<FormState>();
             
              Text.rich(TextSpan( 
           text:getTranslated('have_no_account', context)!,
-           style: TextStyle(
+           style:
+          
+            TextStyle(
             
-              fontWeight: FontWeight.bold ,fontSize: 18
-             ),
+              fontWeight: FontWeight.bold ,fontSize: 16
+             )
+             
+             ,
               children: [
           TextSpan(
             text: ' ${getTranslated('register_now', context)!}', 
@@ -129,7 +134,7 @@ var formKey =  GlobalKey<FormState>();
           },
             style: TextStyle(
               color: Theme.of(context).primaryColor ,
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
             
           )

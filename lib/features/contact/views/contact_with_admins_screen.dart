@@ -1,6 +1,7 @@
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
+import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/input_area_with_icon.dart';
 import 'package:deals_and_business/shared/widgets/input_field.dart';
 import 'package:deals_and_business/shared/widgets/input_field_no_icon.dart';
@@ -8,7 +9,8 @@ import 'package:deals_and_business/shared/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 
 class ContactWithAdminsScreen extends StatefulWidget {
-  const ContactWithAdminsScreen({super.key});
+  final String? postId;
+  const ContactWithAdminsScreen({super.key, this.postId});
 
   @override
   State<ContactWithAdminsScreen> createState() => _ContactWithAdminsScreenState();
@@ -32,9 +34,19 @@ class _ContactWithAdminsScreenState extends State<ContactWithAdminsScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar:MyAppBar(context, 
+      appBar:AppBar(
+     leading: MyBackButton(
+      onTap: (){
+        Navigator.pop(context);
+      },
+     ), 
       
-      title: getTranslated("contact_with_admins", context), 
+      title: Text(getTranslated("contact_with_admins", context)!, 
+      style: TextStyle(
+        fontWeight: FontWeight.bold
+      ),
+      
+      )
       ),
 body: Builder(builder: (context){
 if (false) {

@@ -5,9 +5,13 @@ import 'dart:io';
 import 'package:deals_and_business/core/constants/api.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
+import 'package:deals_and_business/core/error/failure.dart';
+import 'package:deals_and_business/data/models/post/favorite_post_list_response_model.dart';
+import 'package:deals_and_business/data/models/post/message_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/new_post_model.dart';
 import 'package:deals_and_business/data/models/post/post_details_response_model.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
+import 'package:deals_and_business/data/models/post/thread_message_list_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class PostRemoteDatasource {
@@ -15,7 +19,28 @@ abstract class PostRemoteDatasource {
     Future<Map<String,dynamic>> addPost(NewPostModel newPostModel, String token);
     Future<PostDetailsResponseModel> getPost(int postId,String token , {String? lang ='ar'});
     Future<String> addPostToFavourite(String postId,String token, {String lang='ar'} );
-    Future<PostListResponseModel> getFavouritePosts(String token , {String? lang ='ar'});
+    Future<FavoritePostListResponseModel> getFavouritePosts(String token , {String? lang ='ar'});
+    Future<void> reportPost(String postId, 
+    String reportType, 
+String email,
+
+    String msg,
+    String token
+     , {String? lang ='ar'});
+  Future<void> sendMessage(String postId, 
+  String name,
+String email,
+
+    String msg,
+    String token
+     , {String? lang ='ar'});
+
+
+         Future<MessageListResponseModel> getMessages(String token ,
+          {String? lang ='ar'});
+    Future<ThreadMessageListResponse> getThreadMessages(
+      String threadId,
+      String token , {String? lang ='ar'});
 
 }
 
@@ -59,7 +84,6 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
           
             
         //     );
-log(newPostModel.toJson().toString());
 var request = http.MultipartRequest('POST', Uri.parse(baseUrl+ postsApi));
 
         
@@ -151,7 +175,8 @@ log(responseBody);
     }
     
      else if (res.statusCode == 400 || res.statusCode == 401) {
-      throw TokenExpiredException(
+      throw CredentialFailure(
+        message: 'token'
       );
     } else {
       throw ServerException(message: res.reasonPhrase);
@@ -162,7 +187,7 @@ log(responseBody);
   Future<PostDetailsResponseModel> getPost(int postId, String token, {String? lang = 'ar'})async {
     try {
        final response =
-        await client.get(Uri.parse('$baseUrl$postsApi/$postId'),
+        await client.get(Uri.parse('$baseUrl$postsApi/$postId?detailed=1'),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': token,
@@ -173,20 +198,19 @@ log(responseBody);
             
             );
     if (response.statusCode == 200) {
-      log(response.body);
       return postDetailsResponseFromJson(response.body);
     }
     
      else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw TokenExpiredException(
-      
+      throw CredentialFailure(
+      message: 'token'
       );
     } else {
-      throw ServerException();
+      throw ServerException(message: 'server');
     }
     } 
     on SocketException{
-      throw SocketException('socket');
+      throw NetworkFailure(message: 'network');
     }
     catch (e) {
       rethrow;
@@ -235,8 +259,7 @@ log(responseBody);
   }
   
   @override
-  Future<PostListResponseModel> getFavouritePosts(String token, {String? lang = 'ar'})async {
-     try {
+  Future<FavoritePostListResponseModel> getFavouritePosts(String token, {String? lang = 'ar'})async {
        final response =
         await client.get(Uri.parse('$baseUrl$savedPostAPi''?embed=null&sort=created_at&perPage=20'),
             headers: {
@@ -252,22 +275,158 @@ log(responseBody);
             log(token);
     if (response.statusCode == 200) {
       log(response.body);
-      return postListResponseModelFromJson(response.body);
+      return favPostListResponseModelFromJson(response.body);
     }
     
      else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw TokenExpiredException(
-      
+      throw CredentialFailure(
+      message: 'token'
       );
     } else {
       throw ServerException();
     }
-    } 
-    on SocketException{
-      throw SocketException('socket');
+   
+  }
+  
+  @override
+  Future<void> reportPost(String postId, 
+  
+    String reportType, 
+String email,
+    String msg
+  ,
+  String token,
+  {String? lang = 'ar'})async {
+       
+
+      final response =
+        await client.post(Uri.parse('$baseUrl$postsApi/$postId/report'),
+            headers: {
+              'Content-Type': 'application/json',
+              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+              'Authorization':'Bearer $token', 
+              Strings.contentLang:
+              lang!
+            },
+
+            body: json.encode({
+              'report_type_id':reportType , 
+              'email':email, 
+              'message':msg
+            })
+            );
+
+            log({
+              'report_type_id':reportType , 
+              'email':email, 
+              'message':msg
+            }.toString());
+         log(response.body);
+    if (response.statusCode == 200) {
+     
+      return ;
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      
+      log('SERVER FAILUDUFSDU');
+      throw CredentialFailure(
+        message: 'expired,token'
+      );
+    } else {
+      log(response.statusCode.toString());
+      throw ServerException();
     }
-    catch (e) {
-      rethrow;
+  }
+  
+  @override
+  Future<void> sendMessage(String postId, String name, String email, String msg, String token, {String? lang = 'ar'}) async{
+   
+   var request = http.MultipartRequest(
+    'POST',
+    Uri.parse('$baseUrl/api/threads'),
+  );
+
+
+     request.fields['auth_field'] = 'email';
+       request.fields['email'] = email;
+          request.fields['body'] = msg;
+       request.fields['post_id'] = postId;
+            request.fields['name'] = name;
+
+
+
+request.headers.addAll({
+              'Content-Type': 'application/json',
+              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+              'Authorization':'Bearer $token', 
+              Strings.contentLang:
+              lang!
+            });
+   
+     var response = await request.send();
+
+  
+    if (response.statusCode == 200 || response.statusCode == 201) {
+     
+      return ;
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      
+      log('SERVER FAILUDUFSDU');
+      throw CredentialFailure(
+        message: 'expired,token'
+      );
+    } else {
+ final responseBody = await response.stream.bytesToString();
+log(responseBody);
+
+      throw ServerException();
+    }
+  }
+  
+  @override
+  Future<MessageListResponseModel> getMessages(String token, {String? lang = 'ar'})async {
+    final response =
+        await client.get(Uri.parse('$baseUrl/api/threads'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+              Strings.contentLang: lang!, 
+            },
+          
+            
+            );
+    if (response.statusCode == 200) {
+      return messageListResponseModelFromJson(response.body);
+    } else if ( response.statusCode == 401) {
+      throw CredentialFailure(
+        message: 'token'
+      );
+    } else {
+      throw ServerException(message: 'server');
+    }
+  }
+  
+  @override
+  Future<ThreadMessageListResponse> getThreadMessages(String threadId, String token, {String? lang = 'ar'}) async{
+   final response =
+        await client.get(Uri.parse('$baseUrl/api/threads/$threadId/messages?embed=user&sort=created_at&perPage=2'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+              Strings.contentLang: lang!, 
+            },
+          
+            
+            );
+    if (response.statusCode == 200) {
+      return threadMessagesListResponseModelFromJson(response.body);
+    } else if ( response.statusCode == 401) {
+      throw CredentialFailure(
+        message: 'token'
+      );
+    } else {
+      throw ServerException(message: 'server');
     }
   }
 

@@ -16,7 +16,7 @@ class ReportButton extends StatelessWidget {
                       PopupMenuButton(
                                       onSelected: (choice){
                         
-                                
+                                onTap!();
                                       },
                                       padding: EdgeInsets.zero,
                                       // initialValue: choices[_selection],

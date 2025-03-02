@@ -1,6 +1,7 @@
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
+import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/shared/widgets/input_field.dart';
 import 'package:deals_and_business/shared/widgets/main_button.dart';
@@ -8,6 +9,7 @@ import 'package:deals_and_business/shared/widgets/password_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -29,6 +31,8 @@ bool showAcceptError = false;
 
   @override
   Widget build(BuildContext context) {
+
+    var provider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0, 
@@ -137,7 +141,7 @@ bool showAcceptError = false;
           text:getTranslated('i_read', context)! ,
            style: TextStyle(
             
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
               children: [
           TextSpan(
@@ -147,7 +151,7 @@ bool showAcceptError = false;
             style: TextStyle(
             
               color: Theme.of(context).primaryColor ,
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
           )
               ]
@@ -176,6 +180,7 @@ showAcceptError?
                      SizedBox(height: 24,),
           
           MainButton(
+          isLoading: provider.isLoading,
             onTap: (){
              
               // if (!acceptedTerms) {
@@ -183,9 +188,14 @@ showAcceptError?
               setState(() {
                 
               });
+              if (!acceptedTerms) {
+                return;
+              }
                 
               if (formKey.currentState!.validate()) {
-                
+                provider.signup(context,
+                 nameController.text.trim(), emailController.text.trim(),
+                  passwordController.text.trim());
               
               }
             },
@@ -207,7 +217,7 @@ showAcceptError?
           
            style: TextStyle(
             
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
               children: [
           TextSpan(
@@ -221,7 +231,7 @@ showAcceptError?
           },
             style: TextStyle(
               color: Theme.of(context).primaryColor ,
-              fontWeight: FontWeight.bold ,fontSize: 18
+              fontWeight: FontWeight.bold ,fontSize: 16
              ),
           )
               ]

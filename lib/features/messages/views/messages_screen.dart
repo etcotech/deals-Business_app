@@ -1,7 +1,13 @@
+import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
+import 'package:deals_and_business/features/messages/widgets/message_preview_widget.dart';
+import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/app_drawer.dart';
 import 'package:deals_and_business/shared/widgets/countries_bottomsheet.dart';
+import 'package:deals_and_business/shared/widgets/error_container.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class MessagesScreen extends StatefulWidget {
   final bool? asGuest;
@@ -14,7 +20,16 @@ class MessagesScreen extends StatefulWidget {
 class _MessagesScreenState extends State<MessagesScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+    WidgetsBinding.instance.addPostFrameCallback((_){
+
+      context.read<PostProvider>().getMessages(context);
+    });
+  }
 
 
   @override
@@ -47,6 +62,51 @@ key: scaffoldKey,
 
 drawer: AppDrawer(),
 drawerEnableOpenDragGesture: false, 
+
+
+body: SizedBox.expand(
+  child: Consumer<PostProvider>(builder: (context, provider,child){
+  
+  if (provider.isLoading) {
+    return Center(child: CircularProgressIndicator(
+      color: Theme.of(context).primaryColor,
+    ),);
+  }
+  if (provider.errorData!=null) {
+    return Center(
+      child: ErrorContainer(
+        errorData: provider.errorData,
+        onRetry: (){
+                context.read<PostProvider>().getMessages(context);
+
+        },
+        onLogin: (){
+        
+
+        Navigator.of(context).pushAndRemoveUntil(
+
+          PageTransition(type: PageTransitionType.fade , 
+          
+          
+          child: LoginScreen()), 
+          (_)=> false
+        );
+        },
+      ),
+    );
+  }
+  return ListView.builder(
+    shrinkWrap: true,
+    itemCount: provider.messages.length,
+    itemBuilder: (BuildContext context, int index) {
+      var message = provider.messages[index];
+      return   MessagePreviewWidget(messageModel: message,);
+    },
+  );
+
+
+  }),
+),
     );
   }
 }

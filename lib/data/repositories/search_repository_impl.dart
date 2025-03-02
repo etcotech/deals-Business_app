@@ -67,7 +67,7 @@ category_id: category_id
 Future<Either<Failure, SearchResponseModel>> _searchDataProvider(
    _SearchResponse getDataSource,
       ) async {
-    if (await networkInfo.isConnected) {
+    // if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
         // localDataSource.saveToken(remoteResponse.token);
@@ -77,8 +77,9 @@ Future<Either<Failure, SearchResponseModel>> _searchDataProvider(
       } on Failure catch (failure) {
         return Left(failure);
       }
-    } else {
-      return Left(NetworkFailure());
-    }
+    // }
+    //  else {
+    //   return Left(NetworkFailure());
+    // }
   }
 }

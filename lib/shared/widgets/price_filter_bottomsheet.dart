@@ -28,10 +28,10 @@ double startPrice=0.0,endPrice =0.0;
             ),
           child: Container(
            
-            height: MediaQuery.sizeOf(context).height*.35,
+            height: MediaQuery.sizeOf(context).height*.30,
             padding: EdgeInsets.only(
           
-              top: 5, left: 5,right: 5,
+              top: 8, left: 8,right: 8,
                                       // bottom: MediaQuery.of(context).viewInsets.bottom
           
             ),
@@ -68,7 +68,7 @@ double startPrice=0.0,endPrice =0.0;
                      getTranslated(Strings.filtrtByPrice, context)!,
                       style: TextStyle(fontSize: 15,color: Colors.grey,
                         fontWeight: FontWeight.bold),
-                    ),              SizedBox(height: 8),
+                    ),              SizedBox(height: 16),
                     
           
           
@@ -123,6 +123,9 @@ double startPrice=0.0,endPrice =0.0;
                                 // if (widget.onSelectCategory!=null && categoryModel!=null) {
                                   // widget.onSelectCategory!(categoryModel!);
                                 // }
+                              widget.setPrices(
+                                startPrice ,endPrice
+                              );
                               widget.  apply!();
                                 Navigator.pop(context);
                               },

@@ -4,6 +4,7 @@ import 'package:deals_and_business/data/repositories/user_repository_impl.dart';
 import 'package:deals_and_business/di/di.dart';
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
+import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 
 void registerAuthFeature(){
 
@@ -12,11 +13,15 @@ void registerAuthFeature(){
  sl.registerFactory(
         () => AuthProvider(userRepository:sl()),
   );
+sl.registerFactory(
+        () => ProfileProvider(userRepository:sl()),
+  );
 
 // Repository
   sl.registerLazySingleton<UserRepository>(
         () => UserRepositoryImpl(
           localDataSource: sl(),
+          localeLocalDataSource: sl(),
     remoteDataSource: sl(), 
      networkInfo: sl()
     ),

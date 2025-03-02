@@ -14,7 +14,8 @@ void registerHomeFeature(){
         () => HomeProvider(
           countryRepository: sl(),
           postRepository:sl(),
-          categoryRepository: sl()
+          categoryRepository: sl(), 
+          userRepository: sl()
           ),
   );
 

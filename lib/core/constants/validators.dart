@@ -15,6 +15,14 @@
     }
     return null;
   }
+String? phoneFieldValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    } else if (value.length > 9) {
+      return 'Phone must be  9 digits long';
+    }
+    return null;
+  }
 
   String? titleValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -58,5 +66,24 @@
     if (value == null || value.isEmpty) {
       return 'Email cannot be empty';
     } 
+    return null;
+  }
+ String? reportMessageValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Description cannot be empty';
+    } 
+    if (value.length<20) {
+      return 'too short';
+    }
+    return null;
+  }
+
+   String? messageValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Description cannot be empty';
+    } 
+    if (value.length<20) {
+      return 'too short';
+    }
     return null;
   }

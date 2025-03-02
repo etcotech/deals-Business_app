@@ -55,7 +55,7 @@ class CountryRepositoryImpl implements CountryRepository {
 Future<Either<Failure, CountryListResponseModel>> _countryListProvider(
    _DataSourceChooser getDataSource,
       ) async {
-    if (await networkInfo.isConnected) {
+    // if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
         // localDataSource.saveToken(remoteResponse.token);
@@ -65,16 +65,16 @@ Future<Either<Failure, CountryListResponseModel>> _countryListProvider(
       } on Failure catch (failure) {
         return Left(failure);
       }
-    } else {
-      return Left(NetworkFailure());
-    }
+    // } else {
+    //   return Left(NetworkFailure());
+    // }
   }
 
 
   Future<Either<Failure, CityListResponseModel>> _cityListProvider(
    _CityDataSource getDataSource,
       ) async {
-    if (await networkInfo.isConnected) {
+    // if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
         // localDataSource.saveToken(remoteResponse.token);
@@ -84,10 +84,11 @@ Future<Either<Failure, CountryListResponseModel>> _countryListProvider(
       } on Failure catch (failure) {
         return Left(failure);
       }
-    } else {
-      return Left(NetworkFailure());
     }
-  }
+    //  else {
+    //   return Left(NetworkFailure());
+    // }
+  // }
 
 
 }

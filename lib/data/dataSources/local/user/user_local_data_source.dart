@@ -1,5 +1,6 @@
 
 
+import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,11 +19,16 @@ void saveLoggedInStatus(bool value);
 
   int? getUserId();
 void saveUserId(int userId);
-
+void saveUserEmail(String email);
+void savePhoto(String? photo);
+String? getPhoto();
+void savePhoneCode(String code);
 void saveCountryCode(String code);
 void saveCounryFlag(String flag);
 void saveUserName(String name);
 String? getUserName();
+String getPhoneCode();
+String getUserEmail();
 
 String getCountryCode();
 String getCountryFlag();
@@ -65,6 +71,8 @@ String? getToken()  {
   await sharedPreferences.remove(Strings.isLoggedIn);
   await sharedPreferences.remove(Strings.isGuestMode);
     await sharedPreferences.remove(cachedUser);
+        await sharedPreferences.remove(Strings.userId);
+
   }
   
   @override
@@ -110,5 +118,36 @@ String? getToken()  {
   @override
   void saveUserName(String name) {
     sharedPreferences.setString(Strings.userName, name);
+  }
+  
+  @override
+  String getPhoneCode() {
+      return sharedPreferences.getString(Strings.phoneCode)??'+966';
+
+  }
+  
+  @override
+  void savePhoneCode(String code) {
+    sharedPreferences.setString(Strings.phoneCode, code);
+  }
+  
+  @override
+  String getUserEmail() {
+   return sharedPreferences.getString(Strings.userEmail)??'';
+  }
+  
+  @override
+  void saveUserEmail(String email) {
+    sharedPreferences.setString(Strings.userEmail, email);
+  }
+  
+  @override
+  String? getPhoto() {
+   return sharedPreferences.getString(Strings.photoUrl);
+  }
+  
+  @override
+  void savePhoto(String? photo) {
+    sharedPreferences.setString(Strings.photoUrl, photo??'');
   }
 }

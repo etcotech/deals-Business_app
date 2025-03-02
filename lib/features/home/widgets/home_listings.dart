@@ -2,7 +2,10 @@ import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
+import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
+import 'package:deals_and_business/features/report/views/report_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -19,7 +22,7 @@ class _HomeListingsState extends State<HomeListings> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;    
 /*24 is for notification bar on Android*/
-final double itemHeight = (size.height - kToolbarHeight - 24) *.50; 
+final double itemHeight = (size.height - kToolbarHeight - 24) *.40; 
 final double itemWidth = size.width*.45;
     return  Consumer<HomeProvider>(
      builder: (context, provider, child)=>  Builder(
@@ -225,267 +228,326 @@ class HomePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 var size = MediaQuery.of(context).size;    
-final double itemHeight = (size.height - kToolbarHeight - 24) *.50; 
+final double itemHeight = (size.height - kToolbarHeight - 24) *.40; 
 final double itemWidth = size.width*.45;
     return AnimatedCrossFade(firstChild: 
-    SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height/6,
-  
-  
-      child: Card(
-        color: Colors.white,
-            semanticContainer: true,
-        shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-      
-        ),
-      child:
-       Container(width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height/6,
-      padding: EdgeInsets.all(5),          child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
-              child: Image.network(postModel!.picture!.url!.medium!, 
-          width:    MediaQuery.sizeOf(context).width*.30,
-              height: MediaQuery.sizeOf(context).height/6,
-            fit: BoxFit.cover,
-              ),
-              
-              ),
-        SizedBox(width: 5,),
+    GestureDetector(
+      onTap: (){
+        Navigator.push(context, PageTransition(type: 
         
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-        SizedBox(
-          width: MediaQuery.sizeOf(context).width*.35,
-          child: Text(postModel!.title!, 
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontWeight: FontWeight.bold
-          ),
-          ),
-        ), 
-        
-        
-        Row(
-          children: [
-            ListingIcon(
-              iconData: Icons.schedule,
-            ),
-            Text(postModel!.createdAtFormatted!.toString(), 
-            style: TextStyle(
-              color: Colors.grey
-            ),
-            )
-          ],
+        PageTransitionType.leftToRight , 
+        child: PostDetailsScreen(
+          postId: postModel!.id.toString(),
         )
-        
-
-
-        
-                 ,SizedBox(height: 6,)
-
-              ],
-            )
-          ],
-        ), 
+        ));
+      },
+      child:
+      
+       SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        height: MediaQuery.sizeOf(context).height/7,
         
         
-        // Icon(Icons.more_vert_outlined, color: Colors.grey,)
-        PopupMenuButton(
-
-          menuPadding: EdgeInsets.zero,
-
-            onSelected: (choice){
-
-            },
-            padding: EdgeInsets.zero,
-            // initialValue: choices[_selection],
-            itemBuilder: (BuildContext context) {
-              return ['Report'].map((String choice) {
-                return  PopupMenuItem<String>(
-                value: choice,
-                child: Text(getTranslated(choice, context)!, 
+        child: Card(
+          color: Colors.white,
+              semanticContainer: true,
+          shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+        
+          ),
+        child:
+         Container(width: MediaQuery.sizeOf(context).width,
+        height: MediaQuery.sizeOf(context).height/7,
+        padding: EdgeInsets.all(5),          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+      
+                child:
+                 Image.network(
+                  errorBuilder: (context, error, stackTrace) {
+                    
+      return Center(child: Icon(Icons.image ,color: Colors.grey,),);
+                  },
+                  postModel!.picture!.url!.big!, 
+            width:    MediaQuery.sizeOf(context).width*.30,
+                height: MediaQuery.sizeOf(context).height/7,
+              fit: BoxFit.cover,
+                ),
+                
+                ),
+          SizedBox(width: 5,),
+          
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+      
+                       SizedBox(
+                              width: MediaQuery.sizeOf(context).width*.35,
+                              child: Text(postModel!.category!.name.toString(), 
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold
+                              ),
+                              ),
+                            ), 
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width*.35,
+            child: Text(postModel!.title!, 
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold
+            ),
+            ),
+          ), 
+          
+          
+          Row(
+            children: [
+              ListingIcon(
+                iconData: Icons.schedule,
+              ),
+              SizedBox(width: 3,),
+              Text(postModel!.createdAtFormatted!.toString(), 
               style: TextStyle(
                 color: Colors.grey
               ),
-                ),
-              );}
-              ).toList();
-            },
-          position: PopupMenuPosition.under,
-
+              )
+            ],
+          )
           
-          ), 
-
-        
-          ],
-        ),
-      ),
       
-      ))
+      
+          
+                  //  ,SizedBox(height: 6,)
+      
+                ],
+              )
+            ],
+          ), 
+          
+          
+          // Icon(Icons.more_vert_outlined, color: Colors.grey,)
+          PopupMenuButton(
+      
+            menuPadding: EdgeInsets.zero,
+      
+              onSelected: (choice){
+      Navigator.of(context).push(
+        PageTransition(type: 
+        
+        PageTransitionType.leftToRight ,child: ReportScreen(
+
+          postId: postModel!.id.toString(),
+        )
+        )
+      );
+              },
+              padding: EdgeInsets.zero,
+              // initialValue: choices[_selection],
+              itemBuilder: (BuildContext context) {
+                return ['Report'].map((String choice) {
+                  return  PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(getTranslated(choice, context)!, 
+                style: TextStyle(
+                  color: Colors.grey
+                ),
+                  ),
+                );}
+                ).toList();
+              },
+            position: PopupMenuPosition.under,
+      
+            
+            ), 
+      
+          
+            ],
+          ),
+        ),
+        
+        )),
+   
+   
+    )
     
     
     , secondChild: 
     
-     Card(
-      // margin: EdgeInsets.symmetric(horizontal: 2,
-      // vertical: 3),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15)
-      ),
-      color: Colors.white,
-// height:   itemHeight,
-//            width:        itemWidth,
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(15), 
-          //   color: Colors.white, 
-          //   boxShadow: [
-          //     BoxShadow(
-          //       offset: Offset(0, 1),
-          //       color: Colors.grey[300]!,
-          //       blurRadius: 4,
-          //       spreadRadius: 1
-          //     )
-          //   ]
-          // ),
-     child: Column(
-    
-      spacing: 0,
-       children: [
-         SizedBox(
-                    height:   itemHeight*.50,
-           width:       itemWidth,
-
-           child: Stack(
-             children: [
-               SizedBox(
-                    height:   itemHeight*.60,
-           width:    itemWidth,
-                 child: ClipRRect(
-                                 borderRadius: BorderRadius.circular(15.0),
-                                 child: Image.network(postModel!.picture!.url!.medium!, 
-                                 
-                 fit: BoxFit.cover,
-                 scale: 5,
-
-                                 )),
-               ),
-           
-                 PositionedDirectional(
-                   bottom: 10,
-                   start: 5,
-                   child: Visibility(
-                     visible: postModel!.featured==0,
-                     child: Icon(Icons.bookmark , color: Colors.green,)))
-             ],
-           ),
-         )
-     ,
-     SizedBox(height: 8,),
-     Padding(padding: EdgeInsets.symmetric(horizontal: 8),
-     child: Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-       children: [
-
-        Text(postModel!.title!,
-maxLines: 2,
-overflow: TextOverflow.ellipsis,
-        style: TextStyle(fontWeight: FontWeight.bold),
+     GestureDetector(
+      onTap: (){
+        Navigator.push(context, PageTransition(type: 
         
-        ), 
-SizedBox(height: 4,),
-Column(
-  spacing: 5,
-  children: [
-    Row(
-  children: [
-    ListingIcon(
-      iconData: Icons.location_on_outlined,
-    ),
+        PageTransitionType.leftToRight , 
+        child: PostDetailsScreen(
+          postId: postModel!.id.toString(),
+        )
+        ));
+      },
+       child: Card(
+        // margin: EdgeInsets.symmetric(horizontal: 2,
+        // vertical: 3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15)
+        ),
+        color: Colors.white,
+       // height:   itemHeight,
+       //            width:        itemWidth,
+            // decoration: BoxDecoration(
+            //   borderRadius: BorderRadius.circular(15), 
+            //   color: Colors.white, 
+            //   boxShadow: [
+            //     BoxShadow(
+            //       offset: Offset(0, 1),
+            //       color: Colors.grey[300]!,
+            //       blurRadius: 4,
+            //       spreadRadius: 1
+            //     )
+            //   ]
+            // ),
+       child: Column(
+           
+        spacing: 0,
+         children: [
+           SizedBox(
+                      height:   itemHeight*.55,
+             width:       itemWidth,
+       
+             child: Stack(
+               children: [
+                 SizedBox(
+                      height:   itemHeight*.60,
+             width:    itemWidth,
+                   child: ClipRRect(
+                                   borderRadius: BorderRadius.circular(15.0),
+                                   child: 
+                                   Image.network(postModel!.picture!.url!.full!, 
+                                   
+                   fit: BoxFit.cover,
+                   scale: 5,
+       
+                                   )),
+                 ),
+             
+                   PositionedDirectional(
+                     bottom: 10,
+                     start: 5,
+                     child: Visibility(
+                       visible:
+                       
+                        postModel!.savedByLoggedUser!.isNotEmpty,
 
-SizedBox(width: 5,),
-    Text(postModel!.cityId.toString() ,style: TextStyle(
-      color: Colors.grey
-    ),)
-
-
-
-
-
-  ],
-)
-
-
-
-, 
-
-
-Row(
-  children: [
-    ListingIcon(
-      iconData: Icons.schedule,
-    ),
-
-SizedBox(width: 5,),
-    Text(postModel!.createdAtFormatted.toString() ,style: TextStyle(
-      color: Colors.grey
-    ),)
-
-
-
-
-    
-  ],
-)
-
-
-, 
-
-Row(
-  children: [
-    ListingIcon(
-      iconData: Icons.person_outline,
-    ),
-
-SizedBox(width: 5,),
-    Text(postModel!.contactName.toString() ,style: TextStyle(
-      color: Colors.grey
-    ),)
-
-
-
-
-    
-  ],
-)
-
-
-  ],
-)
-
-
-
-           ],
-     ),
-     
-     )
-     
-       ],
-     ),
-     
-     
+                       child: Icon(Icons.bookmark , color: Colors.green,)))
+               ],
+             ),
+           )
+       ,
+       SizedBox(height: 12,),
+       Padding(padding: EdgeInsets.symmetric(horizontal: 8),
+       child: Column(
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+       
+          Text(postModel!.title!,
+       maxLines: 2,
+       overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontWeight: FontWeight.bold),
+          
+          ), 
+       SizedBox(height: 4,),
+       Column(
+         spacing: 5,
+         children: [
+           Row(
+         children: [
+           ListingIcon(
+        iconData: Icons.location_on_outlined,
+           ),
+       
+       SizedBox(width: 5,),
+           Text(postModel!.cityId.toString() ,style: TextStyle(
+        color: Colors.grey
+           ),)
+       
+       
+       
+       
+       
+         ],
+       )
+       
+       
+       
+       , 
+       
+       
+       Row(
+         children: [
+           ListingIcon(
+        iconData: Icons.schedule,
+           ),
+       
+       SizedBox(width: 5,),
+           Text(postModel!.createdAtFormatted.toString() ,style: TextStyle(
+        color: Colors.grey
+           ),)
+       
+       
+       
+       
+           
+         ],
+       )
+       
+       
+       , 
+       
+       Row(
+         children: [
+           ListingIcon(
+        iconData: Icons.person_outline,
+           ),
+       
+       SizedBox(width: 5,),
+           Text(postModel!.contactName.toString() ,style: TextStyle(
+        color: Colors.grey
+           ),)
+       
+       
+       
+       
+           
+         ],
+       )
+       
+       
+         ],
+       )
+       
+       
+       
+             ],
+       ),
+       
+       )
+       
+         ],
+       ),
+       
+       
+       ),
      )
     , crossFadeState: 
     isList!?CrossFadeState.showFirst: 

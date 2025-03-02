@@ -10,6 +10,9 @@ static const String countryFlag = "countryFlag";
 static const String contentLang ='Content-Language';
 
 static const String userName ='UserNAme';
+static const String phoneCode ='PhoneCode';
+static const String userEmail ='UserEmail';
+static const String photoUrl ='PhotoUrl';
 
 
 //translate
@@ -73,12 +76,28 @@ static const String  terms = "terms_and_condtions";
 static const String  scam_ploicy = "scam_policy";
 static const String  reportThePost = "report_the_post";
 static const String tokenExpireKey = "token_expire_key";
+static const String  free = "free";
 
 static const String networkFailureKey = "internet_failure_key";
 static const String serverFailureKey = "server_failure_key";
 // static const String tokenExpireKey = "token_expire_key";
+static const String emailAlreadyExists = "email_already_exists";
 
 
+static const String reportApost = "report_a_post";
+
+static const String reportReason = "report_reason";
+static const String fradReason = "fraud_reason";
+static const String duplicateReason = "duplicate_reason";
+static const String spamReason = "spam_reason";
+static const String wrongCategoryReason = "wrong_category_reason";
+static const String otherReason = "other_reason";
+static const String sendEmail = "send_email";
+static const String send_message = "send_message";
+
+static const String retry = "retry";
+
+static const String  deleteChat = "delete_chat";
 
 
 }

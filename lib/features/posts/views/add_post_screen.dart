@@ -11,6 +11,7 @@ import 'package:deals_and_business/shared/widgets/input_area.dart';
 import 'package:deals_and_business/shared/widgets/input_field.dart';
 import 'package:deals_and_business/shared/widgets/input_field_no_icon.dart';
 import 'package:deals_and_business/shared/widgets/main_button.dart';
+import 'package:deals_and_business/shared/widgets/select_category_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,11 +84,11 @@ var formKey = GlobalKey<FormState>();
                       onTap: (){
                           showModalBottomSheet(
                     context: context,
-                    isDismissible: false, // Prevent dismissal
+                    isDismissible: true, // Prevent dismissal
                     enableDrag: false, // Prevent dragging to dismiss
                     backgroundColor: Colors.transparent, // Make background transparent
                     builder: (context) {
-                      return CategoriesBottomsheet(
+                      return SelectCategoryBottomsheet(
                         onSelectCategory: (cat){
                         provider.setCategory(
                           cat
@@ -98,7 +99,7 @@ var formKey = GlobalKey<FormState>();
                                     );
                       },
                       child: ContainerButton(
-                        title: provider.selectedCat?.name
+                        title: provider.selectedCat2?.name
                         ,
                         hint: 'category',
                         icon: Icons.grid_4x4,
@@ -243,7 +244,7 @@ var formKey = GlobalKey<FormState>();
 
       bottomNavigationBar: Container(
 
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         decoration: BoxDecoration(color: Colors.white),
         child: Consumer<PostProvider>(
         builder: (context ,provider,child) {
@@ -260,7 +261,7 @@ var formKey = GlobalKey<FormState>();
                 
 
 
-              if (provider.selectedCat==null) {
+              if (provider.selectedCat2==null) {
               showErrorMessage(context, 'You should choose category');
               return;
             }

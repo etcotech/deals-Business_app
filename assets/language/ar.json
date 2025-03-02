@@ -99,6 +99,28 @@
 ,
 "terms_and_condtions":"الاحكام و الشروط" ,
 "scam_policy":"سياسة مكافحة الغش",
-"report_the_post":"تبليغ في الاعلان"
+"report_the_post":"تبليغ في الاعلان",
+
+"token_expire_key":"غير مصرح لك او انتهت الجلسة ، قم بتسجيل الدخول" ,
+"internet_failure_key":"لا وجد اتصال بالانترنت" ,
+"server_failure_key":"مشكلة بالسيرفر",
+"email_already_exists":"هذا البريد مستخدم بالفعل",
+"free":"مجانا" ,
+"report_a_post":"الابلاغ عن اعلان" , 
+
+"report_reason":"سبب البلاغ" ,
+"fraud_reason":"خداع" ,
+"duplicate_reason":"مكرر" ,
+"spam_reason":"احتيال" ,
+"wrong_category_reason":"الفئة خاطئة" ,
+"other_reason":"اخر", 
+"sendEmail":"ارسل للبريد الالكتروني",
+"send_message":"ارسل رسالة عن طريق التطبيق", 
+"phone_number":"رقم الهاتف", 
+"upload_profile":"قم بتحميل الصورة" ,
+"delete_profile":"حذف الصورة", 
+
+"save_changes":"حفظ التعديلات", 
+"delete_chat":"حذف الدردشة"
 }
   

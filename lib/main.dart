@@ -4,8 +4,10 @@ import 'package:deals_and_business/configs/app_localization.dart';
 import 'package:deals_and_business/configs/custom_delegate.dart';
 import 'package:deals_and_business/configs/theme.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
+import 'package:deals_and_business/features/category/providers/category_provider.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/language/providers/language_provider.dart';
+import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 import 'package:deals_and_business/features/search/providers/search_provider.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
@@ -38,19 +40,33 @@ void main()async {
      ChangeNotifierProvider(create: (_)=>  di.sl<LanguageProvider>()) , 
      ChangeNotifierProvider(create: (_)=>  di.sl<PostProvider>()),
      ChangeNotifierProvider(create: (_)=>  di.sl<HomeProvider>()),
-     ChangeNotifierProvider(create: (_)=>  di.sl<SearchProvider>())
+     ChangeNotifierProvider(create: (_)=>  di.sl<SearchProvider>()),
+     ChangeNotifierProvider(create: (_)=>  di.sl<ProfileProvider>()),
+     ChangeNotifierProvider(create: (_)=>  di.sl<CategoryProvider>()),
 
 
     ],
-    child: const MyApp()));
+    child:  MyApp()));
 }
+class GlobalContext {
+  // Singleton instance
+  static final GlobalContext _instance = GlobalContext._internal();
+  factory GlobalContext() => _instance;
+  GlobalContext._internal();
+
+  // Store the context
+  BuildContext? _context;
+  BuildContext? get context => _context;
+  set context(BuildContext? context) => _context = context;
+}
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+   MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+        GlobalContext().context = context;
         List<Locale> locals = [];
  for (var language in languages) {
       locals.add(Locale(language['key'].toString()));
@@ -58,9 +74,10 @@ class MyApp extends StatelessWidget {
     return Consumer<LanguageProvider>(
       builder: (context ,locale,child) {
         return MaterialApp(
+
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-
+navigatorKey: navigatorKey,
         
           //  locale: Provider.of<LocalizationController>(context).locale,
           localizationsDelegates: [
@@ -74,7 +91,10 @@ class MyApp extends StatelessWidget {
             return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling), child: child!);
           },
 supportedLocales: locals,
-          locale: Locale(locale.loadCurrentLocal(context)),
+          locale:
+          locale.locale
+          //  Locale(locale.loadCurrentLocal(context))
+           ,
           localeResolutionCallback: (local ,_)=>Locale(locale.loadCurrentLocal(context)) ,
           theme:
           light(

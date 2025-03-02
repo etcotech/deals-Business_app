@@ -4,32 +4,32 @@ class PostDetailsModel {
   int? id;
   String? countryCode;
   int? userId;
-  dynamic paymentId;
+ dynamic paymentId;
   int? categoryId;
-  int? postTypeId;
+ dynamic postTypeId;
   String? title;
   String? description;
-  List<String>? tags;
-  String? price;
-  dynamic currencyCode;
-  int? negotiable;
+  List<Null>? tags;
+ dynamic price;
+  String? currencyCode;
+ dynamic negotiable;
   String? contactName;
   String? authField;
   String? email;
   String? phone;
   String? phoneNational;
   String? phoneCountry;
-  int? phoneHidden;
-  dynamic address;
+ dynamic phoneHidden;
+ dynamic address;
   int? cityId;
-  double? lat;
-  double? lon;
-  String? createFromIp;
-  dynamic latestUpdateIp;
+  int? lat;
+  int? lon;
+ dynamic createFromIp;
+ dynamic latestUpdateIp;
   int? visits;
-  dynamic tmpToken;
+  String? tmpToken;
  dynamic emailToken;
-  String? phoneToken;
+ dynamic phoneToken;
   String? emailVerifiedAt;
   String? phoneVerifiedAt;
   int? acceptTerms;
@@ -37,14 +37,14 @@ class PostDetailsModel {
   int? isPermanent;
   String? reviewedAt;
   int? featured;
-  dynamic archivedAt;
-  dynamic archivedManuallyAt;
-dynamic deletionMailSentAt;
-dynamic fbProfile;
+ dynamic archivedAt;
+ dynamic archivedManuallyAt;
+ dynamic deletionMailSentAt;
+ dynamic fbProfile;
  dynamic partner;
   String? createdAt;
   String? updatedAt;
-  String? reference;
+  int? reference;
   String? slug;
   String? url;
   String? phoneIntl;
@@ -58,9 +58,12 @@ dynamic fbProfile;
   int? countPictures;
   Picture? picture;
   User? user;
-  PostType? postType;
- dynamic ratingCache;
- dynamic ratingCount;
+  Category? category;
+ dynamic postType;
+  City? city;
+ dynamic payment;
+  List<dynamic>? savedByLoggedUser;
+  List<Pictures>? pictures;
 
   PostDetailsModel(
       {this.id,
@@ -120,11 +123,15 @@ dynamic fbProfile;
       this.countPictures,
       this.picture,
       this.user,
+      this.category,
       this.postType,
-      this.ratingCache,
-      this.ratingCount});
+      this.city,
+      this.payment,
+      this.savedByLoggedUser,
+      this.pictures});
 
   PostDetailsModel.fromJson(Map<String, dynamic> json) {
+    log(json['savedByLoggedUser'].toString());
     id = json['id'];
     countryCode = json['country_code'];
     userId = json['user_id'];
@@ -133,14 +140,17 @@ dynamic fbProfile;
     postTypeId = json['post_type_id'];
     title = json['title'];
     description = json['description'];
-    tags = json['tags'].cast<String>();
+    // if (json['tags'] != null) {
+    //   tags = <Null>[];
+    //   json['tags'].forEach((v) {
+    //     tags!.add(new Null.fromJson(v));
+    //   });
+    // }
     price = json['price'];
     currencyCode = json['currency_code'];
     negotiable = json['negotiable'];
     contactName = json['contact_name'];
     authField = json['auth_field'];
-
-
     email = json['email'];
     phone = json['phone'];
     phoneNational = json['phone_national'];
@@ -148,15 +158,11 @@ dynamic fbProfile;
     phoneHidden = json['phone_hidden'];
     address = json['address'];
     cityId = json['city_id'];
-
-    lat = json['lat']!=null? double.parse(json['lat'].toString()):0.0  ;
-    lon = json['lon']!=null? double.parse(json['lon'].toString()):0.0;
-                            
-
+    lat = json['lat'];
+    lon = json['lon'];
     createFromIp = json['create_from_ip'];
     latestUpdateIp = json['latest_update_ip'];
     visits = json['visits'];
-
     tmpToken = json['tmp_token'];
     emailToken = json['email_token'];
     phoneToken = json['phone_token'];
@@ -166,39 +172,47 @@ dynamic fbProfile;
     acceptMarketingOffers = json['accept_marketing_offers'];
     isPermanent = json['is_permanent'];
     reviewedAt = json['reviewed_at'];
-log("NOTHING HERE");
-
-    // featured = json['featured'];
-    // archivedAt = json['archived_at'];
-    // archivedManuallyAt = json['archived_manually_at'];
-    // deletionMailSentAt = json['deletion_mail_sent_at'];
-    // fbProfile = json['fb_profile'];
-    // partner = json['partner'];
-    // createdAt = json['created_at'];
-    // updatedAt = json['updated_at'];
-    // reference = json['reference'];
-    // slug = json['slug'];
-    // url = json['url'];
-    // phoneIntl = json['phone_intl'];
-    // createdAtFormatted = json['created_at_formatted'];
-    // userPhotoUrl = json['user_photo_url'];
-    // countryFlagUrl = json['country_flag_url'];
-    // priceLabel = json['price_label'];
-    // priceFormatted = json['price_formatted'];
-    // visitsFormatted = json['visits_formatted'];
-    // distanceInfo = json['distance_info'];
-    // countPictures = json['count_pictures'];
-
+    featured = json['featured'];
+    archivedAt = json['archived_at'];
+    archivedManuallyAt = json['archived_manually_at'];
+    deletionMailSentAt = json['deletion_mail_sent_at'];
+    fbProfile = json['fb_profile'];
+    partner = json['partner'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    reference = json['reference'];
+    slug = json['slug'];
+    url = json['url'];
+    phoneIntl = json['phone_intl'];
+    createdAtFormatted = json['created_at_formatted'];
+    userPhotoUrl = json['user_photo_url'];
+    countryFlagUrl = json['country_flag_url'];
+    priceLabel = json['price_label'];
+    priceFormatted = json['price_formatted'];
+    visitsFormatted = json['visits_formatted'];
+    distanceInfo = json['distance_info'];
+    countPictures = json['count_pictures'];
     picture =
         json['picture'] != null ? Picture.fromJson(json['picture']) : null;
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    postType = json['postType'] != null
-        ? PostType.fromJson(json['postType'])
+    category = json['category'] != null
+        ? Category.fromJson(json['category'])
         : null;
-    ratingCache = json['rating_cache'];
-    ratingCount = json['rating_count'];
-
-
+    postType = json['postType'];
+    city = json['city'] != null ? City.fromJson(json['city']) : null;
+    payment = json['payment'];
+    if (json['savedByLoggedUser'] != null) {
+      savedByLoggedUser = <dynamic>[];
+      json['savedByLoggedUser'].forEach((v) {
+        savedByLoggedUser!.add(v);
+      });
+    }
+    if (json['pictures'] != null) {
+      pictures = <Pictures>[];
+      json['pictures'].forEach((v) {
+        pictures!.add(Pictures.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -211,7 +225,9 @@ log("NOTHING HERE");
     data['post_type_id'] = postTypeId;
     data['title'] = title;
     data['description'] = description;
-    data['tags'] = tags;
+    // if (this.tags != null) {
+    //   data['tags'] = this.tags!.map((v) => v.toJson()).toList();
+    // }
     data['price'] = price;
     data['currency_code'] = currencyCode;
     data['negotiable'] = negotiable;
@@ -264,11 +280,21 @@ log("NOTHING HERE");
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    if (postType != null) {
-      data['postType'] = postType!.toJson();
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
-    data['rating_cache'] = ratingCache;
-    data['rating_count'] = ratingCount;
+    data['postType'] = postType;
+    if (city != null) {
+      data['city'] = city!.toJson();
+    }
+    data['payment'] = payment;
+    if (savedByLoggedUser != null) {
+      data['savedByLoggedUser'] =
+          savedByLoggedUser!.map((v) => v.toJson()).toList();
+    }
+    if (pictures != null) {
+      data['pictures'] = pictures!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
@@ -322,10 +348,10 @@ class Url {
 class User {
   int? id;
   String? name;
- dynamic username;
+  String? username;
   String? updatedAt;
   String? originalUpdatedAt;
-  dynamic originalLastActivity;
+ dynamic originalLastActivity;
   String? createdAtFormatted;
   String? photoUrl;
   bool? pIsOnline;
@@ -372,24 +398,191 @@ class User {
   }
 }
 
-class PostType {
+class Category {
   int? id;
+ dynamic parentId;
   String? name;
+  String? slug;
+  String? description;
+  int? hideDescription;
+  String? picture;
+  String? iconClass;
+  String? seoTitle;
+  String? seoDescription;
+  String? seoKeywords;
+  int? lft;
+  int? rgt;
+  int? depth;
+  String? type;
+  int? isForPermanent;
   int? active;
+  String? pictureUrl;
+ dynamic parent;
 
-  PostType({this.id, this.name, this.active});
+  Category(
+      {this.id,
+      this.parentId,
+      this.name,
+      this.slug,
+      this.description,
+      this.hideDescription,
+      this.picture,
+      this.iconClass,
+      this.seoTitle,
+      this.seoDescription,
+      this.seoKeywords,
+      this.lft,
+      this.rgt,
+      this.depth,
+      this.type,
+      this.isForPermanent,
+      this.active,
+      this.pictureUrl,
+      this.parent});
 
-  PostType.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    parentId = json['parent_id'];
     name = json['name'];
+    slug = json['slug'];
+    description = json['description'];
+    hideDescription = json['hide_description'];
+    picture = json['picture'];
+    iconClass = json['icon_class'];
+    seoTitle = json['seo_title'];
+    seoDescription = json['seo_description'];
+    seoKeywords = json['seo_keywords'];
+    lft = json['lft'];
+    rgt = json['rgt'];
+    depth = json['depth'];
+    type = json['type'];
+    isForPermanent = json['is_for_permanent'];
     active = json['active'];
+    pictureUrl = json['picture_url'];
+    parent = json['parent'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['parent_id'] = parentId;
     data['name'] = name;
+    data['slug'] = slug;
+    data['description'] = description;
+    data['hide_description'] = hideDescription;
+    data['picture'] = picture;
+    data['icon_class'] = iconClass;
+    data['seo_title'] = seoTitle;
+    data['seo_description'] = seoDescription;
+    data['seo_keywords'] = seoKeywords;
+    data['lft'] = lft;
+    data['rgt'] = rgt;
+    data['depth'] = depth;
+    data['type'] = type;
+    data['is_for_permanent'] = isForPermanent;
     data['active'] = active;
+    data['picture_url'] = pictureUrl;
+    data['parent'] = parent;
+    return data;
+  }
+}
+
+class City {
+  int? id;
+  String? countryCode;
+  String? name;
+  int? latitude;
+  int? longitude;
+  String? subadmin1Code;
+ dynamic subadmin2Code;
+ dynamic population;
+  String? timeZone;
+  int? active;
+  int? postsCount;
+
+  City(
+      {this.id,
+      this.countryCode,
+      this.name,
+      this.latitude,
+      this.longitude,
+      this.subadmin1Code,
+      this.subadmin2Code,
+      this.population,
+      this.timeZone,
+      this.active,
+      this.postsCount});
+
+  City.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    countryCode = json['country_code'];
+    name = json['name'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    subadmin1Code = json['subadmin1_code'];
+    subadmin2Code = json['subadmin2_code'];
+    population = json['population'];
+    timeZone = json['time_zone'];
+    active = json['active'];
+    postsCount = json['posts_count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['country_code'] = countryCode;
+    data['name'] = name;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['subadmin1_code'] = subadmin1Code;
+    data['subadmin2_code'] = subadmin2Code;
+    data['population'] = population;
+    data['time_zone'] = timeZone;
+    data['active'] = active;
+    data['posts_count'] = postsCount;
+    return data;
+  }
+}
+
+class Pictures {
+  int? id;
+  int? postId;
+  String? filename;
+  String? mimeType;
+  int? position;
+  int? active;
+  Url? url;
+
+  Pictures(
+      {this.id,
+      this.postId,
+      this.filename,
+      this.mimeType,
+      this.position,
+      this.active,
+      this.url});
+
+  Pictures.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    postId = json['post_id'];
+    filename = json['filename'];
+    mimeType = json['mime_type'];
+    position = json['position'];
+    active = json['active'];
+    url = json['url'] != null ? Url.fromJson(json['url']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['post_id'] = postId;
+    data['filename'] = filename;
+    data['mime_type'] = mimeType;
+    data['position'] = position;
+    data['active'] = active;
+    if (url != null) {
+      data['url'] = url!.toJson();
+    }
     return data;
   }
 }

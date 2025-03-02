@@ -72,51 +72,48 @@ context.read<HomeProvider>().getCities(context);
                         child: Column(
                           children: [
                             Text(
-                        'Countries',
+                        'Cities',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),              SizedBox(height: 8),
                       
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 14),
-                              child: Expanded(
-                                child: ListView.builder(
-                                  itemCount: provider.countries.length,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    var city = provider.cities[index];
-              
-              return GestureDetector(
-                onTap: (){
-                  cityModel = city;
-                  setState(() {
-                    
-                  });
-                },
-                child: Padding(padding: EdgeInsets.symmetric(horizontal: 40 ,
-                
-                vertical: 12, 
-                
-                
-                
-                ), 
-                child: Text(city.name.toString(), 
-                
-                style: TextStyle(
-                  fontWeight: FontWeight.bold ,
-                  color: cityModel!=null? city.id==cityModel!.id?Theme.of(context).primaryColor  :  Colors.grey  :  Colors.grey
-                ),
-                ),
-                
-                ),
-              );
-                                 
-                                 
-                                  },
-                                ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: provider.cities.length,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  var city = provider.cities[index];
+                                          
+                                          return GestureDetector(
+                                            onTap: (){
+                                              cityModel = city;
+                                              setState(() {
+                                                
+                                              });
+                                            },
+                                            child: Padding(padding: EdgeInsets.symmetric(horizontal: 40 ,
+                                            
+                                            vertical: 12, 
+                                            
+                                            
+                                            
+                                            ), 
+                                            child: Text(city.name.toString(), 
+                                            
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold ,
+                                              color: cityModel!=null? city.id==cityModel!.id?Theme.of(context).primaryColor  :  Colors.grey  :  Colors.grey
+                                            ),
+                                            ),
+                                            
+                                            ),
+                                          );
+                               
+                               
+                                },
                               ),
                             ),
                           
-                          Spacer(), 
+                          // Spacer(), 
               
               
               

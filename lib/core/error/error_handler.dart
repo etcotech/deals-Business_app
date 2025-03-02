@@ -16,7 +16,8 @@ Map<String, List<String>> _errors = {};
 
   }
   String getErrorIcon(String error){
-   if (error.contains('internet')) {
+   if (error.contains('internet')
+   ||error.contains('network')) {
      return Images.signal;
    }
    else if(error.contains('token')){
@@ -32,11 +33,17 @@ return Images.server;
   }
 
     String getErrorMessage(String error){
-   if (error.contains('internet')) {
+   if (error.contains('internet')
+   ||error.contains('network')
+   
+   ) {
      return Strings.networkFailureKey;
    }
    else if(error.contains('token')){
      return Strings.tokenExpireKey;
+   }
+   else if(error.contains("email"))  {
+     return Strings.emailAlreadyExists;
    }
    else if(error.contains('server')){
      return Strings.serverFailureKey;

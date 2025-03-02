@@ -30,4 +30,11 @@ ThemeData light({Color? primaryColor, Color? secondaryColor})=> ThemeData(
     TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
     TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
   }),
+
+  textTheme: TextTheme(
+    displayLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+    bodyMedium: TextStyle(fontSize: 16, color: Colors.black87),
+    labelSmall: TextStyle(fontSize: 12, color: Colors.grey),
+  ),
 );

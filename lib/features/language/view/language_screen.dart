@@ -34,7 +34,10 @@ appBar: AppBar(
   title: Text( 
     widget.fromSplash!?
     getTranslated('language', context)!:
-    getTranslated('change_language', context)!),
+    getTranslated('change_language', context)!, 
+    
+    style: TextStyle(fontWeight: FontWeight.bold),
+    ),
 centerTitle: true,
 elevation: 0.0,
         backgroundColor: Colors.white,
@@ -47,55 +50,56 @@ body: SizedBox.expand(
       return ListView(
         children:  locale.getLanguages().map((lang){
 
-return   GestureDetector(
-  onTap: (){
-    locale.setCurrentLocale(lang['key']);
+return   Container(
+  height: 50,
+  width: MediaQuery.sizeOf(context).width,
+  padding: const EdgeInsets.symmetric(
 
-    setState(() {
-      
-    });
-      var provider = Provider.of<SplashProvider>(context ,listen: false);
-
-
-      
-provider.setISFistTime(false);
-
-if (!widget.fromSplash!) {
-  Navigator.pop(context);
-  return;
-}
-  Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
-
-
-  },
-  child: Container(
-    height: 50,
-    width: MediaQuery.sizeOf(context).width,
-    padding: const EdgeInsets.symmetric(
+    vertical: 12,
+    
+      horizontal: 25
+  ),
+  child:InkWell(
+    onTap: (){
+      locale.setCurrentLocale(lang['key']);
   
-      vertical: 12,
-      
-        horizontal: 25
-    ),
+      setState(() {
+        
+      });
+        var provider = Provider.of<SplashProvider>(context ,listen: false);
+  
+  
+        
+  provider.setISFistTime(false);
+  
+  // if (!widget.fromSplash!) {
+  //   Navigator.pop(context);
+  //   return;
+  // }
+    // Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
+  
+  
+    },
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
       children: [
     Text(
-
+    
       lang['key']=="ar"?
        getTranslated('arabic', context)!
       :
             getTranslated('english', context)!
-
-
-, style: TextStyle(
-  fontWeight: FontWeight.bold
-),
+    
+    
+    , style: TextStyle(
+    fontWeight: FontWeight.bold
+    ),
       // lang['translate']
     ), 
-
-
-
+    
+    
+    
     Visibility(
       visible: lang['key']==locale.loadCurrentLocal(context),
       child: 

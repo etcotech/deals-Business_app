@@ -47,8 +47,8 @@ class MainButton extends StatelessWidget {
 Text(title!, 
           
           style: TextStyle(
-            color: Colors.white , fontWeight: FontWeight.w600,
-      fontSize: 18
+            color: Colors.white , fontWeight: FontWeight.bold,
+      fontSize: 16
       
           ),
           ),
@@ -58,7 +58,7 @@ Text(title!,
           
           style: TextStyle(
             color: Colors.white , fontWeight: FontWeight.bold,
-      fontSize: 20
+      fontSize: 16
       
           ),
           ),

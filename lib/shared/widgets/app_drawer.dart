@@ -1,8 +1,11 @@
+import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
 import 'package:deals_and_business/features/contact/views/contact_with_admins_screen.dart';
+import 'package:deals_and_business/features/favourite/view/favourite_screen.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
+import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 import 'package:deals_and_business/features/profile/views/profile_screen.dart';
 import 'package:deals_and_business/features/settings/views/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +23,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
       var authProvider = Provider.of<AuthProvider>(context);
+      var profileProvider = Provider.of<ProfileProvider>(context);
 
     return Drawer(
       shape: RoundedRectangleBorder(
@@ -46,11 +50,16 @@ class _AppDrawerState extends State<AppDrawer> {
                           shape: BoxShape.circle
                         ),
                         child: CircleAvatar(radius: 40,
-                        backgroundColor: Colors.grey[500],
-                        child: Icon(Icons.person , color: Colors.white,size: 40,),
+                        backgroundColor: Colors.grey[300],
+backgroundImage: profileProvider.getUserPhoto()!.isEmpty?
+AssetImage(Images.user): NetworkImage( profileProvider.getUserPhoto()!)
+,
+
+
+                        // child: Icon(Icons.person , color: Colors.white,size: 40,),
                         ),
                       ),
-                      Text("Kururu")
+                      Text(profileProvider.getUserName())
                     ],
                   ),
                 ),
@@ -115,14 +124,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const MyHomePage(
-                  //       title: 'Houses',
-                  //     ),
-                  //   ),
-                  // );
+                   Navigator.push(context,
+                  PageTransition(type: PageTransitionType.fade ,child:  
+    FavouriteScreen(
+      asGuest: true,
+    )));
                 },
               ),
 

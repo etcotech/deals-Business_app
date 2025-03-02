@@ -1,12 +1,15 @@
 import 'dart:developer';
 
 import 'package:deals_and_business/features/favourite/view/favourite_screen.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/view/home_screen.dart';
 import 'package:deals_and_business/features/messages/views/messages_screen.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 import 'package:deals_and_business/features/search/views/advance_search_screen.dart';
+import 'package:deals_and_business/shared/widgets/not_authenticated_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   final bool? asGuest;
@@ -40,6 +43,8 @@ Container(),
 
   @override
   Widget build(BuildContext context) {
+    var homeProvider = Provider.of<HomeProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -72,7 +77,18 @@ bottomNavigationBar: BottomNavigationBar(
       return;
     }
          _selectedPage = index;
+if (index==1) {
+  if (homeProvider.isLoggedIn()) {
+    _selectedPage =index;
 
+  }else{
+    showDialog(context: context, builder: (_){
+
+
+      return NotAuthenticatedAlertDialog();
+    });
+  }
+}
     
     setState(() {
       

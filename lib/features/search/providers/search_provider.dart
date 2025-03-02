@@ -129,8 +129,8 @@ try {
   var result = await  searchRepository!.search(
 '',
 keyword: keyword ,
-// price_from: price_from, 
-// price_to:price_to, 
+price_from: price_from, 
+price_to:price_to, 
 category_id: category_id ,
 sort_by: sort_by,
 sort_order: sort_order
@@ -140,6 +140,7 @@ sort_order: sort_order
 error = failure.toString();
 notifyListeners();
   }, (success){
+    posts =[];
 posts.addAll(success.searchPaginatedModel.posts!);
 notifyListeners();
 
