@@ -46,7 +46,6 @@ notifyListeners();
     try {
       var result = await userRepository!.getUserProfile();
 result.fold((failure){
-log("FAILRE${failure.runtimeType}");
   errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
     icon: getErrorIcon(failure.message.toString())
@@ -71,7 +70,7 @@ notifyListeners();
     } catch (e) {
 
 
-  log("FAILURE$e");
+  // log("FAILURE$e");
 
       errorData = ErrorData(
     message: getErrorMessage(e.toString()), 
@@ -112,7 +111,6 @@ logout();
 }
 
 }, (success){
-      log("SUSSUU");
 
 statsModel= success.statsModel;
 notifyListeners();
@@ -123,7 +121,7 @@ notifyListeners();
 
     } catch (e) {
 
-  log("FAILURE$e");
+  log("FAILURE STATS$e");
 showErrorMessage(navigatorKey.currentContext!,
  getTranslated(
   getErrorMessage(e.toString())

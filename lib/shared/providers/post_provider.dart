@@ -203,7 +203,14 @@ notifyListeners();
     notifyListeners();
 }
 
+ final Map<int, bool> _isItemLoading = {};
 
+  FavoritePostModel? getItem(int id) => favouritePosts[id];
+  bool isItemLoading(int id) => _isItemLoading[id] ?? false;
+
+
+
+  
 Future refreshFavouite(String postId)async{
    
   try {

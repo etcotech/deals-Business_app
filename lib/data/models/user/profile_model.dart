@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class ProfileModel {
   int? id;
   String? name;
@@ -94,6 +96,7 @@ class ProfileModel {
     countryCode = json['country_code'];
     languageCode = json['language_code'];
     userTypeId = json['user_type_id'];
+
     genderId = json['gender_id'];
     photo = json['photo'];
     about = json['about'];
@@ -108,6 +111,7 @@ class ProfileModel {
     latestUpdateIp = json['latest_update_ip'];
     provider = json['provider'];
     providerId = json['provider_id'];
+
     emailToken = json['email_token'];
     phoneToken = json['phone_token'];
     emailVerifiedAt = json['email_verified_at'];
@@ -116,10 +120,13 @@ class ProfileModel {
     acceptMarketingOffers = json['accept_marketing_offers'];
     timeZone = json['time_zone'];
     featured = json['featured'];
+
     blocked = json['blocked'];
     closed = json['closed'];
     lastActivity = json['last_activity'];
     phoneIntl = json['phone_intl'];
+
+
   }
 
   Map<String, dynamic> toJson() {
