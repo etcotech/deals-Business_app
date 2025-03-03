@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:http_parser/http_parser.dart'; // For MediaType
 import 'package:deals_and_business/core/constants/api.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
@@ -51,7 +51,7 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
   @override
   Future<PostListResponseModel> getPosts(String token, {String? lang ='ar'}) async{
    final response =
-        await client.get(Uri.parse('$baseUrl$postsApi?op=search&archived=1&embed=null&sort=created_at&perPage=10'),
+        await client.get(Uri.parse('$baseUrl$postsApi?op=latest&archived=1&embed=null&sort=created_at&perPage=10'),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': token,
@@ -131,12 +131,18 @@ var request = http.MultipartRequest('POST', Uri.parse(baseUrl+ postsApi));
         for (var file in newPostModel.pictures!) {
       final fileStream = http.ByteStream(file.openRead());
       final fileLength = await file.length();
-      final multipartFile = http.MultipartFile(
-        'pictures', // Field name for the files
-        fileStream,
-        fileLength,
-        filename: file.path.split('/').last, // File name
-      );
+      // final multipartFile = http.MultipartFile(
+      //   'pictures', // Field name for the files
+      //   fileStream,
+      //   fileLength,
+      //   filename: file.path.split('/').last, // File name
+      // );
+      // http.MultipartFile.
+      var multipartFile = await http.MultipartFile.fromPath(
+    'pictures', // Field name in the form
+   file.path, // Path to the file
+    contentType: MediaType('image', ''), // Optional: specify the content type
+  );
       request.files.add(multipartFile);
     }
 

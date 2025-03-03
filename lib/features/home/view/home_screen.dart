@@ -104,24 +104,29 @@ initHome();
         drawer: AppDrawer(),
         drawerEnableOpenDragGesture: false, 
         
-        body: CustomScrollView(
-          slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-        
-        HomeSearchContainer()
-        ,
-        SizedBox(height: 24,),
-        HomeCategories(),
-        SizedBox(height: 24,),
-        
-        HomeListings()
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            provider.refreshPosts(context);
+          },
+          child: CustomScrollView(
+            slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+          
+          HomeSearchContainer()
+          ,
+          SizedBox(height: 24,),
+          HomeCategories(),
+          SizedBox(height: 24,),
+          
+          HomeListings()
+              ],
+            ),
+          )
             ],
           ),
-        )
-          ],
         ),
         );
       }

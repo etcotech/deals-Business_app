@@ -1,3 +1,4 @@
+import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
@@ -64,7 +65,7 @@ var formKey = GlobalKey<FormState>();
                       children: [
                         SizedBox(height: 24,),
                         InputFieldNoIcon(controller: adressController,
-                         hintText: 'title',
+                         hintText: getTranslated(Strings.title, context)!,
                          validator: titleValidator,
                          ),
                     InputArea(controller: descriptionController, hintText: 'desc' ,
@@ -73,7 +74,7 @@ var formKey = GlobalKey<FormState>();
                     , 
                     InputField(controller: priceController,
                     iconData: Icons.paid,
-                     hintText: 'price', 
+                     hintText:  getTranslated(Strings.price, context)!, 
                      validator: priceValidator,
                      keyboardType: TextInputType.number,
                     
@@ -101,7 +102,7 @@ var formKey = GlobalKey<FormState>();
                       child: ContainerButton(
                         title: provider.selectedCat2?.name
                         ,
-                        hint: 'category',
+                        hint: getTranslated(Strings.categoryField, context),
                         icon: Icons.grid_4x4,
                       ),
                     ), 
@@ -128,7 +129,7 @@ var formKey = GlobalKey<FormState>();
                         title: provider.selectedCountry?.name
                         
                         ,
-                        hint: 'country',
+                        hint:getTranslated(Strings.country, context),
                         icon: Icons.location_on_outlined,
                       ),
                     ), 
@@ -136,7 +137,8 @@ var formKey = GlobalKey<FormState>();
                     GestureDetector(
                       onTap: (){
                         if (provider.selectedCountry==null) {
-                          showErrorMessage(context, 'Select Country first!');
+                          showErrorMessage(context, 
+                          getTranslated(Strings.selectCountryfirst, context));
                         }else{
                     
                      showModalBottomSheet(
@@ -161,7 +163,7 @@ var formKey = GlobalKey<FormState>();
                       child: ContainerButton(
                         title: provider.selectedCity?.name
                         ,
-                        hint: 'city',
+                        hint: getTranslated(Strings.city, context),
                         icon: Icons.location_on_outlined,
                       ),
                     ), 
@@ -255,26 +257,26 @@ var formKey = GlobalKey<FormState>();
             
             
              MainButton(
-              title: 'publish',
+              title: getTranslated(Strings.publish, context),
               color: Theme.of(context).primaryColor,
               onTap: (){
                 
 
 
               if (provider.selectedCat2==null) {
-              showErrorMessage(context, 'You should choose category');
+              showErrorMessage(context, getTranslated(Strings.selectCategory, context));
               return;
             }
             if (provider.selectedCity==null) {
-              showErrorMessage(context, 'You should choose City');
+              showErrorMessage(context,  getTranslated(Strings.selectCity, context));
               return;
             }
             if (provider.selectedCountry==null) {
-              showErrorMessage(context, 'You should choose Country');
+              showErrorMessage(context,  getTranslated(Strings.selectCountryfirst, context));
               return;
             }
        if (provider.files.isEmpty) {
-              showErrorMessage(context, 'You should choose images');
+              showErrorMessage(context,  getTranslated(Strings.selectImages, context));
               return;
             }
       

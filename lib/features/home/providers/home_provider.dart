@@ -123,6 +123,47 @@ notifyListeners();
 }
 
 
+Future<void>refreshPosts(BuildContext context)async{
+//   isLoading = true;
+errorData = null;
+notifyListeners();
+try {
+  var result = await postRepository!.getPosts();
+result.fold((failure){
+    log("FAILURE$failure");
+
+  errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+if (failure is CredentialFailure) {
+  //logout
+logout();
+  
+}
+}, (success){
+posts =[];
+posts.addAll(success.postPaginateModel.posts!);
+});
+} catch (e) {
+
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  notifyListeners();
+
+  isLoading = false;
+
+notifyListeners();
+}
+
+isLoading = false;
+notifyListeners();
+}
+
 
 Future<void> getCountries(BuildContext context)async{
   isCountryLoading = true;

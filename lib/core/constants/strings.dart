@@ -98,6 +98,16 @@ static const String send_message = "send_message";
 static const String retry = "retry";
 
 static const String  deleteChat = "delete_chat";
+static const String  title = "title";
+static const String  price = "price";
+static const String  categoryField = "category_field";
 
+static const String  country = "country_field";
+static const String  selectCountryfirst = "select_country_first";
+static const String  city = "city_field";
+static const String  publish = "publish";
+static const String  selectCategory = "select_category_first";
+static const String  selectCity = "select_city_first";
+static const String  selectImages= "select_images_first";
 
 }

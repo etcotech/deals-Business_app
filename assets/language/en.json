@@ -137,7 +137,17 @@
 
 "save_changes":"Save changes"
 ,
-"delete_chat":"Delete chat"
-
+"delete_chat":"Delete chat",
+"retry":"Retry",
+"title":"Title" ,
+"price":"Price" , 
+"category_field":"Category" ,
+"country_field":"Country" ,
+"select_country_first":"Please select Country" ,
+"city_field":"City" ,
+"publish":"Publish" ,
+"select_category_first":"Please select category" ,
+"select_city_first":"Please select City" ,
+"select_images_first":"Please select images"
   }
   

@@ -121,6 +121,17 @@
 "delete_profile":"حذف الصورة", 
 
 "save_changes":"حفظ التعديلات", 
-"delete_chat":"حذف الدردشة"
+"delete_chat":"حذف الدردشة", 
+"retry":"اعد المحاولة",
+"title":"العنوان" ,
+"price":"السعر" , 
+"category_field":"الفئة" ,
+"country_field":"الدولة" ,
+"select_country_first":"اختر الدولة" ,
+"city_field":"المدينة" ,
+"publish":"نشر" ,
+"select_category_first":"اختر الفئة" ,
+"select_city_first":"اختر المدينة" ,
+"select_images_first":"قم بتحميل صور"
 }
   
