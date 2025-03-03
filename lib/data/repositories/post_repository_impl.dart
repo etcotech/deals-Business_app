@@ -39,7 +39,8 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, PostListResponseModel>> getPosts() async{
     return  await _postListProvider((){
 
-        return    postRemoteDatasource.getPosts(localDataSource.getToken()!.toString(), 
+        return    postRemoteDatasource.getPosts(
+          localDataSource.getToken().toString(), 
         
         lang: localeLocalDatasource.getCurrentLocale()
         );
@@ -195,7 +196,7 @@ Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
   Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts()async {
     return  await _favoritePostListProvider((){
 
-        return    postRemoteDatasource.getFavouritePosts(localDataSource.getToken()!.toString(), 
+        return    postRemoteDatasource.getFavouritePosts(localDataSource.getToken().toString(), 
         
         lang: localeLocalDatasource.getCurrentLocale()
         );

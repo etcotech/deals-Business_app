@@ -24,7 +24,7 @@ class HomeSearchContainer extends StatelessWidget {
       child: Container(
       
         width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height/5,
+        height: MediaQuery.sizeOf(context).height/4.5,
         padding: EdgeInsets.symmetric(
           horizontal: 8,vertical: 16
         ),

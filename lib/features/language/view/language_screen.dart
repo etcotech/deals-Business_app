@@ -72,11 +72,12 @@ return   Container(
         
   provider.setISFistTime(false);
   
-  // if (!widget.fromSplash!) {
-  //   Navigator.pop(context);
-  //   return;
-  // }
-    // Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
+  if (!widget.fromSplash!) {
+    Navigator.pop(context);
+    return;
+  }
+    
+    Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
   
   
     },

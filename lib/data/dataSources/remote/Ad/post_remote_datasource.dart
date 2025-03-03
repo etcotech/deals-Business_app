@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-import 'package:http_parser/http_parser.dart'; // For MediaType
+
 import 'package:deals_and_business/core/constants/api.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
@@ -13,6 +13,7 @@ import 'package:deals_and_business/data/models/post/post_details_response_model.
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/thread_message_list_response.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart'; // For MediaType
 
 abstract class PostRemoteDatasource {
     Future<PostListResponseModel> getPosts(String token , {String? lang ='ar'});
@@ -54,9 +55,9 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
         await client.get(Uri.parse('$baseUrl$postsApi?op=latest&archived=1&embed=null&sort=created_at&perPage=10'),
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': token,
+              'Authorization': 'Bearer $token',
               'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang!
+              Strings.contentLang: lang.toString()
             },
           
             
@@ -65,10 +66,11 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
       log(response.body);
       return postListResponseModelFromJson(response.body);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw TokenExpiredException(
+      throw CredentialFailure(
+        message: 'token'
       );
     } else {
-      throw ServerException();
+      throw ServerException(message: 'server');
     }
   }
   

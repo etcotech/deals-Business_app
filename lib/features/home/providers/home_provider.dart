@@ -64,6 +64,7 @@ categoris.addAll(success.categoryPaginateModel.categories!);
 });
 
 } catch (e) {
+   log("FAILURE$e");
 
       errorData = ErrorData(
     message: getErrorMessage(e.toString()), 
@@ -86,7 +87,9 @@ Future<void> getPosts(BuildContext context)async{
 errorData = null;
 notifyListeners();
 try {
+
   var result = await postRepository!.getPosts();
+  
 result.fold((failure){
     log("FAILURE$failure");
 
@@ -105,7 +108,12 @@ logout();
 posts =[];
 posts.addAll(success.postPaginateModel.posts!);
 });
+
+
+
+
 } catch (e) {
+   log("FAILURE PORSTS $e");
 
       errorData = ErrorData(
     message: getErrorMessage(e.toString()), 
