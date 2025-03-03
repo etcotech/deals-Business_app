@@ -123,12 +123,12 @@ child: SizedBox(
 
 ), 
 
-SizedBox(height: 8,),
+SizedBox(height: 16,),
 
 Container(
-  padding: EdgeInsets.all(8),
+  padding: EdgeInsets.all(10),
    width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.18,
+    height: MediaQuery.sizeOf(context).height*.15,
   decoration: BoxDecoration(
     borderRadius: BorderRadius.circular(15),
     color: Colors.white, 
@@ -141,23 +141,159 @@ Container(
               )
             ]
   ),
-  child: Row(
+  child: 
+  /*
+  Column(
+    children: [
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+
+
+ Text(provider.postDetailsModel!.title.toString() , 
+  style: TextStyle(
+    fontSize: 20, fontWeight: FontWeight.w500
+  ),
+  ),
+ContactWithUsButton(
+    price: provider.postDetailsModel!.price,
+   )
+
+  ],
+)
+, 
+Spacer(),
+// Column(
+//   crossAxisAlignment: CrossAxisAlignment.start,
+//   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//   children: [
+
+
+
+Row(
+  // crossAxisAlignment: CrossAxisAlignment.start,
+  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  mainAxisSize: MainAxisSize.min,
+  spacing: 8,
+  children: [
+    
+       Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(spacing:5, children: [
+            ListingIcon(
+            iconData: Icons.person_outline,
+          ),
+          SizedBox(
+            width: 200,
+            child: Text(
+               provider.postDetailsModel!.user != null?
+              provider.postDetailsModel!.user!.name.toString()
+              :'', 
+              overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey
+            ),
+            ),
+          ), 
+          
+          
+          ],)
+          ,
+          Row(
+
+            spacing:5,
+            children: [ ListingIcon(
+            iconData: Icons.list,
+          ),
+          Text(provider.postDetailsModel!.categoryId.toString(), 
+          style: TextStyle(              fontSize: 12,
+
+            color: Colors.grey
+          ),
+          ), 
+      ],
+          )
+        ],
+      ),
+     
+       Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Row(
+            spacing: 5,
+            children: [
+ListingIcon(
+            iconData: Icons.schedule,
+          ),
+          Text(provider.postDetailsModel!.createdAtFormatted.toString(), 
+          style: TextStyle(              fontSize: 10,
+
+            color: Colors.grey
+          ),
+          ), 
+          ],), 
+
+
+
+          Row(
+            spacing: 5,
+            children: [
+               ListingIcon(
+            iconData: Icons.location_on_outlined,
+          ),
+          Text(provider.postDetailsModel!.cityId.toString(), 
+          style: TextStyle(              fontSize: 10,
+
+            color: Colors.grey
+          ),
+          ),
+            ],
+          ) 
+        ],
+      )
+ 
+  ],
+)
+
+
+
+  // ],)
+   ,
+
+
+
+    ],
+  )
+ */ 
+
+
+  Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
 Expanded(
+  // flex: 1,
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
   Text(provider.postDetailsModel!.title.toString() , 
   style: TextStyle(
-    fontSize: 20, fontWeight: FontWeight.w500
+    fontSize: 20, fontWeight: FontWeight.bold
   ),
   ), 
+
+  
   Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
+      
          Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +306,9 @@ Expanded(
                provider.postDetailsModel!.user != null?
               provider.postDetailsModel!.user!.name.toString()
               :'', 
-            style: TextStyle(
+              // overflow: TextOverflow.ellipsis,
+            style: TextStyle(              fontSize: 10,
+            
               color: Colors.grey
             ),
             ), 
@@ -185,7 +323,8 @@ Expanded(
               iconData: Icons.list,
             ),
             Text(provider.postDetailsModel!.categoryId.toString(), 
-            style: TextStyle(
+            style: TextStyle(              fontSize: 11,
+
               color: Colors.grey
             ),
             ), 
@@ -193,6 +332,7 @@ Expanded(
             )
           ],
         ),
+       
          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                    crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -204,7 +344,8 @@ ListingIcon(
               iconData: Icons.schedule,
             ),
             Text(provider.postDetailsModel!.createdAtFormatted.toString(), 
-            style: TextStyle(
+            style: TextStyle(              fontSize: 10,
+
               color: Colors.grey
             ),
             ), 
@@ -220,6 +361,7 @@ ListingIcon(
             ),
             Text(provider.postDetailsModel!.cityId.toString(), 
             style: TextStyle(
+              fontSize: 10,
               color: Colors.grey
             ),
             ),
@@ -227,6 +369,7 @@ ListingIcon(
             ) 
           ],
         )
+   
     ],
   )
   
@@ -234,13 +377,27 @@ ListingIcon(
   
     ],),
 )
-   ,ContactWithUsButton(
+   ,
+   
+   
+   ContactWithUsButton(
     price: provider.postDetailsModel!.price,
    )
    
    
     ],
   ),
+
+
+
+
+
+
+
+
+
+
+  
 )
 ,
 SizedBox(height: 16,),

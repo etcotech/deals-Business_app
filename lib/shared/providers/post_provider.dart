@@ -161,9 +161,53 @@ notifyListeners();
     isLoading= false;
     notifyListeners();
 }
+
+Future refreshFavouritePosts()async{
+    // isLoading= true;
+    error= null;
+    errorData= null;
+    notifyListeners();
+  try {
+    var result = await postRepository!.getFavouritePosts();
+    result.fold((failure){
+
+ error = failure.message.toString();
+ errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+     notifyListeners();
+
+    }, (success){
+      favouritePosts =[];
+      favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
+// postDetailsModel = success.postDetailsModel;
+// isFavourite= postDetailsModel!.featured==1;
+notifyListeners();
+    });
+  } catch (e) {
+    errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+     error= e.toString();
+     notifyListeners();
+    
+  }
+    isLoading= false;
+    notifyListeners();
+}
 Future<Either<Failure, PostDetailsResponseModel>> getFavouritePost(postId)async{
   return  await postRepository!.getPost('',postId);
 }
+
+
+
+
 Future getPost(String postId)async{
     isLoading= true;
     error= null;
@@ -205,12 +249,50 @@ notifyListeners();
 
  final Map<int, bool> _isItemLoading = {};
 
-  FavoritePostModel? getItem(int id) => favouritePosts[id];
+  PostDetailsModel? getItem(int id) => _items[id];
   bool isItemLoading(int id) => _isItemLoading[id] ?? false;
+  final Map<int, PostDetailsModel> _items = {};
 
+Future getPostDetails(String postId)async{
+   if (_items.containsKey(int.parse(postId))) return; // Avoid fetching the same item twice
+    _isItemLoading[int.parse(postId)]= true;
+    error= null;
+    notifyListeners();
+  try {
+    var result = await postRepository!.getPost('',postId);
+    result.fold((failure){
 
+ error = failure.message.toString();
+   errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+     notifyListeners();
 
-  
+    }, (success){
+      // favouritePosts =[];
+      // favouritePosts.addAll(success.postPaginateModel.posts!);
+postDetailsModel = success.postDetailsModel;
+isFavourite= success.postDetailsModel.savedByLoggedUser!.isNotEmpty;
+ _items[int.parse(postId)] = success.postDetailsModel;
+notifyListeners();
+    });
+  } catch (e) {
+     error= e.toString();
+     notifyListeners();
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+   _isItemLoading[int.parse(postId)]= false;
+  notifyListeners();
+  }
+   _isItemLoading[int.parse(postId)]= false;
+    notifyListeners();
+}
+
 Future refreshFavouite(String postId)async{
    
   try {
@@ -278,6 +360,7 @@ logout();
       showSuccessMessage(context, json.decode(success)['message']);
 
 refreshFavouite(postId);
+refreshFavouritePosts();
 notifyListeners();
     });
   } catch (e) {     log(e.toString());
