@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -17,13 +18,36 @@ class _AddImagesContainerState extends State<AddImagesContainer> {
   List<String> images =[];
 final ImagePicker picker = ImagePicker();
  openStudio(Function(List<XFile>? image) selectedImage)async{
-  var images = await picker.pickMultiImage();
-selectedImage(images);
+  var images = await picker.pickMultiImage(
+  );
+List<XFile> compressedImages=[];
+
+for (var image in images) {
+        final File? compressedImage = await _compressImage(File(image.path));
+compressedImages.add(XFile(compressedImage!.path));
+
+}
+
+selectedImage(compressedImages);
 
 
  }
 
+ Future<File?> _compressImage(File file) async {
+    // Compress the image to a maximum of 2500 KB
+    final result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      '${file.absolute.path}_compressed.jpg', // Output file path
+      quality: 85, // Adjust quality (0-100)
+      minWidth: 1024, // Adjust width
+      minHeight: 1024, // Adjust height
+    );
 
+    if (result != null) {
+      return File(result.path);
+    }
+    return null;
+  }
   @override
   Widget build(BuildContext context) {
     return  Consumer<PostProvider>(
@@ -71,7 +95,8 @@ selectedImage(images);
         )
         , secondChild: Container(
           width: MediaQuery.sizeOf(context).width,
-          height: provider.files.length*100/  4  + 80,
+          height: (provider.files.length/  4).ceilToDouble()*100  +
+           80,
         padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10), 
@@ -84,7 +109,7 @@ child: Column(
   children: [
 SizedBox(
   //  height: provider.files.length* 120,
-          height: provider.files.length*100/  4  ,
+          height:( provider.files.length/  4 ).ceilToDouble()*100 ,
 
   //  width: 80,
   child: GridView.count(crossAxisCount: 4, 

@@ -80,19 +80,35 @@ bool showAcceptError = false;
           ), 
           SizedBox(height: 16,),
           InputField(controller:emailController , 
-          hintText:            getTranslated('email', context)!
+          errorText: provider.emailError,
+          hintText:        
+              getTranslated('email', context)!
           , 
           iconData: Icons.email_outlined,
           
-                    validator: emailValidator,
+                    validator: (str){
+                   var error=   emailValidator(str);
+                  //  var 
+                   provider.setEmailError(error);
+                  //  return null;
+                    return provider.emailError;
+                    },
 
           ), 
           SizedBox(height: 16,),
           PasswordField(controller:passwordController ,
-           hintText:             getTranslated('password', context)!
+           hintText:        
+                getTranslated('password', context)!
 , 
           iconData: Icons.lock_outline,
-          validator: passwordValidator,
+          errorText: provider.passwordError,
+         validator: (str){
+                   var error=   passwordValidator(str);
+                  //  var 
+                   provider.setPasswordError(error);
+                  //  return null;
+                    return provider.passwordError;
+                    },
           
           ), 
            SizedBox(height: 16,),
@@ -100,12 +116,21 @@ bool showAcceptError = false;
                       getTranslated('password_confirm', context)!
 , 
           iconData: Icons.lock_outline,
+          errorText: provider.passwordError,
           validator: (value){
 
 
        if (value!= passwordController.text.trim()) {
          return 'passwords not mathches';
        }
+
+   
+                   var error=   passwordValidator(value);
+                  //  var 
+                   provider.setPasswordError(error);
+                  //  return null;
+                    return provider.passwordError;
+                    
             passwordValidator(value);
             return null;
           },
@@ -182,7 +207,7 @@ showAcceptError?
           MainButton(
           isLoading: provider.isLoading,
             onTap: (){
-             
+             provider.resetValidations();
               // if (!acceptedTerms) {
                    showAcceptError= !acceptedTerms;
               setState(() {
@@ -201,7 +226,7 @@ showAcceptError?
             },
             color: Theme.of(context).primaryColor,
             title: 
-                        getTranslated('login', context)!
+                        getTranslated('register', context)!
 
           )
           , 

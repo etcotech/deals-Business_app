@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputArea extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final String? errorText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator; // Validator function as a parameter
 
@@ -11,7 +12,7 @@ class InputArea extends StatelessWidget {
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.multiline,
-    this.validator,  // Nullable validator function
+    this.validator, this.errorText,  // Nullable validator function
   });
 
   @override
@@ -32,7 +33,7 @@ counterText: '',
 
         filled: true,
         fillColor: Colors.grey[200],
-        
+        errorText: errorText,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.grey ,

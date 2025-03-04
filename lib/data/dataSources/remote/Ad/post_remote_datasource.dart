@@ -6,6 +6,7 @@ import 'package:deals_and_business/core/constants/api.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
+import 'package:deals_and_business/data/dataSources/remote/app_http_client.dart';
 import 'package:deals_and_business/data/models/post/favorite_post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/message_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/new_post_model.dart';
@@ -47,7 +48,11 @@ String email,
 
 class PostRemoteDatasourceImpl implements PostRemoteDatasource {
   final http.Client client;
-  PostRemoteDatasourceImpl({required this.client});
+  final ApiClient? apiClient;
+  PostRemoteDatasourceImpl({
+     required this.apiClient,
+    
+    required this.client});
   
   @override
   Future<PostListResponseModel> getPosts(String token, {String? lang ='ar'}) async{
@@ -86,109 +91,65 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
           
             
         //     );
-var request = http.MultipartRequest('POST', Uri.parse(baseUrl+ postsApi));
 
-        
-          
-  // request.files.addAll(
-        
+var response= await apiClient!.postFormData(postsApi,
+body: newPostModel.toJson(), 
+fileParam: 'pictures[]' , 
+files: newPostModel.pictures
+ );
 
-  //       newPostModel.pictures!.map((file)=>
-  //       http.MultipartFile(
-        
 
-        
-          
 
-  //     'pictures',
-        
+// var request = http.MultipartRequest('POST',
+//  Uri.parse(baseUrl+ postsApi));
 
-        
-  //             File(file.path).readAsBytes().asStream(),
-        
+     
+//         for (var file in newPostModel.pictures!) {
+//       final fileStream = http.ByteStream(file.openRead());
+//       final fileLength = await file.length();
+//       final multipartFile = http.MultipartFile(
+//         'pictures[]', // Field name for the files
+//         fileStream,
+//         fileLength,
+//         filename: file.path.split('/').last, // File name
+//       );
+//       // http.MultipartFile.
+//   //     var multipartFile = await http.MultipartFile.fromPath(
+//   //   'pictures', // Field name in the form
+//   //  file.path, // Path to the file
+//   //   // contentType: MediaType('image', ''), // Optional: specify the content type
+//   // );
+//       request.files.add(multipartFile);
+//     }
 
-        
-          
-
-  //     File(file.path).lengthSync(),
-        
-
-        
-          
-
-  //     filename: file.path.split("/").last  
-
-  //   )
-        
-  //       ).toList()
-          
-
-    
-        
-
-        
-          
-
-  // );
-        for (var file in newPostModel.pictures!) {
-      final fileStream = http.ByteStream(file.openRead());
-      final fileLength = await file.length();
-      // final multipartFile = http.MultipartFile(
-      //   'pictures', // Field name for the files
-      //   fileStream,
-      //   fileLength,
-      //   filename: file.path.split('/').last, // File name
-      // );
-      // http.MultipartFile.
-      var multipartFile = await http.MultipartFile.fromPath(
-    'pictures', // Field name in the form
-   file.path, // Path to the file
-    contentType: MediaType('image', ''), // Optional: specify the content type
-  );
-      request.files.add(multipartFile);
-    }
-
-        request.fields['category_id'] = newPostModel.category_id.toString();
-        request.fields['title'] = newPostModel.title.toString();
-        request.fields['description'] = newPostModel.description.toString();
-        request.fields['contact_name'] = newPostModel.contact_name.toString();
-        // request.fields['auth_field'] = 'email';
-        request.fields['email'] = 'abdo@gmail.com';
-// request.fields['country_code']= 'US';
-        request.fields['city_id'] = newPostModel.city_id.toString();
-        request.fields['accept_terms'] = newPostModel.accept_terms!.toString();
+//         request.fields['category_id'] = newPostModel.category_id.toString();
+//         request.fields['title'] = newPostModel.title.toString();
+//         request.fields['description'] = newPostModel.description.toString();
+//         request.fields['contact_name'] = newPostModel.contact_name.toString();
+//         // request.fields['auth_field'] = 'email';
+//         request.fields['email'] = newPostModel.email.toString();
+// // request.fields['country_code']= 'US';
+//         request.fields['city_id'] = newPostModel.city_id.toString();
+//         request.fields['accept_terms'] = newPostModel.accept_terms!.toString();
 
                  
-        request.fields['price'] =newPostModel.price.toString();
-request.headers.addAll({
-         'Accept': 'application/json',
-         'Content-Type':'multipart/form-data',
-              'Authorization': token,
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
-});
+//         request.fields['price'] =newPostModel.price.toString();
+// request.headers.addAll({
+//          'Accept': 'application/json',
+//          'Content-Type':'multipart/form-data',
+//           Strings.contentLang: 'en',
+//               'Authorization': token,
+//               'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+// });
 
-  var res = await request.send();
- final responseBody = await res.stream.bytesToString();
-log(responseBody);
+//   var res = await request.send();
+
+//  final responseBody = await res.stream.bytesToString();
+// log(responseBody);
 
 
 
-    if (res.statusCode == 200) {
-      // log(response.body);
-      return json.decode(responseBody);
-    }
-    if (res.statusCode==422) {
-      throw ServerException(message: json.decode(responseBody)['errors'].toString());
-
-    }
-    
-     else if (res.statusCode == 400 || res.statusCode == 401) {
-      throw CredentialFailure(
-        message: 'token'
-      );
-    } else {
-      throw ServerException(message: res.reasonPhrase);
-    }
+  return response;
   }
   
   @override

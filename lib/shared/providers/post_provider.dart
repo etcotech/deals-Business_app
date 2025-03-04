@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/category/category_model.dart';
@@ -45,6 +46,32 @@ List<MessageModel> messages=[];
 List<ThreadMessageModel> threadMessages=[];
 
 String? error;
+String? titleError;
+String? bodyError;
+String? priceError;
+
+clearErrors(){
+  titleError = null;
+  bodyError= null;
+  priceError= null;
+  notifyListeners();
+}
+void setTitleError(String? err){
+  titleError= err;
+  notifyListeners();
+}
+void setBodyError(String? err){
+  bodyError= err;
+  notifyListeners();
+}
+void setPriceError(String? err){
+ priceError= err;
+  notifyListeners();
+}
+
+
+
+
 void addFile(XFile file){
   files.add(file);
   notifyListeners();
@@ -74,12 +101,18 @@ void setCity(CityModel city){
   
 }
 
-Future<void> addPost(BuildContext context , String title,String desc , String price)async{
+Future<void> addPost(BuildContext context ,
+
+
+ String title,String desc , String price)async{
+  titleError=null;
+  bodyError=null;
   isLoading =true;
   errorData = null;
   notifyListeners();
 try {
   var newPost = NewPostModel(
+    email: userRepository!.getUserEmail(),
 category_id: selectedCat2!.id!.toString(),
 country_code: selectedCountry!.code!.toString(),
 city_id: selectedCity!.id!.toString(),
@@ -97,9 +130,56 @@ pictures: files.map((file)=> File(file.path)).toList()
 
   result.fold((failure){
 showErrorMessage(context, failure.message.toString());
+if (failure is UnauthorizedException) {
+  
+}
+if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'title') {
+       titleError ='';
+  for (var titleValidationError in  errors[error]) {
+    log(titleValidationError);
+   
+     titleError =  titleValidationError +"\n";
+  }
+ 
+    }
+
+
+  if (error == 'description') {
+       bodyError ='';
+  for (var bodyValidationError in  errors[error]) {
+    log(bodyValidationError);
+   
+     bodyError =  bodyValidationError +"\n";
+  }
+ 
+    }
+
+
+  }
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+    notifyListeners();
+
+}
+
+
+
+
+
 
   }, (success){
     selectedCat=null;
+    selectedCat2=null;
 selectedCity=null;
 selectedCountry=null;
 files=[];
@@ -108,8 +188,10 @@ showSuccessMessage(context, 'Post Sent!');
 Navigator.pop(context);
 
   });
-} catch (e) {
-  
+} 
+
+catch (e) {
+  log("FASFas$e");
 
     isLoading =false;
   notifyListeners();

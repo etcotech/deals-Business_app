@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/core/network/network_info.dart';
 import 'package:deals_and_business/data/dataSources/local/locale_local_data_source.dart';
@@ -102,7 +103,7 @@ Future<Either<Failure, PostListResponseModel>> _postListProvider(
 
 
 
-Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
+Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
    _AddPost getDataSource,
       ) async {
     // if (await networkInfo.isConnected) {
@@ -113,16 +114,10 @@ Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
        
         return Right(remoteResponse);
       } 
-          on TimeoutException{
-        return Left(TimeoutFailure());
-  }
-  on SocketException{
-    log('SPOCLe');
-        return Left(NetworkFailure());
-  }
+       
    
       
-      on Failure catch (failure) {
+      on ApiException catch (failure) {
         return Left(failure);
       }
     
@@ -168,7 +163,7 @@ Future<Either<Failure, Map<String,dynamic>>> _addPostProvider(
     }
   }
   @override
-  Future<Either<Failure, Map<String, dynamic>>> addPost(NewPostModel newPostModel) async{
+  Future<Either<ApiException, Map<String, dynamic>>> addPost(NewPostModel newPostModel) async{
     return  await _addPostProvider((){
 
         return    postRemoteDatasource.addPost(newPostModel, localDataSource.getToken()??'');

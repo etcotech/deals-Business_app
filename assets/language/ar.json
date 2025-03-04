@@ -114,7 +114,7 @@
 "spam_reason":"احتيال" ,
 "wrong_category_reason":"الفئة خاطئة" ,
 "other_reason":"اخر", 
-"sendEmail":"ارسل للبريد الالكتروني",
+"send_email":"ارسل للبريد الالكتروني",
 "send_message":"ارسل رسالة عن طريق التطبيق", 
 "phone_number":"رقم الهاتف", 
 "upload_profile":"قم بتحميل الصورة" ,
@@ -132,6 +132,7 @@
 "publish":"نشر" ,
 "select_category_first":"اختر الفئة" ,
 "select_city_first":"اختر المدينة" ,
-"select_images_first":"قم بتحميل صور"
+"select_images_first":"قم بتحميل صور", 
+"no_messages":"لا توجد رسايل"
 }
   

@@ -29,7 +29,12 @@ sl.registerFactory(
 
   // Data sources
   sl.registerLazySingleton<UserRemoteDataSource>(
-        () => UserRemoteDataSourceImpl(client: sl()),
+        () => UserRemoteDataSourceImpl(
+          sl(),
+          client: sl(), 
+        
+        
+        ),
   );
    sl.registerLazySingleton<UserLocalDataSource>(
         () => UserLocalDataSourceImpl(sharedPreferences: sl())

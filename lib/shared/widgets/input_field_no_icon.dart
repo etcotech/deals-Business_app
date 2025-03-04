@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputFieldNoIcon extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final String? errorText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator; // Validator function as a parameter
 
@@ -11,7 +12,7 @@ class InputFieldNoIcon extends StatelessWidget {
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator,  // Nullable validator function
+    this.validator, this.errorText,  // Nullable validator function
   });
 
   @override
@@ -30,7 +31,7 @@ contentPadding: EdgeInsets.symmetric(
 
         filled: true,
         fillColor: Colors.grey[200],
-        
+        errorText:errorText ,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.grey ,

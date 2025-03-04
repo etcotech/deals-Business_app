@@ -64,12 +64,31 @@ var formKey = GlobalKey<FormState>();
                       spacing: 10,
                       children: [
                         SizedBox(height: 24,),
-                        InputFieldNoIcon(controller: adressController,
+                        InputFieldNoIcon(
+                        errorText: provider.titleError,
+                          
+                          controller: adressController,
                          hintText: getTranslated(Strings.title, context)!,
-                         validator: titleValidator,
+                         validator: (str){
+                          var error = titleValidator(str);
+                       provider.setTitleError(error);
+                  //  return null;
+                   
+                      return provider.titleError;
+                         },
                          ),
-                    InputArea(controller: descriptionController, hintText: 'desc' ,
-                    validator: descValidator,
+                    InputArea(
+                      errorText: provider.bodyError,
+                      controller: descriptionController, hintText: 'desc' ,
+                    validator: (str){
+
+                      var error = descValidator(str);
+                       provider.setBodyError(error);
+                  //  return null;
+                   
+                      return provider.bodyError;
+                    },
+
                     )
                     , 
                     InputField(controller: priceController,
@@ -262,7 +281,7 @@ var formKey = GlobalKey<FormState>();
               onTap: (){
                 
 
-
+provider.clearErrors();
               if (provider.selectedCat2==null) {
               showErrorMessage(context, getTranslated(Strings.selectCategory, context));
               return;

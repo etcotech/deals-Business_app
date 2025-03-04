@@ -4,8 +4,8 @@ import 'package:deals_and_business/data/models/user/extra_auth_field.dart';
 
 import 'user_model.dart';
 
-LoginResponseModel authenticationResponseModelFromJson(String str) =>
-    LoginResponseModel.fromJson(json.decode(str));
+LoginResponseModel authenticationResponseModelFromJson(Map<String,dynamic> str) =>
+    LoginResponseModel.fromJson(str);
 
 String authenticationResponseModelToJson(LoginResponseModel data) =>
     json.encode(data.toJson());

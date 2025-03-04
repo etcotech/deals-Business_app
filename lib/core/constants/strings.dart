@@ -26,6 +26,8 @@ static const String filtrtByPrice = "filter_by_price";
 static const String filterByCity = "filter_by_city";
 static const String sortBy = "sort_by";
 static const String noData = "no_data";
+static const String noMessages = "no_messages";
+
 static const String pleaseChooseValue = "please_choose_value";
 static const String sortByPrice = "sort_by_price";
 static const String sortByAlp = "sort_by_aplh";

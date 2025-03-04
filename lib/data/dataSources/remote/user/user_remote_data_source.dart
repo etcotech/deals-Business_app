@@ -8,6 +8,8 @@ import 'package:deals_and_business/core/constants/api.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
+import 'package:deals_and_business/data/dataSources/remote/app_http_client.dart';
+import 'package:deals_and_business/data/dataSources/remote/dio_client.dart';
 import 'package:deals_and_business/data/models/user/login_response.dart';
 import 'package:deals_and_business/data/models/user/profile_response_model.dart';
 import 'package:deals_and_business/data/models/user/signup_response_model.dart';
@@ -40,10 +42,33 @@ abstract class UserRemoteDataSource {
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
-  UserRemoteDataSourceImpl({required this.client});
+  final ApiClient? httpClient;
+  UserRemoteDataSourceImpl(this.httpClient, {required this.client});
   
   @override
   Future<LoginResponseModel> signIn(String email, String password) async{
+  
+  try {
+    var response = await httpClient!.post('/api/auth/login', 
+  body: 
+  {
+    
+              'email': email,
+              'password': password,
+  }     
+  
+  );
+  // log(response.body)
+      return authenticationResponseModelFromJson(response);
+  }
+  
+  
+   catch (e) {
+    rethrow;
+  }
+  
+/*
+  
    final response =
         await client.post(Uri.parse('$baseUrl/api/auth/login'),
             headers: {
@@ -64,10 +89,16 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else {
       throw ServerException();
     }
+*/
+
   }
   
   @override
   Future<String?> signOut(String? token, int userId) async{
+
+
+
+
   try {
       final response =
         await client.get(Uri.parse('$baseUrl$logoutApi$userId'),
@@ -97,6 +128,34 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   
   @override
   Future<SignupResponseModel> signUp(String userName, String email, String password)async{
+   
+   try {
+    var response = await httpClient!.post('/api/users', 
+  body: 
+  {
+    
+        
+              'name':userName,
+              'auth_field':'email',
+              'email': email,
+              'password': password,
+              'password_confirmation':password,
+              'accept_terms':1.toString()
+            
+  }     
+  
+  );
+  // log(response.body)
+      return signupResponseModelFromJson(response);
+  }
+  
+  
+   catch (e) {
+    rethrow;
+  }
+  
+   /*
+   
      final response =
         await client.post(Uri.parse('$baseUrl/api/users'),
             headers: {
@@ -126,7 +185,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     } else {
       throw NetworkFailure();
     }
-  
+  */
 
   }
   

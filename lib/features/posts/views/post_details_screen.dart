@@ -54,7 +54,7 @@ context.read<PostProvider>().getPost(widget.postId!);
                   ),
                 );
               }
-                if (provider.error!=null) {
+                else if (provider.error!=null) {
                 return Scaffold(
                   body: SizedBox.expand(
                     child: Center(
@@ -65,7 +65,8 @@ context.read<PostProvider>().getPost(widget.postId!);
                   ),
                 );
               }
-        return Scaffold(
+     // ignore: curly_braces_in_flow_control_structures
+     else    return Scaffold(
         backgroundColor: Colors.white,
           appBar: AppBar(
         backgroundColor: Colors.transparent,
