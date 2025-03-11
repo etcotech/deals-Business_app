@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/post/favorite_post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/message_list_response_model.dart';
@@ -13,7 +14,7 @@ abstract class PostRepository {
 
     Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts();
 
-  Future<Either<Failure, Map<String,dynamic>>> addPost(
+  Future<Either<ApiException, Map<String,dynamic>>> addPost(
     NewPostModel new_post_model 
   );
   Future<Either<Failure, PostDetailsResponseModel>> getPost(

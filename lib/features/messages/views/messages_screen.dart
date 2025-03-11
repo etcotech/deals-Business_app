@@ -1,3 +1,5 @@
+import 'package:deals_and_business/core/constants/strings.dart';
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
 import 'package:deals_and_business/features/messages/widgets/message_preview_widget.dart';
@@ -72,7 +74,7 @@ body: SizedBox.expand(
       color: Theme.of(context).primaryColor,
     ),);
   }
-  if (provider.errorData!=null) {
+ else  if (provider.errorData!=null) {
     return Center(
       child: ErrorContainer(
         errorData: provider.errorData,
@@ -95,7 +97,12 @@ body: SizedBox.expand(
       ),
     );
   }
-  return ListView.builder(
+  else if(provider.messages.isEmpty){
+return Center(child: 
+Text(getTranslated(Strings.noMessages, context)!)
+    );
+  }
+  else return ListView.builder(
     shrinkWrap: true,
     itemCount: provider.messages.length,
     itemBuilder: (BuildContext context, int index) {

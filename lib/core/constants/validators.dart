@@ -2,17 +2,19 @@
   String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password cannot be empty';
-    } else if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
     }
+    //  else if (value.length < 6) {
+    //   return 'Password must be at least 6 characters long';
+    // }
     return null;
   }
   String? confirmPasswordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Password cannot be empty';
-    } else if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
     }
+    //  else if (value.length < 6) {
+    //   return 'Password must be at least 6 characters long';
+    // }
     return null;
   }
 String? phoneFieldValidator(String? value) {
@@ -35,9 +37,7 @@ String? phoneFieldValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Description cannot be empty';
     } 
-    if (value.length<5) {
-      return 'too short';
-    }
+   
     return null;
   }
 

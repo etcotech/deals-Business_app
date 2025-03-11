@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/core/network/network_info.dart';
 import 'package:deals_and_business/data/dataSources/local/locale_local_data_source.dart';
@@ -33,7 +34,7 @@ class UserRepositoryImpl implements UserRepository {
   });
 
   @override
-  Future<Either<Failure, LoginResponseModel>> signIn(   
+  Future<Either<ApiException, LoginResponseModel>> signIn(   
 String email,  String password) async {
     return await _authenticate(() {
       return remoteDataSource.signIn(email,password);
@@ -84,7 +85,7 @@ String email,  String password) async {
   //   }
   // }
 
-  Future<Either<Failure, LoginResponseModel>> _authenticate(
+  Future<Either<ApiException, LoginResponseModel>> _authenticate(
    _DataSourceChooser getDataSource,
       ) async {
     if (await networkInfo.isConnected) {
@@ -100,16 +101,16 @@ localDataSource.saveUserEmail(remoteResponse.user.email!);
 localDataSource.savePhoto(remoteResponse.user.photoUrl!);
 
         return Right(remoteResponse);
-      } on Failure catch (failure) {
+      } on ApiException catch (failure) {
         return Left(failure);
       }
     } else {
-      return Left(NetworkFailure());
+      return Left(ApiException('Failed to fetch api',696));
     }
 
     
   }
-  Future<Either<Failure, SignupResponseModel>> _signup(
+  Future<Either<ApiException, SignupResponseModel>> _signup(
 _SignupDataSourceChooser   getDataSource   ) async {
     // if (await networkInfo.isConnected) {
       try {
@@ -124,15 +125,9 @@ _SignupDataSourceChooser   getDataSource   ) async {
         return Right(remoteResponse);
       } 
       
-          on TimeoutException{
-        return Left(TimeoutFailure());
-  }
-  on SocketException{
-        return Left(NetworkFailure());
-  }
    
       
-      on Failure catch (failure) {
+      on ApiException catch (failure) {
         return Left(failure);
       }
     
@@ -166,7 +161,7 @@ _SignupDataSourceChooser   getDataSource   ) async {
   }
   
   @override
-  Future<Either<Failure, SignupResponseModel>> signUp(String name, String email, String password)async {
+  Future<Either<ApiException, SignupResponseModel>> signUp(String name, String email, String password)async {
    return await _signup(() {
       return remoteDataSource.signUp(name,email,password);
     });

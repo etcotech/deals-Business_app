@@ -30,7 +30,9 @@ void registerPostFeature(){
 
   // Data sources
   sl.registerLazySingleton<PostRemoteDatasource>(
-        () => PostRemoteDatasourceImpl(client: sl()),
+        () => PostRemoteDatasourceImpl(
+          apiClient: sl(),
+          client: sl()),
   );
   //
    sl.registerLazySingleton<UserLocalDataSource>(

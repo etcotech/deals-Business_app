@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
   final TextEditingController controller;
+final   String? errorText;
   final String hintText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator; // Validator function as a parameter
@@ -12,7 +13,7 @@ final Function(String?)? onTextChange;
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator,  this.iconData, this.onTextChange, // Nullable validator function
+    this.validator,  this.iconData, this.onTextChange, this.errorText, // Nullable validator function
   });
 
   @override
@@ -20,16 +21,19 @@ final Function(String?)? onTextChange;
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
+      
 onChanged: onTextChange,
+
       
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
   vertical: 10
 ),
 
+
         filled: true,
         fillColor: Colors.grey[200],
-        
+        errorText: errorText,
         hintText: hintText,
         hintStyle: TextStyle(
           color: Colors.grey ,

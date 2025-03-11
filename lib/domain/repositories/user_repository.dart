@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/user/login_response.dart';
 import 'package:deals_and_business/data/models/user/profile_response_model.dart';
@@ -9,10 +10,10 @@ import 'package:deals_and_business/data/models/user/stats_response_model.dart';
 
 
 abstract class UserRepository {
-  Future<Either<Failure, LoginResponseModel>> signIn(
+  Future<Either<ApiException, LoginResponseModel>> signIn(
     
     String email , String password);
-  Future<Either<Failure, SignupResponseModel>> signUp(String name, String email  ,String password );
+  Future<Either<ApiException, SignupResponseModel>> signUp(String name, String email  ,String password );
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();
 

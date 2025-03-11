@@ -10,10 +10,10 @@ bool? accept_terms;
 List<File>?  pictures;
 String? country_code;
 int? price;
-
+String? email;
 
 NewPostModel({
-
+required this.email,
   this.category_id , this.title ,this.description ,this.contact_name ,this.city_id ,
   this.accept_terms ,this.pictures ,this.country_code ,this.price
 });

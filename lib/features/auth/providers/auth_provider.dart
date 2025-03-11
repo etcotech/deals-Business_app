@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
+import 'package:deals_and_business/core/error/validation_errors.dart';
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/view/dashboard.dart';
@@ -17,27 +22,54 @@ bool isLoading = false;
 
 
 
+String? emailError;
+String? passwordError;
 
+resetValidations(){
+emailError =null; 
+passwordError = null;
+notifyListeners();
+}
+
+void setEmailError(String? error){
+  emailError =error;
+  notifyListeners();
+}
+
+void setPasswordError(String? error){
+  passwordError =error;
+  notifyListeners();
+}
 
   login(BuildContext  context , String email , String password)async{
      try {
        isLoading= true;
+       emailError=null;
+       passwordError=null;
        notifyListeners();
    var loginresult = await userRepository!.signIn(email, password);
 
  isLoading= false;
        notifyListeners();
   loginresult.fold((failure){
-Fluttertoast.showToast(
-        msg: failure.message.toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+    log("FAILURe${failure.runtimeType}");
+
 showErrorMessage(context, failure.message.toString());
+if (failure is ValidationException) {
+  
+ final errors = Map<String, dynamic>.from(json.decode(failure.message)['errors']);
+ 
+  
+  final errorMessages = errors.entries.map((entry) {
+    log('${entry.key}: ${entry.value.join(', ')}');
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+ 
+}
+
+
+
+
   }, (success){
 
 
@@ -68,26 +100,59 @@ showSuccessMessage(context, 'Login success');
    String email , String password)async{
      try {
        isLoading= true;
+       emailError=null; 
+       passwordError= null;
        notifyListeners();
-   var loginresult = await userRepository!.
+   var signUpResult = await userRepository!.
    signUp(
     name,
     email, password);
 
  isLoading= false;
        notifyListeners();
-  loginresult.fold((failure){
-Fluttertoast.showToast(
-        msg:  getErrorMessage(failure.message.toString()),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+  signUpResult.fold((failure){
+log(failure.message.toString());
 showErrorMessage(context, 
 getErrorMessage(failure.message.toString()));
+
+if (failure is ValidationException) {
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'email') {
+       emailError ='';
+  for (var emailValitionError in  errors[error]) {
+    log(emailValitionError);
+   
+     emailError =  emailValitionError +"\n";
+  }
+ 
+    }
+
+
+  if (error == 'password') {
+       passwordError ='';
+  for (var passwordViationError in  errors[error]) {
+    log(passwordViationError);
+   
+     passwordError =  passwordViationError +"\n";
+  }
+ 
+    }
+
+
+  }
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+    notifyListeners();
+
+}
+
+
   }, (success){
 
 
@@ -100,6 +165,7 @@ showSuccessMessage(context, 'success');
 
 
      } catch (e) {
+      log(e.toString()); 
         isLoading= false;
        notifyListeners();
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class PasswordField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
+  final String? errorText;
   final TextInputType keyboardType;
   final IconData iconData;
   final String? Function(String?)? validator; // Validator function as a parameter
@@ -12,7 +13,7 @@ class PasswordField extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator, required this.iconData, // Nullable validator function
+    this.validator, required this.iconData, this.errorText, // Nullable validator function
   });
 
   @override
@@ -47,7 +48,7 @@ setState(() {
 )),
         filled: true,
         fillColor: Colors.grey[200],
-        
+        errorText: widget.errorText,
         hintText: widget.hintText,
         hintStyle: TextStyle(
           color: Colors.grey ,

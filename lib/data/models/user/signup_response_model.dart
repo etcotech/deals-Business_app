@@ -5,8 +5,8 @@ import 'package:deals_and_business/data/models/user/signup_user_model.dart';
 
 import 'user_model.dart';
 
-SignupResponseModel signupResponseModelFromJson(String str) =>
-    SignupResponseModel.fromJson(json.decode(str));
+SignupResponseModel signupResponseModelFromJson(Map<String,dynamic> str) =>
+    SignupResponseModel.fromJson(str);
 
 String signupResponseModelToJson(SignupResponseModel data) =>
     json.encode(data.toJson());

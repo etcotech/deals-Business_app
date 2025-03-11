@@ -13,6 +13,7 @@
     "name_or_email":"You email or username" ,
     "register":"Register" ,
     "name":"Name"  ,
+    "send_email":"Send email",
     "i_read":"I have read and accept",
     "terms_and_conditions":"Terms and conditions" ,
     "login_now":"Sign in" ,
@@ -149,5 +150,8 @@
 "select_category_first":"Please select category" ,
 "select_city_first":"Please select City" ,
 "select_images_first":"Please select images"
+,
+"no_messages":"No messages"
+
   }
   
