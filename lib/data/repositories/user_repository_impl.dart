@@ -236,11 +236,11 @@ _SignupDataSourceChooser   getDataSource   ) async {
   }
   
   @override
-  (String, String, String) getCountryData() {
+  (String, String, String ,String ) getCountryData() {
   return  (localDataSource.getPhoneCode(), 
   localDataSource.getCountryCode() , 
     localDataSource.getCountryFlag() , 
-
+localDataSource.getCounryName()
   
   );
    }
@@ -275,9 +275,15 @@ _SignupDataSourceChooser   getDataSource   ) async {
          }
          
            @override
-           Future<Either<Failure, void>> updateUser({String? userId, 
+           Future<Either<ApiException, void>> updateUser({String? userId, 
            File? photo, String? name, String? userName, 
-           String? email, String? countryCode, String? phone})async {
+           String? email, String? countryCode, String? phone, 
+           
+           
+           int? gender_id, 
+           int? type_id
+           
+           })async {
              try {
         final remoteResponse = await  remoteDataSource.
         updateUser(localDataSource.getToken()??'',
@@ -288,7 +294,9 @@ _SignupDataSourceChooser   getDataSource   ) async {
         email: email,
         phone: phone , 
         photo: photo , 
-        countryCode: countryCode
+        countryCode: countryCode , 
+        gender_id: gender_id , 
+        type_id: type_id
         
       );
         // localDataSource.saveToken(remoteResponse.token);
@@ -301,18 +309,38 @@ _SignupDataSourceChooser   getDataSource   ) async {
         return Right(remoteResponse);
       } 
       
-          on TimeoutException{
-        return Left(TimeoutFailure(message: 'timeout'));
-  }
-  on SocketException{
-        return Left(NetworkFailure(message: 'internet'));
-  }
+      
    
       
-      on Failure catch (failure) {
+      on ApiException catch (failure) {
         log(failure.toString());
         return Left(failure);
       }
            }
+           
+             @override
+             void setCountryCode(String code) {
+               localDataSource.saveCountryCode(code);
+             }
+           
+             @override
+             void setCountryFlag(String flag) {
+             localDataSource.saveCounryFlag(flag);
+             }
+           
+             @override
+             void setCountryName(String name) {
+            localDataSource.saveCounryName(name);
+             }
+           
+             @override
+             void setCountryPhoneCode(String code) {
+              localDataSource.savePhoneCode(code);
+             }
+             
+               @override
+               void setUserPhoto(String photo) {
+               localDataSource.savePhoto(photo);
+               }
 
 }

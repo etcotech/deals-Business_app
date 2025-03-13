@@ -5,6 +5,7 @@ import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/exceptions.dart';
 import 'package:deals_and_business/main.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 class HttpException implements Exception {
@@ -26,11 +27,39 @@ class ApiClient {
   ApiClient(this.baseUrl);
 
   Future<dynamic> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$baseUrl/$endpoint'));
+    final response = await http.get(Uri.parse('$baseUrl$endpoint'), 
+    
+     headers: { 
+
+        'Content-Type': 'application/json',
+          'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar', 
+
+      "Authorization":"Bearer ${globalSharedPrefs.getString(Strings.token)}"
+      },
+    
+    );
 
     return _handleResponse(response);
   }
+ Future<dynamic> getPaginate(String url) async {
+    final response = await http.get(Uri.parse(url), 
+    
+     headers: { 
 
+        'Content-Type': 'application/json',
+          'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
+    
+    
+          ,'Authorization':"Bearer ${globalSharedPrefs.getString(Strings.token)??''}"
+
+      },
+    
+    );
+log(response.body);
+    return _handleResponse(response);
+  }
   Future<dynamic> post(String endpoint, {Map<String, dynamic>? body}) async {
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
@@ -39,30 +68,39 @@ class ApiClient {
         'Content-Type': 'application/json',
           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
       'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
+     
+     
+     
       },
       body: jsonEncode(body),
     );
 
     return _handleResponse(response);
   }
+
+
    Future<dynamic> postFormData(String endpoint, 
    
    
    {Map<String, dynamic>? body, 
    String? fileParam,
    List<File>? files 
-   
+   , 
+   String? method='POST'
    }) async {
      var request = http.MultipartRequest(
-    'POST',
+    method!,
     Uri.parse('$baseUrl$endpoint'),
   );
     
      // Add text fields
 
   for (var key in body!.keys) {
+   log("$key   ${body[key]}");
     request.fields[key] = body[key].toString();
   }
+
+  log(request.fields.toString());
   request.fields['email'] = globalSharedPrefs.getString(Strings.userEmail)??'';
  if (files!=null ) {
    for (var file in files) {
@@ -81,7 +119,8 @@ class ApiClient {
   // Add first file
 
 request.headers.addAll({
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
+        'Accept':'application/json',
           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
       'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
       ,'Authorization':"Bearer ${globalSharedPrefs.getString(Strings.token)??''}"
@@ -101,6 +140,78 @@ var response = await http.Response.fromStream(res);
   }
   
 
+  
+   Future<dynamic> postFormDataUpdtateProfile(String endpoint, 
+   
+   
+   {Map<String, dynamic>? body, 
+   String? fileParam,
+   List<File>? files 
+   , 
+   String? method='POST'
+   }) async {
+    var dio = Dio();
+    dio.options.baseUrl= baseUrl; 
+    dio.options.headers= {
+
+      'Content-Type': 'multipart/form-data',
+        'Accept':'application/json',
+          'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
+      ,'Authorization':"Bearer ${globalSharedPrefs.getString(Strings.token)??''}"
+      
+    };
+     var request = http.MultipartRequest(
+    method!,
+    Uri.parse('$baseUrl$endpoint'),
+  );
+    
+     // Add text fields
+
+  for (var key in body!.keys) {
+   log("$key   ${body[key]}");
+    request.fields[key] = body[key].toString();
+  }
+
+  log(request.fields.toString());
+  request.fields['email'] = globalSharedPrefs.getString(Strings.userEmail)??'';
+ if (files!=null ) {
+   for (var file in files) {
+       final fileStream = http.ByteStream(file.openRead());
+      final fileLength = await file.length();
+      final multipartFile = http.MultipartFile(
+       fileParam!, // Field name for the files
+        fileStream,
+        fileLength,
+        filename: file.path.split('/').last, // File name
+      );
+      request.files.add(multipartFile);
+
+   }
+ }
+  // Add first file
+
+request.headers.addAll({
+        'Content-Type': 'multipart/form-data',
+        'Accept':'application/json',
+          'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
+      ,'Authorization':"Bearer ${globalSharedPrefs.getString(Strings.token)??''}"
+      
+      
+      });
+
+   var res = await request.send();
+    
+    // final response = await http.post(
+    //   Uri.parse('$baseUrl/$endpoint'),
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: jsonEncode(body),
+    // );
+var response = await http.Response.fromStream(res);
+    return _handleResponse( response);
+  }
+  
   dynamic _handleResponse(http.Response response) {
     var message  = json.decode(response.body)['message'];
     switch (response.statusCode) {

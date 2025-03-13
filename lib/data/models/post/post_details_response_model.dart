@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:deals_and_business/data/models/post/post_details_model.dart';
 
@@ -16,6 +17,7 @@ class PostDetailsResponseModel {
   });
 
   factory PostDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
+      
       PostDetailsResponseModel(
         postDetailsModel: PostDetailsModel.fromJson(json["result"]),
       );

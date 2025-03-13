@@ -1,3 +1,4 @@
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/data/models/post/message_model.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
@@ -135,9 +136,18 @@ context.read<PostProvider>().getThreadMessages(context, widget.messageModel!.lat
                     
                      InputFieldNoIcon(
                       
-                      validator: messageValidator,
+                      // validator: messageValidator,
+
+                       errorText:provider.bodyError ,
+        validator: (str){
+                   var error=   messageValidator(str);
+                  //  var 
+                   provider.setBodyError(error);
+                  //  return null;
+                    return provider.bodyError;
+                    },
                       controller: _textController, 
-                     hintText: 'send a message')
+                     hintText:getTranslated("send_a_message", context)!)
                   ),
                  
                  SizedBox(width: 8,), 

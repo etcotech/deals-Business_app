@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class UserModel {
   int? id;
   String? name;
@@ -94,6 +96,7 @@ class UserModel {
     countryCode = json['country_code'];
     languageCode = json['language_code'];
     userTypeId = json['user_type_id'];
+    log("USER TYPE ->  $userTypeId");
     genderId = json['gender_id'];
     photo = json['photo'];
     about = json['about'];

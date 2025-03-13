@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/error_data.dart';
@@ -14,10 +16,47 @@ import 'package:deals_and_business/main.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-typedef CountryData=(String, String);
+typedef CountryData=(String, String , String);
 class ProfileProvider extends ChangeNotifier{
   final UserRepository? userRepository;
 
+String? userNameError;
+String? phoneError;
+String? emailError;
+String? nameError;
+String? photoError;
+
+
+
+clearErrors(){
+  emailError = null;
+  photoError=null;
+  nameError= null;
+  userNameError= null;
+  phoneError= null;
+  notifyListeners();
+}
+void setNameError(String? err){
+  nameError= err;
+  notifyListeners();
+}
+void setPhotoError(String? err){
+  photoError= err;
+  notifyListeners();
+}
+void setUserNameError(String? err){
+  userNameError= err;
+  notifyListeners();
+}
+void setPhoneError(String? err){
+  phoneError= err;
+  notifyListeners();
+}
+
+void setEmailError(String? err){
+  emailError= err;
+  notifyListeners();
+}
   ProfileProvider({required this.userRepository});
    ProfileModel? profileModel;
       StatsModel? statsModel;
@@ -33,13 +72,13 @@ String getUserEmail(){
 
 CountryData? countryData ; 
 
-void setcountryData(String flag, String code){
-countryData = (flag,code);
+void setcountryData(String flag, String code , String countryCode){
+countryData = (flag,code , countryCode);
 notifyListeners();
 }
 
 
-   Future<void> getUserProfile()async{
+   Future<void> getUserProfile({Function(ProfileModel?)? userData})async{
 isLoading = true;
 errorData = null;
 notifyListeners();
@@ -61,6 +100,11 @@ logout();
 
 }, (success){
 profileModel= success.user;
+userRepository!.setUserPhoto(success.user.photoUrl!);
+if (userData!=null) {
+  userData(success.user);
+
+}
 notifyListeners();
 
 
@@ -69,7 +113,7 @@ notifyListeners();
 
     } catch (e) {
 
-
+log(e.toString());
   // log("FAILURE$e");
 
       errorData = ErrorData(
@@ -136,16 +180,20 @@ showErrorMessage(navigatorKey.currentContext!,
     isLoading = false;
 notifyListeners();
    }
- Future<void> updateProfile(  { File? photo, String? name, String? userName, 
+
+ Future<void> updateProfile(  { File? photo,
+ int? typeId,int? genderId,
+  String? name, String? userName, 
            String? email, String? countryCode, String? phone})async{
 isLoading = true;
 errorData = null;
 notifyListeners();
     try {
       var result = await userRepository!.updateUser(
-
-        phone: phone ,
-         countryCode: countryData!.$2, 
+type_id: typeId, 
+gender_id: genderId,
+        phone:countryData!.$2+ phone! ,
+         countryCode: countryData!.$3, 
         email: email , 
         name: name , 
         userName: userName, 
@@ -153,11 +201,203 @@ notifyListeners();
 
       );
 result.fold((failure){
-  errorData = ErrorData(
-    message: getErrorMessage(failure.message.toString()), 
-    icon: getErrorIcon(failure.message.toString())
+
+
+  if (failure is UnauthorizedException) {
+  logout();
+}
+if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'username') {
+       userNameError ='';
+  for (var userNameValidationError in  errors[error]) {
+    log(userNameValidationError);
+   
+     userNameError =  userNameValidationError +"\n";
+  }
+ 
+    }
+
+  if (error == 'photo') {
+       phoneError ='';
+  for (var photoValidationError in  errors[error]) {
+    log(photoValidationError);
+   
+     photoError =  photoValidationError +"\n";
+  }
+ 
+    }
+  if (error == 'name') {
+       nameError ='';
+  for (var nameValidationError in  errors[error]) {
+    log(nameValidationError);
+   
+     nameError =  nameValidationError +"\n";
+  }
+ 
+    }
+if (error == 'phone') {
+       phoneError ='';
+  for (var phoneValidationError in  errors[error]) {
+   
+     phoneError =  phoneValidationError +"\n";
+  }
+ 
+    }
+if (error == 'email') {
+       emailError ='';
+  for (var emailValidationError in  errors[error]) {
+   
+     emailError =  emailValidationError +"\n";
+  }
+ 
+    }
+  }
+ 
+ 
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+    notifyListeners();
+return;
+}
+ 
+  notifyListeners();
+showErrorMessage(navigatorKey.currentContext!,
+ getTranslated(
+  getErrorMessage(failure.message.toString())
+  , navigatorKey.currentContext!));
+if (failure is CredentialFailure) {
+  //logout
+logout();
+
+}
+
+}, (success){
+      log("SUSSUU");
+
+// statsModel= success.statsModel;
+notifyListeners();
+showSuccessMessage(navigatorKey.currentContext!, 'Profile updated');
+
+Navigator.of(navigatorKey.currentContext!).pop();
+
+});
+
+    } catch (e) {
+
+  log("FAILURE$e");
+showErrorMessage(navigatorKey.currentContext!,
+ getTranslated(
+  getErrorMessage(e.toString())
+  , navigatorKey.currentContext!));
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
   );
+  notifyListeners();
   
+    }
+    isLoading = false;
+notifyListeners();
+
+ }
+
+ Future<void> updateUserGender(  { 
+ int? typeId,int? genderId,
+  String? name, String? userName, 
+           String? email})async{
+isLoading = true;
+errorData = null;
+notifyListeners();
+    try {
+      var result = await userRepository!.updateUser(
+type_id: typeId, 
+gender_id: genderId,
+        // phone:countryData!.$2+ phone! ,
+        //  countryCode: countryData!.$3, 
+        email: email , 
+        name: name , 
+        userName: userName, 
+        // photo: photo
+
+      );
+result.fold((failure){
+
+
+  if (failure is UnauthorizedException) {
+  logout();
+}
+if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'username') {
+       userNameError ='';
+  for (var userNameValidationError in  errors[error]) {
+    log(userNameValidationError);
+   
+     userNameError =  userNameValidationError +"\n";
+  }
+ 
+    }
+
+  if (error == 'photo') {
+       phoneError ='';
+  for (var photoValidationError in  errors[error]) {
+    log(photoValidationError);
+   
+     photoError =  photoValidationError +"\n";
+  }
+ 
+    }
+  if (error == 'name') {
+       nameError ='';
+  for (var nameValidationError in  errors[error]) {
+    log(nameValidationError);
+   
+     nameError =  nameValidationError +"\n";
+  }
+ 
+    }
+if (error == 'phone') {
+       phoneError ='';
+  for (var phoneValidationError in  errors[error]) {
+   
+     phoneError =  phoneValidationError +"\n";
+  }
+ 
+    }
+if (error == 'email') {
+       emailError ='';
+  for (var emailValidationError in  errors[error]) {
+   
+     emailError =  emailValidationError +"\n";
+  }
+ 
+    }
+  }
+ 
+ 
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+    notifyListeners();
+return;
+}
+ 
   notifyListeners();
 showErrorMessage(navigatorKey.currentContext!,
  getTranslated(

@@ -18,6 +18,11 @@ import 'package:http_parser/http_parser.dart'; // For MediaType
 
 abstract class PostRemoteDatasource {
     Future<PostListResponseModel> getPosts(String token , {String? lang ='ar'});
+
+        Future<PostListResponseModel> getMorePosts(
+         String url,
+         {String? lang ='ar'});
+
     Future<Map<String,dynamic>> addPost(NewPostModel newPostModel, String token);
     Future<PostDetailsResponseModel> getPost(int postId,String token , {String? lang ='ar'});
     Future<String> addPostToFavourite(String postId,String token, {String lang='ar'} );
@@ -36,7 +41,17 @@ String email,
     String msg,
     String token
      , {String? lang ='ar'});
+  Future<void> sendMessageToManagement(String firstName, 
+  String lastName,
+String email,
 
+    String msg,
+
+    String  countryCode , 
+    String countryName , 
+    
+    String token
+     , {String? lang ='ar'});
 
          Future<MessageListResponseModel> getMessages(String token ,
           {String? lang ='ar'});
@@ -56,27 +71,34 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
   
   @override
   Future<PostListResponseModel> getPosts(String token, {String? lang ='ar'}) async{
-   final response =
-        await client.get(Uri.parse('$baseUrl$postsApi?op=latest&archived=1&embed=null&sort=created_at&perPage=10'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang.toString()
-            },
+
+
+    //&belongLoggedUser=1
+  var response2 = await apiClient!.get("$postsApi?op=latest&archived=1&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
+ 
+ log(response2.runtimeType.toString());
+  return postListResponseModelFromJson(response2);
+  //  final response =
+  //       await client.get(Uri.parse('$baseUrl$postsApi?op=latest&archived=1&embed=null&belongLoggedUser=1&sort=created_at&perPage=10'),
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             'Authorization': 'Bearer $token',
+  //             'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+  //             Strings.contentLang: lang.toString()
+  //           },
           
             
-            );
-    if (response.statusCode == 200) {
-      log(response.body);
-      return postListResponseModelFromJson(response.body);
-    } else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure(
-        message: 'token'
-      );
-    } else {
-      throw ServerException(message: 'server');
-    }
+  //           );
+  //   if (response.statusCode == 200) {
+  //     log(response.body);
+  //     return postListResponseModelFromJson(response.body);
+  //   } else if (response.statusCode == 400 || response.statusCode == 401) {
+  //     throw CredentialFailure(
+  //       message: 'token'
+  //     );
+  //   } else {
+  //     throw ServerException(message: 'server');
+  //   }
   }
   
   @override
@@ -155,11 +177,12 @@ files: newPostModel.pictures
   @override
   Future<PostDetailsResponseModel> getPost(int postId, String token, {String? lang = 'ar'})async {
     try {
+      log(token);
        final response =
-        await client.get(Uri.parse('$baseUrl$postsApi/$postId?detailed=1'),
+        await client.get(Uri.parse('$baseUrl$postsApi/$postId?detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package,fieldsValues'),
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': token,
+              'Authorization': "Bearer $token",
               'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
               Strings.contentLang: lang!
             },
@@ -167,6 +190,7 @@ files: newPostModel.pictures
             
             );
     if (response.statusCode == 200) {
+      log(response.body.toString());
       return postDetailsResponseFromJson(response.body);
     }
     
@@ -267,7 +291,16 @@ String email,
   String token,
   {String? lang = 'ar'})async {
        
+var response2 = await apiClient!.post("$postsApi/$postId/report", 
 
+body: {
+              'report_type_id':reportType , 
+              'email':email, 
+              'message':msg
+            }
+);
+
+return;
       final response =
         await client.post(Uri.parse('$baseUrl$postsApi/$postId/report'),
             headers: {
@@ -309,6 +342,19 @@ String email,
   @override
   Future<void> sendMessage(String postId, String name, String email, String msg, String token, {String? lang = 'ar'}) async{
    
+   var response2 = await apiClient!.postFormData("/api/threads", 
+   
+   body: {
+'auth_field': 'email',
+      'email': email,
+         'body': msg,
+      'post_id':  postId,
+          'name': name
+
+
+   }
+   );
+   return;
    var request = http.MultipartRequest(
     'POST',
     Uri.parse('$baseUrl/api/threads'),
@@ -397,6 +443,33 @@ log(responseBody);
     } else {
       throw ServerException(message: 'server');
     }
+  }
+  
+  @override
+  Future<void> sendMessageToManagement(String firstName, String lastName, String email, String msg, String countryCode, String countryName, String token, {String? lang = 'ar'})async {
+   var response2 = await apiClient!.post("/api/contact", 
+
+body: {
+              'first_name':firstName ,
+              'last_name':lastName , 
+              'country_code':countryCode , 
+              'country_name':countryName, 
+              'email':email, 
+              'message':msg, 
+              
+            }
+
+
+);
+
+return;
+  }
+  
+  @override
+  Future<PostListResponseModel> getMorePosts(String url, {String? lang = 'ar'})async {
+  var response2 = await apiClient!.getPaginate(url);
+
+  return postListResponseModelFromJson(response2);
   }
 
 

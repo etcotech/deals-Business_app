@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:deals_and_business/data/models/category/category_model.dart';
+import 'package:deals_and_business/data/models/category/category_subcategoory_model.dart';
 import 'package:deals_and_business/data/models/search/search_post_model.dart';
 import 'package:deals_and_business/domain/repositories/search_repository.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ String sort_order ='asc';
 String? category;
 
 
-setCategorory(CategoryModel? categoryModel){
+setCategorory(CategorySubcategoryModel? categoryModel){
   category = categoryModel!.name!.toString();
   category_id = categoryModel.id.toString();
   notifyListeners();

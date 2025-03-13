@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'category_paginate_model.dart';
 
-CategoryListResponseModel categoryListResponseModelFromJson(String str) =>
-    CategoryListResponseModel.fromJson(json.decode(str));
+CategoryListResponseModel categoryListResponseModelFromJson(Map<String,dynamic> str) =>
+    CategoryListResponseModel.fromJson(str);
 
 String categoryListResponseModelToJson(CategoryListResponseModel data) =>
     json.encode(data.toJson());

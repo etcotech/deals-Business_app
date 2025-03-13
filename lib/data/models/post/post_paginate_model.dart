@@ -1,18 +1,26 @@
+import 'dart:developer';
+
 import 'package:deals_and_business/data/models/post/post_model.dart';
 
 class PostPaginateModel {
   Meta? meta;
   List<PostModel>? posts;
-
-  PostPaginateModel({this.meta , this.posts});
+PaginateLinks? paginateLinks;
+  PostPaginateModel({this.meta , this.posts , this.paginateLinks});
 
   PostPaginateModel.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
+    paginateLinks = json['links'] != null ?
+     PaginateLinks.fromJson(json['links']) : null;
+
+
     posts =[];
   if (json['data']!=null) {
     Iterable data = json['data'];
     posts = data.map((post)=>PostModel.fromJson(post)).toList();
   }
+      log("NO PREOM PAGINATE MODEL");
+
   }
 
   Map<String, dynamic> toJson() {
@@ -48,12 +56,12 @@ class Meta {
     currentPage = json['current_page'];
     from = json['from'];
     lastPage = json['last_page'];
-    if (json['links'] != null) {
-      links = <Links>[];
-      json['links'].forEach((v) {
-        links!.add(Links.fromJson(v));
-      });
-    }
+    // if (json['links'] != null) {
+    //   links = <Links>[];
+    //   json['links'].forEach((v) {
+    //     links!.add(Links.fromJson(v));
+    //   });
+    // }
     path = json['path'];
     perPage = json['per_page'];
     to = json['to'];
@@ -75,7 +83,28 @@ class Meta {
     return data;
   }
 }
+class PaginateLinks {
+   String? first;
+   String? last;
+   String? prev;
+   String? next;
 
+  PaginateLinks({ this.first,  this.last,  this.prev,  this.next});
+PaginateLinks.fromJson(Map<String ,dynamic> data){
+  first = data['first'];
+  last = data['last'];
+  prev= data['prev']; 
+  next = data['next'];
+}
+Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['first'] = first;
+    data['last'] = last;
+   data['prev'] = prev;
+    data['next'] = next;
+    return data;
+  }
+}
 class Links {
   String? url;
   String? label;

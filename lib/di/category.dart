@@ -22,7 +22,10 @@ sl.registerFactory<CategoryProvider>(()=> CategoryProvider(categoryRepository: s
 
   // Data sources
   sl.registerLazySingleton<CategoryRemoteDataSource>(
-        () =>CategoryRemoteDataSourceImpl(client: sl()),
+        () =>CategoryRemoteDataSourceImpl(client: sl(), 
+        
+        apiClient: sl()
+        ),
   );
   //
   //  sl.registerLazySingleton<UserLocalDataSource>(

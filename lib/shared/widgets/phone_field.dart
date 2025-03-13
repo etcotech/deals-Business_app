@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class PhoneField extends StatelessWidget {
   final String? flag;
   final String? code;
+final   String? errorText;
   final TextEditingController controller;
   final String hintText;
   final TextInputType keyboardType;
@@ -16,7 +17,7 @@ final Function()? onSelectCountryCode;
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator,  this.iconData, this.onTextChange, this.onSelectCountryCode, this.flag, this.code, // Nullable validator function
+    this.validator,  this.iconData, this.onTextChange, this.onSelectCountryCode, this.flag, this.code, this.errorText, // Nullable validator function
   });
 
   @override
@@ -80,6 +81,7 @@ helperMaxLines: null,
         size: 18,
         
         ) ,
+        errorText: errorText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none

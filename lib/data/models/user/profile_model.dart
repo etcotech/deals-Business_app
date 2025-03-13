@@ -126,7 +126,6 @@ class ProfileModel {
     lastActivity = json['last_activity'];
     phoneIntl = json['phone_intl'];
 
-
   }
 
   Map<String, dynamic> toJson() {

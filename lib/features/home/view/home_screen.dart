@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
@@ -21,13 +23,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final ScrollController _scrollController = ScrollController();
+void _gridScrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      //Fetch
+log("BOTTOM OF GRID");
+  context.read<HomeProvider>().getMorePosts(context);
+    }
+  }
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+_scrollController.addListener(_gridScrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_){
+      
 initHome();
 
     });
@@ -37,7 +48,12 @@ initHome(){
   context.read<HomeProvider>().getCategories(context);
 context.read<HomeProvider>().getPosts(context);
 }
-
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
@@ -94,7 +110,12 @@ initHome();
                   enableDrag: false, // Prevent dragging to dismiss
                   backgroundColor: Colors.transparent, // Make background transparent
                   builder: (context) {
-                    return CountriesBottomsheet();
+                    return CountriesBottomsheet(
+
+                      onSelectCountry: (country){
+                        provider.saveCountryData(country);
+                      },
+                    );
                   },
                 );
             }, 
@@ -107,8 +128,11 @@ initHome();
         body: RefreshIndicator(
           onRefresh: ()async{
             provider.refreshPosts(context);
+                        provider.refreshCategories(context);
+
           },
           child: CustomScrollView(
+            controller: _scrollController,
             slivers: [
           SliverToBoxAdapter(
             child: Column(
@@ -121,7 +145,14 @@ initHome();
           HomeCategories(),
           SizedBox(height: 24,),
           
-          HomeListings()
+          HomeListings(), 
+
+
+          Visibility(
+            visible: provider.isPaginateLoading,
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ))
               ],
             ),
           )

@@ -1,7 +1,9 @@
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/features/category/views/category_details_screen.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -79,6 +81,17 @@ else{
              provider.categoris.map((category)=>
              
              HomeCategory(
+              onTap: (){
+
+
+                Navigator.of(context).push(
+                  PageTransition(type: PageTransitionType.fade , 
+                  child: CategoryDetailsScreen(
+                    categoryModel: category,
+                  )
+                  )
+                );
+              },
             title: category.name,
             image: category.iconClass,
           ), 
@@ -101,53 +114,63 @@ else{
 class HomeCategory extends StatelessWidget {
   final String? title;
   final String? image;
-  
-  const HomeCategory({super.key, this.title, this.image});
+  final Function? onTap;
+  const HomeCategory({super.key, this.title, this.image, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-
-        width: MediaQuery.sizeOf(context).width*.28,
-         height: MediaQuery.sizeOf(context).width*.28,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), 
-            color: Colors.white, 
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 1),
-                color: Colors.grey[300]!,
-                blurRadius: 4,
-                spreadRadius: 1
-              )
-            ]
-          ),
-
-          child: Center(
-            child: Column(
-
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-
-               Icon(getIcon(image , ),              
-                     color: Theme.of(context).primaryColor, 
-), 
-SizedBox(height: 8,),
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width*.25,
-                  child: Text(title! , 
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                   fontWeight: FontWeight.bold, 
-                    fontSize: 12
-                  ),
-                  ),
+    return  GestureDetector(
+      onTap: (){
+        onTap!();
+      },
+      child:
+      
+       Container(
+      
+          width: MediaQuery.sizeOf(context).width*.28,
+           height: MediaQuery.sizeOf(context).width*.28,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8), 
+              color: Colors.white, 
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 1),
+                  color: Colors.grey[300]!,
+                  blurRadius: 4,
+                  spreadRadius: 1
                 )
-              ],
+              ]
             ),
-          ),
+      
+            child: Center(
+              child: Column(
+      
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+      
+                 Icon(getIcon(image , ),              
+                       color: Theme.of(context).primaryColor, 
+      ), 
+      SizedBox(height: 8,),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width*.25,
+                    child: Text(title! , 
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                     fontWeight: FontWeight.bold, 
+                      fontSize: 12
+                    ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+      ),
+    
+    
+    
     );
   }
 
@@ -167,4 +190,6 @@ SizedBox(height: 8,),
 
     }
   }
+
+
 }

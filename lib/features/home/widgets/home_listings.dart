@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
@@ -18,6 +21,42 @@ class HomeListings extends StatefulWidget {
 
 class _HomeListingsState extends State<HomeListings> {
   bool isList= true;
+  final ScrollController _listScrollController = ScrollController();
+  final ScrollController _gridtScrollController = ScrollController();
+
+  void _listScrollListener() {
+    if (_listScrollController.position.pixels ==
+        _listScrollController.position.maxScrollExtent) {
+      //Fetch
+log("BOTTOM OF LISt");
+
+    }
+  }
+
+  void _gridScrollListener() {
+    if (_gridtScrollController.position.pixels ==
+        _gridtScrollController.position.maxScrollExtent) {
+      //Fetch
+log("BOTTOM OF GRID");
+
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _gridtScrollController.addListener(_gridScrollListener);
+        _listScrollController.addListener(_listScrollListener);
+
+  }
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _gridtScrollController.dispose();
+    _listScrollController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;    
@@ -169,15 +208,15 @@ else{
 
 
 
-isList?
-
-ListView( shrinkWrap: true,
+if (isList) ListView( 
+  controller: _listScrollController,
+  shrinkWrap: true,
 physics: NeverScrollableScrollPhysics(),
                   
                 children: provider.posts.map((post)=>  HomePost(
                   isList: true,postModel: post,
-                )).toList(),):
-                GridView.count(
+                )).toList(),) else GridView.count(
+                  controller: _gridtScrollController,
                   shrinkWrap: true,
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 0,
@@ -291,7 +330,9 @@ final double itemWidth = size.width*.45;
       
                        SizedBox(
                               width: MediaQuery.sizeOf(context).width*.35,
-                              child: Text(postModel!.category!.name.toString(), 
+                              child: Text(
+                                  postModel!.category==null?'':
+                                postModel!.category!.name.toString(), 
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -301,6 +342,9 @@ final double itemWidth = size.width*.45;
                               ),
                               ),
                             ), 
+        
+        
+        
           SizedBox(
             width: MediaQuery.sizeOf(context).width*.35,
             child: Text(postModel!.title!, 
@@ -521,9 +565,14 @@ final double itemWidth = size.width*.45;
            ),
        
        SizedBox(width: 5,),
-           Text(postModel!.contactName.toString() ,style: TextStyle(
-        color: Colors.grey
-           ),)
+           SizedBox(
+            width: 120,
+             child: Text(postModel!.contactName.toString()
+             ,maxLines: 1,overflow: TextOverflow.ellipsis
+              ,style: TextStyle(
+                     color: Colors.grey
+             ),),
+           )
        
        
        

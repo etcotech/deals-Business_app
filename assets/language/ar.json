@@ -133,6 +133,40 @@
 "select_category_first":"اختر الفئة" ,
 "select_city_first":"اختر المدينة" ,
 "select_images_first":"قم بتحميل صور", 
-"no_messages":"لا توجد رسايل"
+"no_messages":"لا توجد رسايل", 
+
+"phone_should_be_9_digits":"يجب ان يحتوي رقم الهاتف على ٩ خانات" ,
+"title_required":"يجب اضافة العنوان" ,
+"desc_required":"الوصف مطلوب" ,
+
+"price_required":"السعر مطلوب", 
+"invalid_email":"البريد الالكتروني غير صالح" ,
+"message_required":"هذا الحقل مطلوب" , 
+"message_sent":"تم ارسال الرسالة",
+"send_a_message":"ارسل رسالة", 
+"report_sent":"تم ارسال البلاغ" 
+
+, 
+"change_user_gender":"تغيير جنس المستخدم"
+ ,
+ "change_user_type":"تغيير نوع المستخدم"
+ ,
+ "change_password":"تغيير كلمة المرور"
+ ,
+ "delete_account":"حذف الحساب"
+ ,
+ "professional_user":"مهني"
+ ,
+ "individual_user":"شخصي"
+ ,
+ "mr":"ذكر"
+ ,
+ "mrs":"أنثى"
+
+, 
+"sub_categories_in":"الفئات الفرعية في ", 
+"continue":"استمرار" ,
+"are_you_sure_delete_account":"هل انت متأكد من أنك تريد حذف الحساب؟ لا يمكنك التراجع عن ذلك!"
+
 }
   

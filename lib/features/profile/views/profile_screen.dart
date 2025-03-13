@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
@@ -27,7 +29,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
 
-context.read<ProfileProvider>().getUserProfile();
+context.read<ProfileProvider>().getUserProfile(
+  userData:
+  (user){
+log(user!.genderId.toString());
+log("TYPE${user.userTypeId}");
+
+});
 context.read<ProfileProvider>().getUserStats();
 
 

@@ -4,8 +4,8 @@ import 'package:deals_and_business/data/models/category/category_subcategory_pag
 
 import 'category_paginate_model.dart';
 
-CategorySubCategoryListResponseModel categorySubCategoryListResponseModelFromJson(String str) =>
-    CategorySubCategoryListResponseModel.fromJson(json.decode(str));
+CategorySubCategoryListResponseModel categorySubCategoryListResponseModelFromJson(Map<String,dynamic> str) =>
+    CategorySubCategoryListResponseModel.fromJson(str);
 
 String categorySubCategoryResponseModelToJson(CategorySubCategoryListResponseModel data) =>
     json.encode(data.toJson());

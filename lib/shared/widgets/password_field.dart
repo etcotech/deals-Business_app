@@ -6,6 +6,7 @@ class PasswordField extends StatefulWidget {
   final String? errorText;
   final TextInputType keyboardType;
   final IconData iconData;
+  final bool? showVisiblityIcon;
   final String? Function(String?)? validator; // Validator function as a parameter
 
   const PasswordField({
@@ -13,7 +14,8 @@ class PasswordField extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator, required this.iconData, this.errorText, // Nullable validator function
+    this.validator, required this.iconData, 
+    this.errorText, this.showVisiblityIcon=true, // Nullable validator function
   });
 
   @override
@@ -29,13 +31,19 @@ class _PasswordFieldState extends State<PasswordField> {
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       
-      obscureText: visible,
+      obscureText:
+      !widget.showVisiblityIcon!?false:
+      
+       visible,
       decoration: InputDecoration(
 contentPadding: EdgeInsets.symmetric(
   vertical: 10
 ),
 
-suffixIcon: IconButton(onPressed: (){
+suffixIcon:
+!widget.showVisiblityIcon! ?
+null:
+ IconButton(onPressed: (){
 visible = !visible;
 setState(() {
   

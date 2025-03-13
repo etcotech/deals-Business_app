@@ -305,7 +305,7 @@ Expanded(
             ),
             Text(
                provider.postDetailsModel!.user != null?
-              provider.postDetailsModel!.user!.name.toString()
+              provider.postDetailsModel!.user!.username .toString()
               :'', 
               // overflow: TextOverflow.ellipsis,
             style: TextStyle(              fontSize: 10,

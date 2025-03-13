@@ -37,7 +37,7 @@ class PostRepositoryImpl implements PostRepository {
   });
 
   @override
-  Future<Either<Failure, PostListResponseModel>> getPosts() async{
+  Future<Either<ApiException, PostListResponseModel>> getPosts() async{
     return  await _postListProvider((){
 
         return    postRemoteDatasource.getPosts(
@@ -76,7 +76,7 @@ class PostRepositoryImpl implements PostRepository {
     //   return Left(NetworkFailure());
     // }
   }
-Future<Either<Failure, PostListResponseModel>> _postListProvider(
+Future<Either<ApiException, PostListResponseModel>> _postListProvider(
    _DataSourceChooser getDataSource,
       ) async {
     // if (await networkInfo.isConnected) {
@@ -88,12 +88,7 @@ Future<Either<Failure, PostListResponseModel>> _postListProvider(
         return Right(remoteResponse);
       } 
       
-      on SocketException{
-        return Left(NetworkFailure(message: 'network'));
-      }
-      
-      
-      on Failure catch (failure) {
+        on ApiException catch (failure) {
         return Left(failure);
       }
     // } else {
@@ -199,7 +194,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
   }
   
   @override
-  Future<Either<Failure, void>> reportPost(String postId, String reportType, 
+  Future<Either<ApiException, void>> reportPost(String postId, String reportType, 
   String email,
 
   String msg)async {
@@ -213,23 +208,14 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
        
         return Right(remoteResponse);
       } 
-          on TimeoutException{
-        return Left(TimeoutFailure());
-  }
-  on SocketException{
-    log('SPOCLe');
-        return Left(NetworkFailure());
-  }
-   
-      
-      on Failure catch (failure) {
+        on ApiException catch (failure) {
         return Left(failure);
       }
     
   }
   
   @override
-  Future<Either<Failure, void>> sendMessage(String postId, String name, String email, String msg)async {
+  Future<Either<ApiException, void>> sendMessage(String postId, String name, String email, String msg)async {
       try {
         final remoteResponse = await postRemoteDatasource.
         sendMessage(postId, 
@@ -241,16 +227,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
        
         return Right(remoteResponse);
       } 
-          on TimeoutException{
-        return Left(TimeoutFailure());
-  }
-  on SocketException{
-    log('SPOCLe');
-        return Left(NetworkFailure());
-  }
-   
-      
-      on Failure catch (failure) {
+       on ApiException catch (failure) {
         return Left(failure);
       }
   }
@@ -312,6 +289,39 @@ lang: localeLocalDatasource.getCurrentLocale()
       on Failure catch (failure) {
         return Left(failure);
       }
+  }
+  
+  @override
+  Future<Either<ApiException, void>> sendMessageToManagement({String? firstName, String? lastName,
+   String? email, String? msg, String? countryCode, String? countryName})async {
+    try {
+        final remoteResponse = await postRemoteDatasource.sendMessageToManagement(
+          
+          firstName!, 
+        lastName!, 
+        email!, msg!, countryCode!, countryName!,
+        
+         localDataSource.getToken()??'');
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } 
+        on ApiException catch (failure) {
+        return Left(failure);
+      }
+  }
+  
+  @override
+  Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url) async{
+   return  await _postListProvider((){
+
+        return    postRemoteDatasource.getMorePosts(
+          url, 
+        
+        lang: localeLocalDatasource.getCurrentLocale()
+        );
+    });
   }
 
 

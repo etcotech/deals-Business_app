@@ -151,7 +151,38 @@
 "select_city_first":"Please select City" ,
 "select_images_first":"Please select images"
 ,
-"no_messages":"No messages"
+"no_messages":"No messages",
 
+"phone_should_be_9_digits":"Phone number must be 9 digits" ,
+"title_required":"Title required" ,
+"desc_required":"Description required" ,
+
+"price_required":"Price required", 
+"invalid_email":"Invalid email address" ,
+"message_required":"This field is required" 
+,
+"message_sent":"Message sent!", 
+"send_a_message":"Send a message",
+"report_sent":"Report sent" 
+, 
+"change_user_gender":"Change user gender"
+ ,
+ "change_user_type":"Change user type"
+ ,
+ "change_password":"Chane password"
+ ,
+ "delete_account":"Delete account"
+ ,
+ "professional_user":"Professional"
+ ,
+ "individual_user":"Individual"
+ ,
+ "mr":"Mr"
+ ,
+ "mrs":"Mrs"
+ , 
+ "sub_categories_in":"Sub categories in",
+ "continue":"Continue" ,
+"are_you_sure_delete_account":"Are you sure you want to delete your account? you can't undo that!"
   }
   

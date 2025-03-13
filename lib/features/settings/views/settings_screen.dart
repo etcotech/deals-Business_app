@@ -1,8 +1,10 @@
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
+import 'package:deals_and_business/features/settings/views/account_settings.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -34,13 +36,23 @@ title: Text(getTranslated(Strings.settings,
 
 
   child: Column(
+    spacing: 8,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
 
     SizedBox(height: 24,),
 
 
-_title(context, Strings.accountSettings, Icons.person, (){}),
+_title(context, Strings.accountSettings, Icons.person, (){
+
+  Navigator.of(context).push(
+
+    PageTransition(type: PageTransitionType.leftToRight, 
+    
+    child: AccountSettings()
+    )
+  );
+}),
 _title(context, Strings.faq, Icons.question_mark, (){}),
 _title(context, Strings.privacy, Icons.fingerprint, (){}),
 _title(context, Strings.terms, Icons.policy, (){}),
@@ -78,4 +90,7 @@ _title(context, Strings.scam_ploicy, FontAwesomeIcons.shield, (){}),
       ),
     );
   }
+
+
+
 }

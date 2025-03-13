@@ -49,7 +49,17 @@ String? error;
 String? titleError;
 String? bodyError;
 String? priceError;
-
+String? messageError;
+String? nameError;
+clearMessageErrors(){
+bodyError=null;
+nameError=null;
+notifyListeners();
+}
+clearReportErrors(){
+  messageError=null;
+  notifyListeners();
+}
 clearErrors(){
   titleError = null;
   bodyError= null;
@@ -58,6 +68,14 @@ clearErrors(){
 }
 void setTitleError(String? err){
   titleError= err;
+  notifyListeners();
+}
+void setMessageError(String? err){
+  messageError= err;
+  notifyListeners();
+}
+void setNameError(String? err){
+  nameError= err;
   notifyListeners();
 }
 void setBodyError(String? err){
@@ -131,7 +149,7 @@ pictures: files.map((file)=> File(file.path)).toList()
   result.fold((failure){
 showErrorMessage(context, failure.message.toString());
 if (failure is UnauthorizedException) {
-  
+  logout();
 }
 if(failure is ValidationException){
 //handle validation errors
@@ -164,6 +182,8 @@ if(failure is ValidationException){
 
 
   }
+ 
+ 
   final errorMessages = errors.entries.map((entry) {
     return '${entry.key}: ${entry.value.join(', ')}';
   }).join('\n');
@@ -265,7 +285,7 @@ Future refreshFavouritePosts()async{
     }, (success){
       favouritePosts =[];
       favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
-// postDetailsModel = success.postDetailsModel;
+// postDetailsModel = success.;
 // isFavourite= postDetailsModel!.featured==1;
 notifyListeners();
     });
@@ -613,6 +633,8 @@ int reportType,
 String msg,String email )async{
   isLoading =true;
   errorData = null;
+    messageError=null;
+
   notifyListeners();
 try {
 
@@ -623,13 +645,64 @@ try {
    );
 
   result.fold((failure){
+    if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'title') {
+       titleError ='';
+  for (var titleValidationError in  errors[error]) {
+    log(titleValidationError);
+   
+     titleError =  titleValidationError +"\n";
+  }
+ 
+    }
+
+
+  if (error == 'message') {
+       messageError ='';
+  for (var messageValidationError in  errors[error]) {
+   
+   
+     messageError =  messageValidationError +"\n";
+  }
+ 
+    }
+        notifyListeners();
+
+return;
+
+  }
+ 
+ 
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+
+
+
+return;
+
+
+
+}
+
+if (failure is UnauthorizedException) {
+  logout();
+}
 showErrorMessage(context, failure.message.toString());
 
   }, (success){
-    selectedCat=null;
-selectedCity=null;
-selectedCountry=null;
-files=[];
+//     selectedCat=null;
+// selectedCity=null;
+// selectedCountry=null;
+// files=[];
 notifyListeners();
 showSuccessMessage(context, 'Report Sent!');
 Navigator.pop(context);
@@ -665,6 +738,51 @@ try {
    );
 
   result.fold((failure){
+
+
+    if (failure is UnauthorizedException) {
+  logout();
+}
+if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'name') {
+       nameError ='';
+  for (var nameValidationError in  errors[error]) {
+    log(nameValidationError);
+   
+     nameError =  nameValidationError +"\n";
+  }
+ 
+    }
+
+
+  if (error == 'body') {
+       bodyError ='';
+  for (var bodyValidationError in  errors[error]) {
+    log(bodyValidationError);
+   
+     bodyError =  bodyValidationError +"\n";
+  }
+ 
+    }
+
+
+  }
+ 
+ 
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+    notifyListeners();
+
+}
 showErrorMessage(context, failure.message.toString());
 
   }, (success){
@@ -698,8 +816,8 @@ String? postId,
 String name,
 String msg,String email )async{
   // isLoading =true;
-  // errorData = null;
-  // notifyListeners();
+  messageError = null;
+  notifyListeners();
 try {
 
   var result = await  postRepository!.sendMessage(postId.toString(),
@@ -709,6 +827,27 @@ try {
    );
 
   result.fold((failure){
+if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'body') {
+       bodyError ='';
+  for (var bodyValidationError in  errors[error]) {
+    log(bodyValidationError);
+   
+     bodyError =  bodyValidationError +"\n";
+  }
+ 
+    }
+  }
+notifyListeners();
+  return;
+}
 showErrorMessage(context, failure.message.toString());
 
   }, (success){
@@ -747,4 +886,15 @@ refreshThreadMessages(context, postId!);
     (v)=> false
   );
  }
+
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+    messageError=null;
+    notifyListeners();
+  }
+
 }

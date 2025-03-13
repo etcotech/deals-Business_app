@@ -25,6 +25,8 @@ String? getPhoto();
 void savePhoneCode(String code);
 void saveCountryCode(String code);
 void saveCounryFlag(String flag);
+void saveCounryName(String name);
+
 void saveUserName(String name);
 String? getUserName();
 String getPhoneCode();
@@ -32,6 +34,7 @@ String getUserEmail();
 
 String getCountryCode();
 String getCountryFlag();
+String getCounryName();
 }
 const cachedToken = 'TOKEN';
 const cachedUser = 'USER';
@@ -149,5 +152,16 @@ String? getToken()  {
   @override
   void savePhoto(String? photo) {
     sharedPreferences.setString(Strings.photoUrl, photo??'');
+  }
+  
+  @override
+  String getCounryName() {
+   return sharedPreferences.getString(Strings.countryName)??'Saudi Arabia';
+  }
+  
+  @override
+  void saveCounryName(String name) {
+       sharedPreferences.setString(Strings.countryName, name??'');
+
   }
 }

@@ -4,6 +4,7 @@ import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/search/search_post_model.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
 import 'package:deals_and_business/features/search/providers/search_provider.dart';
@@ -88,7 +89,12 @@ showModalBottomSheet(
               enableDrag: false, // Prevent dragging to dismiss
               backgroundColor: Colors.transparent, // Make background transparent
               builder: (context) {
-                return CountriesBottomsheet();
+                return CountriesBottomsheet(
+
+                  onSelectCountry: (country){
+                    context.read<HomeProvider>().saveCountryData(country);
+                  },
+                );
               },
             );
         }, 

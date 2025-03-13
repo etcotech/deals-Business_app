@@ -477,6 +477,8 @@
 
 
 
+import 'dart:developer';
+
 class PostModel {
   int? _id;
   String? _countryCode;
@@ -945,9 +947,9 @@ class PostModel {
     _description = json['description'];
     if (json['tags'] != dynamic) {
       _tags = <dynamic>[];
-      json['tags'].forEach((v) {
+      // json['tags'].forEach((v) {
         // _tags!.add(dynamic.fromJson(v));
-      });
+      // });
     }
     _price = json['price'];
     _currencyCode = json['currency_code'];
@@ -1004,7 +1006,9 @@ class PostModel {
     _postType = json['postType'];
     _city = json['city'] != null ? City.fromJson(json['city']) : null;
     _payment = json['payment'];
-    if (json['savedByLoggedUser'] != dynamic) {
+        _savedByLoggedUser = [];
+    if (json['savedByLoggedUser'] != null) {
+      log("LOGGED USER ${json['savedByLoggedUser']}");
       _savedByLoggedUser = [];
       json['savedByLoggedUser'].forEach((v) {
         _savedByLoggedUser!.add(v);
@@ -1012,10 +1016,12 @@ class PostModel {
     }
     if (json['pictures'] != dynamic) {
       _pictures = <Pictures>[];
-      json['pictures'].forEach((v) {
-        _pictures!.add(Pictures.fromJson(v));
-      });
+      // json['pictures'].forEach((v) {
+      //   _pictures!.add(Pictures.fromJson(v));
+      // });
     }
+
+
   }
 
   Map<String, dynamic> toJson() {

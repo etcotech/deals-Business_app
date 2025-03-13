@@ -50,6 +50,9 @@ class HomeSearchContainer extends StatelessWidget {
       Text(getTranslated('promote_text2', context)!,  style: TextStyle(
         color: Colors.white54
       ),), 
+
+            SizedBox(height: 16,), 
+
       Container(
         padding: EdgeInsets.all(8),
         width: MediaQuery.sizeOf(context).width,

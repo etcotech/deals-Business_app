@@ -81,7 +81,14 @@ class _ContactWithSellerScreenState extends State<ContactWithSellerScreen> {
           InputFieldNoIcon(controller: namecontroller,
            hintText: getTranslated(Strings.name, context)!, 
            
-           validator: titleValidator,
+           errorText:provider.nameError ,
+        validator: (str){
+                   var error=   nameValidator(str);
+                  //  var 
+                   provider.setNameError(error);
+                  //  return null;
+                    return provider.nameError;
+                    },
            ),
           
           InputField(controller: emailController,
@@ -95,7 +102,14 @@ class _ContactWithSellerScreenState extends State<ContactWithSellerScreen> {
            hintText: getTranslated(Strings.messageToUs, context)!,
            
            iconData: Icons.mail,
-           validator: reportMessageValidator,
+          errorText:provider.bodyError ,
+        validator: (str){
+                   var error=   reportMessageValidator(str);
+                  //  var 
+                   provider.setBodyError(error);
+                  //  return null;
+                    return provider.bodyError;
+                    },
            )
           
           ],),

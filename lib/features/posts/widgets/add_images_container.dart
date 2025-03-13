@@ -48,6 +48,8 @@ selectedImage(compressedImages);
     }
     return null;
   }
+ 
+ 
   @override
   Widget build(BuildContext context) {
     return  Consumer<PostProvider>(

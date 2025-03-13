@@ -1,6 +1,7 @@
 
 import 'package:deals_and_business/di/auth.dart';
 import 'package:deals_and_business/di/category.dart';
+import 'package:deals_and_business/di/chat.dart';
 import 'package:deals_and_business/di/common.dart';
 import 'package:deals_and_business/di/country.dart';
 import 'package:deals_and_business/di/home.dart';
@@ -19,7 +20,7 @@ Future<void> init() async {
   registerHomeFeature();
   registerLocaleFeature();
   registerSearchFeature();
-
+  registerChatFeature();
   regiserSplashFeature();
 
   registerAuthFeature();

@@ -11,6 +11,7 @@ import 'package:deals_and_business/features/profile/providers/profile_provider.d
 import 'package:deals_and_business/features/search/providers/search_provider.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
+import 'package:deals_and_business/shared/providers/chat_provider.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -43,6 +44,7 @@ void main()async {
      ChangeNotifierProvider(create: (_)=>  di.sl<SearchProvider>()),
      ChangeNotifierProvider(create: (_)=>  di.sl<ProfileProvider>()),
      ChangeNotifierProvider(create: (_)=>  di.sl<CategoryProvider>()),
+     ChangeNotifierProvider(create: (_)=>  di.sl<ChatProvider>()),
 
 
     ],

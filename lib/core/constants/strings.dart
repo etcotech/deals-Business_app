@@ -13,6 +13,7 @@ static const String userName ='UserNAme';
 static const String phoneCode ='PhoneCode';
 static const String userEmail ='UserEmail';
 static const String photoUrl ='PhotoUrl';
+static const String countryName ='CountryName';
 
 
 //translate
@@ -53,6 +54,17 @@ static const String region = "region";
 static const String  name = "user_name";
 static const String statics = "statics";
 static const String editMyProfile = "edit_my_profile";
+
+static const String changeUserGender = "change_user_gender";
+static const String changeUserType = "change_user_type";
+static const String changePassword = "change_password";
+static const String deleteAccount = "delete_account";
+static const String professionalUser = "professional_user";
+static const String individualUser = "individual_user";
+static const String male = "mr";
+static const String female = "mrs";
+
+
 static const String published = "published";
 static const String pendingPosts = "pending_post";
 static const String favourite = "favourite_posts";
@@ -111,5 +123,6 @@ static const String  publish = "publish";
 static const String  selectCategory = "select_category_first";
 static const String  selectCity = "select_city_first";
 static const String  selectImages= "select_images_first";
+static const String  subCategoriesIn= "sub_categories_in";
 
 }

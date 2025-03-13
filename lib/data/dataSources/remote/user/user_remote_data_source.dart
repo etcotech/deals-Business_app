@@ -34,7 +34,13 @@ abstract class UserRemoteDataSource {
     String? userName, 
     String? email ,
     String? countryCode,
-    String? phone}
+    String? phone
+    ,
+    
+           int? gender_id, 
+           int? type_id
+    
+    }
   );
 
 
@@ -261,10 +267,54 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
     String? userName, 
     String? email ,
-    String? phone})async {
+    String? phone,
+    
+           int? gender_id, 
+           int? type_id})async {
 
- var request = http.MultipartRequest('POST',
-  Uri.parse("$baseUrl$userApi/$userId"));
+Map<String,dynamic> body = {
+
+  'auth_field':'email', 
+  'email':email , 
+  'name':name,
+  'username':userName, 
+  '_method':"PUT"
+
+};
+if (gender_id!=null) {
+  body['gender_id']= gender_id.toString();
+}
+if (type_id!=null) {
+  body['user_type_id']= type_id.toString();
+}
+
+if (phone!=null) {
+          body['phone'] =phone;
+         body['phone_country'] =countryCode.toString();
+
+}
+
+if (userName!=null) {
+          body['username'] =userName;
+
+}
+
+log(body.toString());
+var response =  await httpClient!.postFormData("/api/users/$userId", 
+fileParam: 'photo',
+files:
+
+photo!=null?
+ [
+  photo
+]:null,
+method: 'POST', 
+body: body, 
+
+);
+return;
+ var request = http.MultipartRequest('PUT',
+  Uri.parse("$baseUrl/api/users/$userId"));
 
 if (photo!=null) {
   final fileStream = http.ByteStream(photo.openRead());
@@ -285,7 +335,7 @@ request.headers.addAll({
               'Authorization':'Bearer $token', 
               
             });
-
+request.fields['auth_field']= 'email';
 if (email!=null) {
           request.fields['email'] =email;
 
@@ -303,6 +353,8 @@ if (email!=null) {
           request.fields['email'] =email;
 
 }
+
+log(request.fields.toString());
   var res = await request.send();
  final responseBody = await res.stream.bytesToString();
 log(responseBody);

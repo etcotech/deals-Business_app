@@ -10,12 +10,13 @@ import 'package:deals_and_business/data/models/post/thread_message_list_response
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 
 abstract class PostRepository {
-  Future<Either<Failure, PostListResponseModel>> getPosts();
+  Future<Either<ApiException, PostListResponseModel>> getPosts();
+  Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url);
 
     Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts();
 
   Future<Either<ApiException, Map<String,dynamic>>> addPost(
-    NewPostModel new_post_model 
+    NewPostModel newPostModel 
   );
   Future<Either<Failure, PostDetailsResponseModel>> getPost(
     String token,
@@ -26,7 +27,7 @@ Future<Either<Failure, String>> addPostFavourite(
     String postId
   );
 
-  Future<Either<Failure, void>> reportPost(
+  Future<Either<ApiException, void>> reportPost(
    String postId, 
   
     String reportType, 
@@ -36,7 +37,7 @@ String email,
   ,
   );
 
-  Future<Either<Failure, void>> sendMessage(
+  Future<Either<ApiException, void>> sendMessage(
   String postId, 
   
     String name, 
@@ -44,7 +45,16 @@ String email,
     String msg
   ,
   );
-  // Future<Either<Failure, User>> signUp(SignUpParams params);
+  Future<Either<ApiException, void>> sendMessageToManagement({
+    String firstName, 
+  String lastName,
+String email,
+
+    String msg,
+
+    String  countryCode , 
+    String countryName , 
+  });
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();
 

@@ -130,7 +130,17 @@ var messageController = TextEditingController();
           InputAreaWithIcon(controller: messageController, 
           hintText: getTranslated(Strings.messageToUs, context)!
           , iconData: Icons.mail,
-          validator: reportMessageValidator,
+          errorText:provider.messageError,
+          validator:
+          (str){
+                   var error=   reportMessageValidator(str);
+                  //  var 
+                   provider.setMessageError(error);
+                  //  return null;
+                    return provider.messageError;
+                    },
+          
+           
           )
           
           

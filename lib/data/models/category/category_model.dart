@@ -1,6 +1,6 @@
 class CategoryModel {
   int? id;
-  Null parentId;
+  dynamic parentId;
   String? name;
   String? slug;
   String? description;
@@ -17,7 +17,7 @@ class CategoryModel {
   int? isForPermanent;
   int? active;
   String? pictureUrl;
-  Null parentClosure;
+  dynamic parentClosure;
 
   CategoryModel(
       {this.id,

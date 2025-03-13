@@ -201,8 +201,11 @@ class PostDetailsModel {
     postType = json['postType'];
     city = json['city'] != null ? City.fromJson(json['city']) : null;
     payment = json['payment'];
+
+          savedByLoggedUser = <dynamic>[];
+
     if (json['savedByLoggedUser'] != null) {
-      savedByLoggedUser = <dynamic>[];
+      log("LOGGED USER ${json['savedByLoggedUser']}");
       json['savedByLoggedUser'].forEach((v) {
         savedByLoggedUser!.add(v);
       });

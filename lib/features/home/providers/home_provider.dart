@@ -3,10 +3,12 @@ import 'dart:developer';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/data/models/category/category_model.dart';
+import 'package:deals_and_business/data/models/category/category_subcategoory_model.dart';
 import 'package:deals_and_business/data/models/country/city_model.dart';
 import 'package:deals_and_business/data/models/country/country_model.dart';
 import 'package:deals_and_business/data/models/error_data.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
+import 'package:deals_and_business/data/models/post/post_paginate_model.dart';
 import 'package:deals_and_business/domain/repositories/category_repository.dart';
 import 'package:deals_and_business/domain/repositories/country_repositories.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
@@ -32,19 +34,20 @@ bool isCategoryLoading = false;
 bool isCountryLoading = false;
 
 bool isCityLoading = false;
+bool isPaginateLoading= false;
 
-List<CategoryModel> categoris =[];
+List<CategorySubcategoryModel> categoris =[];
 List<PostModel> posts =[];
 List<CountryModel> countries =[];
 List<CityModel> cities =[];
-
+ PaginateLinks? paginateLinks;
 Future<void> getCategories(BuildContext context)async{
   isCategoryLoading = true;
 errorData = null;
 notifyListeners();
 try {
   
-var result = await categoryRepository!.getCategories();
+var result = await categoryRepository!.getCategoriesDetailed();
 result.fold((failure){
   errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -106,6 +109,7 @@ logout();
 }
 }, (success){
 posts =[];
+paginateLinks = success.postPaginateModel.paginateLinks;
 posts.addAll(success.postPaginateModel.posts!);
 });
 
@@ -131,14 +135,20 @@ notifyListeners();
 }
 
 
-Future<void>refreshPosts(BuildContext context)async{
-//   isLoading = true;
+Future<void> getMorePosts(BuildContext context)async{
 errorData = null;
 notifyListeners();
 try {
-  var result = await postRepository!.getPosts();
+  log(paginateLinks!.last.toString());
+if (paginateLinks?.next!=null) {
+    isPaginateLoading = true;
+notifyListeners();
+   var result = await postRepository!.getMorePosts(
+    paginateLinks!.next.toString() 
+  );
+  
 result.fold((failure){
-    log("FAILURE$failure");
+    log("FAILURE GET MORE $failure");
 
   errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -152,11 +162,110 @@ logout();
   
 }
 }, (success){
-posts =[];
+// posts =[];
+
+log(success.postPaginateModel.posts!.length.toString());
+paginateLinks = success.postPaginateModel.paginateLinks;
 posts.addAll(success.postPaginateModel.posts!);
+notifyListeners();
+});
+
+}
+ 
+
+
+
+} catch (e) {
+   log("FAILURE MORE PORSTS $e");
+
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  notifyListeners();
+
+  isPaginateLoading = false;
+
+notifyListeners();
+}
+
+isPaginateLoading = false;
+notifyListeners();
+}
+
+Future<void>refreshCategories(BuildContext context)async{
+  // isCategoryLoading = true;
+errorData = null;
+notifyListeners();
+try {
+  
+var result = await categoryRepository!.getCategories();
+result.fold((failure){
+  errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+if (failure is CredentialFailure) {
+  //logout
+logout();
+  
+}
+}, (success){
+  categoris =[];
+
+categoris.addAll(success.categoryPaginateModel.categories!);
+});
+
+} catch (e) {
+   log("CATEGORIES $e");
+
+      errorData = ErrorData(
+    message: getErrorMessage(e.toString()), 
+    icon: getErrorIcon(e.toString())
+  );
+  notifyListeners();
+
+  isCategoryLoading = false;
+
+notifyListeners();
+}
+
+isCategoryLoading = false;
+
+notifyListeners();
+}
+
+Future<void>refreshPosts(BuildContext context)async{
+//   isLoading = true;
+errorData = null;
+notifyListeners();
+try {
+  var result = await postRepository!.getPosts();
+result.fold((failure){
+
+
+  errorData = ErrorData(
+    message: getErrorMessage(failure.message.toString()), 
+    icon: getErrorIcon(failure.message.toString())
+  );
+  isLoading= false;
+  notifyListeners();
+if (failure is CredentialFailure) {
+  //logout
+logout();
+  
+}
+}, (success){
+  log("SUCCESS");
+posts =[];
+paginateLinks = success.postPaginateModel.paginateLinks;
+posts.addAll(success.postPaginateModel.posts!);
+notifyListeners();
 });
 } catch (e) {
-
+    log("REFRESH $e");
       errorData = ErrorData(
     message: getErrorMessage(e.toString()), 
     icon: getErrorIcon(e.toString())
@@ -196,7 +305,14 @@ notifyListeners();
 isCountryLoading = false;
 notifyListeners();
 }
+saveCountryData(CountryModel country
+){
+  userRepository!.setCountryCode(country.code!);
+    userRepository!.setCountryFlag(country.flag16Url!);
+  userRepository!.setCountryName(country.name!);
+  userRepository!.setCountryPhoneCode(country.phone!);
 
+}
 
   Future<void> getCities(BuildContext context)async{
   isCityLoading = true;

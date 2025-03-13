@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/failure.dart';
 import 'package:deals_and_business/core/network/network_info.dart';
 import 'package:deals_and_business/data/dataSources/local/locale_local_data_source.dart';
@@ -10,7 +11,7 @@ import 'package:deals_and_business/data/models/category/category_list_response_m
 import 'package:deals_and_business/data/models/category/category_sub_category_list_response_model.dart';
 import 'package:deals_and_business/domain/repositories/category_repository.dart';
 
-typedef _DataSourceChooser = Future<CategoryListResponseModel> Function();
+typedef _DataSourceChooser = Future<CategorySubCategoryListResponseModel> Function();
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryRemoteDataSource categoryRemoteDataSource;
     final LocaleLocalDataSource localeLocalDatasource;
@@ -25,7 +26,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
   });
 
   @override
-  Future<Either<Failure, CategoryListResponseModel>> getCategories() async{
+  Future<Either<ApiException, CategorySubCategoryListResponseModel>> getCategories() async{
+    
     return  await _categoryListProvider((){
 
         return    categoryRemoteDataSource.getCategories(
@@ -38,7 +40,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
 
   
-Future<Either<Failure, CategoryListResponseModel>> _categoryListProvider(
+Future<Either<ApiException, CategorySubCategoryListResponseModel>> _categoryListProvider(
    _DataSourceChooser getDataSource,
       ) async {
     // if (await networkInfo.isConnected) {
@@ -49,14 +51,7 @@ Future<Either<Failure, CategoryListResponseModel>> _categoryListProvider(
        
         return Right(remoteResponse);
       }
-      
-      on TimeoutException{
-        return Left(TimeoutFailure(message: 'connection'));
-  }
-  on SocketException{
-        return Left(NetworkFailure(message: 'network'));
-  }
-       on Failure catch (failure) {
+       on ApiException catch (failure) {
         return Left(failure);
       }
     // } else {

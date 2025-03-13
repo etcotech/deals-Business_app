@@ -1,6 +1,7 @@
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/category/category_model.dart';
+import 'package:deals_and_business/data/models/category/category_subcategoory_model.dart';
 import 'package:deals_and_business/shared/widgets/mini_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../features/home/providers/home_provider.dart';
 
 class CategoriesBottomsheet extends StatefulWidget {
-  final Function(CategoryModel)? onSelectCategory;
+  final Function(CategorySubcategoryModel)? onSelectCategory;
     final Function()? onDeleteCategory;
 
   const CategoriesBottomsheet({super.key, this.onSelectCategory, this.onDeleteCategory});
@@ -31,7 +32,7 @@ context.read<HomeProvider>().getCategories(context);
   }
    int? selectedCat;
 
-      CategoryModel? categoryModel;
+      CategorySubcategoryModel? categoryModel;
 
 
   @override

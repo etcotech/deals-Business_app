@@ -6,6 +6,7 @@ import 'package:deals_and_business/data/models/post/post_details_response_model.
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/app_drawer.dart';
@@ -59,7 +60,11 @@ backgroundColor:
               enableDrag: false, // Prevent dragging to dismiss
               backgroundColor: Colors.transparent, // Make background transparent
               builder: (context) {
-                return CountriesBottomsheet();
+                return CountriesBottomsheet(
+                   onSelectCountry: (country){
+                    context.read<HomeProvider>().saveCountryData(country);
+                  },
+                );
               },
             );
         }, 
@@ -175,7 +180,8 @@ WidgetsBinding.instance.addPostFrameCallback((_){
        
         if (provider.isItemLoading(int.parse(widget.postId!))) {
 
-          return CircularProgressIndicator();
+          return SizedBox(   width: MediaQuery.sizeOf(context).width,
+        height: MediaQuery.sizeOf(context).height/7,child: Center(child: CircularProgressIndicator()));
                     return SizedBox();
 
         }
