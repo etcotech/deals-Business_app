@@ -140,7 +140,11 @@ else
         }),
         _title(context, Strings.changeUserGender, 
         
-        data:  getGender(provider.profileModel!.genderId??0) ,
+        data:  
+        
+         getGender(provider.profileModel!.genderId??0)!=null?
+         getTranslated( getGender(provider.profileModel!.genderId??0), context):
+      null,
         Icons.male, (){
         
           Navigator.of(context).push(

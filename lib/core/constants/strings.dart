@@ -43,6 +43,8 @@ static const String endPrice = "end_price";
 static const String contactWithSeller = "contact_with_seller";
 static const String youHaveToLogin = "you_have_to_login";
 static const String contactUs = "contact_us";
+// static const String free = "free";
+
 static const String location = "location";
 static const String details = "details";
 static const String similarPosts = "similar_posts";

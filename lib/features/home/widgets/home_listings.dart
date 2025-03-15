@@ -521,9 +521,16 @@ final double itemWidth = size.width*.45;
            ),
        
        SizedBox(width: 5,),
-           Text(postModel!.cityId.toString() ,style: TextStyle(
-        color: Colors.grey
-           ),)
+           SizedBox(
+            width: itemWidth*.50,
+
+             child: Text(
+               postModel!.city==null?
+               '':
+              postModel!.city!.name.toString() ,style: TextStyle(
+                     color: Colors.grey
+             ),),
+           )
        
        
        
