@@ -82,7 +82,7 @@ context.read<HomeProvider>().getCategories(context);
                         child: Column(
                           children: [
                             Text(
-                        'Categories',
+                     getTranslated(Strings.categories, context)!,
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),              SizedBox(height: 8),
                       

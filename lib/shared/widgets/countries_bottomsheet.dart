@@ -69,7 +69,8 @@ context.read<HomeProvider>().getCountries(context);
                     child: Column(
                       children: [
                         Text(
-                    'Countries',
+                                   getTranslated(Strings.countries, context)!,
+
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),              SizedBox(height: 8),
                   

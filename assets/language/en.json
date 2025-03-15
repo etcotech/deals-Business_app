@@ -184,5 +184,12 @@
  "sub_categories_in":"Sub categories in",
  "continue":"Continue" ,
 "are_you_sure_delete_account":"Are you sure you want to delete your account? you can't undo that!"
-  }
+ ,"categories":"Categories" ,
+   "no_sub_categories":"No sub categories" ,
+   "countries":"countries" ,
+   "cities":"Cities" ,
+   "no_cities":"No cities" 
+
+
+}
   

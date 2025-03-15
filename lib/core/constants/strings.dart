@@ -48,7 +48,10 @@ static const String contactUs = "contact_us";
 static const String location = "location";
 static const String details = "details";
 static const String similarPosts = "similar_posts";
-
+static const String categories = "categories";
+static const String subCategories = "sub_categories";
+static const String countries = "countries";
+static const String cities = "cities";
 
 static const String profile = "profile";
 static const String posts = "posts";

@@ -167,6 +167,13 @@
 "sub_categories_in":"الفئات الفرعية في ", 
 "continue":"استمرار" ,
 "are_you_sure_delete_account":"هل انت متأكد من أنك تريد حذف الحساب؟ لا يمكنك التراجع عن ذلك!"
+,"categories":"الفئات" ,
+"no_sub_categories":"لا توجد فئات فرعية" ,
+"no_categories":"لا توجد فئات" ,
+"countries":"الدول" ,
+"cities":"المدن" ,
+"no_cities":"لا توجد مدن" 
+
 
 
 }
