@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData light({Color? primaryColor, Color? secondaryColor})=> ThemeData(
   fontFamily: 'Cairo',
-  primaryColor: const Color(0xFFfbb93e),
+  primaryColor: const Color(0xFFfbbe12),
   brightness: Brightness.light,
   highlightColor: Colors.white,
   hintColor: const Color(0xFF9E9E9E),
