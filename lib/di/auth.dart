@@ -14,7 +14,7 @@ void registerAuthFeature(){
         () => AuthProvider(userRepository:sl()),
   );
 sl.registerFactory(
-        () => ProfileProvider(userRepository:sl()),
+        () => ProfileProvider(userRepository:sl(), postRepository: sl()),
   );
 
 // Repository

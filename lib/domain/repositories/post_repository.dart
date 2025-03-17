@@ -11,6 +11,8 @@ import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 
 abstract class PostRepository {
   Future<Either<ApiException, PostListResponseModel>> getPosts();
+    Future<Either<ApiException, PostListResponseModel>> getUserPosts(String userId);
+
   Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url);
 
     Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts();
@@ -18,7 +20,7 @@ abstract class PostRepository {
   Future<Either<ApiException, Map<String,dynamic>>> addPost(
     NewPostModel newPostModel 
   );
-  Future<Either<Failure, PostDetailsResponseModel>> getPost(
+  Future<Either<ApiException, PostDetailsResponseModel>> getPost(
     String token,
     String postId
   );

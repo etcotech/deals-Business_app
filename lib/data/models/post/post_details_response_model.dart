@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:deals_and_business/data/models/post/post_details_model.dart';
 
-PostDetailsResponseModel postDetailsResponseFromJson(String str) =>
-    PostDetailsResponseModel.fromJson(json.decode(str));
+PostDetailsResponseModel postDetailsResponseFromJson(Map<String,dynamic> str) =>
+    PostDetailsResponseModel.fromJson(str);
 
 String postDetailsResponseToJson(PostDetailsResponseModel data) =>
     json.encode(data.toJson());

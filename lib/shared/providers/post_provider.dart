@@ -246,7 +246,7 @@ Future getFavouritePosts()async{
       favouritePosts =[];
       favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
 // postDetailsModel = success.postDetailsModel;
-// isFavourite= postDetailsModel!.featured==1;
+isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
 notifyListeners();
     });
   } catch (e) {
@@ -286,7 +286,7 @@ Future refreshFavouritePosts()async{
       favouritePosts =[];
       favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
 // postDetailsModel = success.;
-// isFavourite= postDetailsModel!.featured==1;
+isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
 notifyListeners();
     });
   } catch (e) {
@@ -303,7 +303,7 @@ notifyListeners();
     isLoading= false;
     notifyListeners();
 }
-Future<Either<Failure, PostDetailsResponseModel>> getFavouritePost(postId)async{
+Future<Either<ApiException, PostDetailsResponseModel>> getFavouritePost(postId)async{
   return  await postRepository!.getPost('',postId);
 }
 

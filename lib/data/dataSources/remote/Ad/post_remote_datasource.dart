@@ -18,6 +18,10 @@ import 'package:http_parser/http_parser.dart'; // For MediaType
 
 abstract class PostRemoteDatasource {
     Future<PostListResponseModel> getPosts(String token , {String? lang ='ar'});
+    Future<PostListResponseModel> getUserPosts(
+      
+      String userId,
+      String token , {String? lang ='ar'});
 
         Future<PostListResponseModel> getMorePosts(
          String url,
@@ -74,7 +78,7 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
 
 
     //&belongLoggedUser=1
-  var response2 = await apiClient!.get("$postsApi?op=latest&archived=1&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
+  var response2 = await apiClient!.get("$postsApi?op=latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
  
  log(response2.runtimeType.toString());
   return postListResponseModelFromJson(response2);
@@ -176,38 +180,10 @@ files: newPostModel.pictures
   
   @override
   Future<PostDetailsResponseModel> getPost(int postId, String token, {String? lang = 'ar'})async {
-    try {
-      log(token);
-       final response =
-        await client.get(Uri.parse('$baseUrl$postsApi/$postId?detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package,fieldsValues'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': "Bearer $token",
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang!
-            },
-          
-            
-            );
-    if (response.statusCode == 200) {
-      log(response.body.toString());
-      return postDetailsResponseFromJson(response.body);
-    }
+    var response  = await apiClient!.get("$postsApi/$postId?detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package,fieldsValues");
+    return postDetailsResponseFromJson(response);
     
-     else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure(
-      message: 'token'
-      );
-    } else {
-      throw ServerException(message: 'server');
-    }
-    } 
-    on SocketException{
-      throw NetworkFailure(message: 'network');
-    }
-    catch (e) {
-      rethrow;
-    }
+  
   }
   
   @override
@@ -469,6 +445,15 @@ return;
   Future<PostListResponseModel> getMorePosts(String url, {String? lang = 'ar'})async {
   var response2 = await apiClient!.getPaginate(url);
 
+  return postListResponseModelFromJson(response2);
+  }
+  
+  @override
+  Future<PostListResponseModel> getUserPosts(String userId, String token, {String? lang = 'ar'})async {
+  //&belongLoggedUser=1
+  var response2 = await apiClient!.get("$userApi/$userId/posts");
+ 
+ log("TYPE POSTS$response2");
   return postListResponseModelFromJson(response2);
   }
 

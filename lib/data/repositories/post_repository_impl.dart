@@ -118,7 +118,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
     
   }
  
- Future<Either<Failure, PostDetailsResponseModel>> _getPostProvider(
+ Future<Either<ApiException, PostDetailsResponseModel>> _getPostProvider(
    _PostDetailsDataSource getDataSource,
       ) async {
     // if (await networkInfo.isConnected) {
@@ -129,11 +129,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
        
         return Right(remoteResponse);
       }
-      on SocketException{
-        return Left(NetworkFailure(message: 'internet'));
-      }
-      
-       on Failure catch (failure) {
+       on ApiException catch (failure) {
         return Left(failure);
       }
     // } else {
@@ -166,7 +162,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
   }
   
   @override
-  Future<Either<Failure, PostDetailsResponseModel>> getPost(String token, String postId)async {
+  Future<Either<ApiException, PostDetailsResponseModel>> getPost(String token, String postId)async {
  return  await _getPostProvider((){
 
         return    postRemoteDatasource.getPost(int.parse(postId), localDataSource.getToken()??'');
@@ -322,6 +318,22 @@ lang: localeLocalDatasource.getCurrentLocale()
         lang: localeLocalDatasource.getCurrentLocale()
         );
     });
+  }
+  
+  @override
+  Future<Either<ApiException, PostListResponseModel>> getUserPosts(String userId) async{
+ 
+  return  await _postListProvider((){
+
+        return    postRemoteDatasource.getUserPosts(
+          userId,
+          localDataSource.getToken().toString(), 
+        
+        lang: localeLocalDatasource.getCurrentLocale()
+        );
+    });
+ 
+
   }
 
 
