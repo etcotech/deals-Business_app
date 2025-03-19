@@ -129,5 +129,6 @@ static const String  selectCategory = "select_category_first";
 static const String  selectCity = "select_city_first";
 static const String  selectImages= "select_images_first";
 static const String  subCategoriesIn= "sub_categories_in";
+static const String  noPostIncategory= "no_post_in_category";
 
 }

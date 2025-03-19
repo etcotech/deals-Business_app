@@ -173,7 +173,8 @@
 "countries":"الدول" ,
 "cities":"المدن" ,
 "no_cities":"لا توجد مدن" 
-
+, 
+"no_post_in_category":"لا توجد اعلانات في  فئة " 
 
 
 }

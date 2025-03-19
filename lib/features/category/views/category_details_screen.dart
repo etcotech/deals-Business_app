@@ -138,7 +138,15 @@ style: TextStyle(
     }),
     )
     , 
-
+SizedBox(height: 16,),
+provider.posts.isEmpty?
+Center(child: Text(getTranslated("${Strings.noPostIncategory}" " (${widget.categoryModel!.name})", context)!,
+style: TextStyle(
+  color: Colors.grey, 
+  fontWeight: FontWeight.bold
+),
+),
+):
     ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),

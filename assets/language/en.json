@@ -188,7 +188,8 @@
    "no_sub_categories":"No sub categories" ,
    "countries":"countries" ,
    "cities":"Cities" ,
-   "no_cities":"No cities" 
+   "no_cities":"No cities" ,
+"no_post_in_category":"No posts in the category"
 
 
 }
