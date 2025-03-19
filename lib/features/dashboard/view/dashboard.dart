@@ -59,6 +59,21 @@ floatingActionButton: FloatingActionButton(
   shape:CircleBorder(),
   backgroundColor: Theme.of(context).primaryColor,
   onPressed: (){
+
+     if (homeProvider.isLoggedIn()) {
+   
+  setState(() {
+      
+    });
+  }else{
+    showDialog(context: context, builder: (_){
+
+
+      return NotAuthenticatedAlertDialog();
+    });
+  
+  return;
+}
                  Navigator.push(context,
                   PageTransition(type: PageTransitionType.fade ,child:  
     AddPostScreen()));
@@ -76,11 +91,13 @@ bottomNavigationBar: BottomNavigationBar(
     if (index==2) {
       return;
     }
-         _selectedPage = index;
-if (index==1) {
+
+    if (index==4) {
   if (homeProvider.isLoggedIn()) {
     _selectedPage =index;
-
+  setState(() {
+      
+    });
   }else{
     showDialog(context: context, builder: (_){
 
@@ -88,11 +105,28 @@ if (index==1) {
       return NotAuthenticatedAlertDialog();
     });
   }
+  return;
 }
-    
-    setState(() {
+if (index==1) {
+  if (homeProvider.isLoggedIn()) {
+    _selectedPage =index;
+  setState(() {
       
     });
+  }else{
+    showDialog(context: context, builder: (_){
+
+
+      return NotAuthenticatedAlertDialog();
+    });
+  }
+  return;
+}
+             _selectedPage = index;
+  setState(() {
+      
+    });
+  
   },
 
   selectedItemColor: Theme.of(context).primaryColor,

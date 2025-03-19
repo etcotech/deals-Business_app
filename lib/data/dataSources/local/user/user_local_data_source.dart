@@ -71,6 +71,16 @@ String? getToken()  {
   Future<void> clearCache() async {
     // await secureStorage.deleteAll();
   //  await sharedPreferences.remove(cachedCart);
+  await sharedPreferences.remove(Strings.userName);
+  await sharedPreferences.remove(Strings.userEmail);
+  await sharedPreferences.remove(Strings.phoneCode);
+  await sharedPreferences.remove(Strings.countryCode);
+  await sharedPreferences.remove(Strings.countryFlag);
+  await sharedPreferences.remove(Strings.countryName);
+  await sharedPreferences.remove(Strings.photoUrl);
+  await sharedPreferences.remove(Strings.phoneCode);
+  
+  await sharedPreferences.remove(Strings.token);
   await sharedPreferences.remove(Strings.isLoggedIn);
   await sharedPreferences.remove(Strings.isGuestMode);
     await sharedPreferences.remove(cachedUser);
