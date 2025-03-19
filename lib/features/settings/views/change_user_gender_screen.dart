@@ -23,7 +23,12 @@ class _ChangeUserGenderScreenState extends State<ChangeUserGenderScreen> {
 List<String> genders =[
  Strings.male ,Strings.female
 ];
-
+String? extractPhone(String? phone){
+  if(phone==null || phone.isEmpty) return null;
+  var phoneWithouthFirstLetter=phone.substring(1);
+  var phoneWithoutSpaces = phoneWithouthFirstLetter.replaceAll(' ', ''); // Remove all spaces
+return phoneWithoutSpaces ;
+}
   @override
   void initState() {
     // TODO: implement initState
@@ -119,11 +124,19 @@ List<String> genders =[
         color: Theme.of(context).primaryColor,
         title: getTranslated("save_changes", context),
         onTap: ()async{
+          String? phone;
+           var extractPhoneNumber =  extractPhone(widget.profileModel?.phoneNational);
+        if (extractPhoneNumber!=null) {
+                  phone =extractPhoneNumber;
+
+        }
         await  provider.updateUserGender(
         name: widget.profileModel!.name, 
         email:widget.profileModel!.email, 
         userName: widget.profileModel!.username,
-         genderId: selectedGender==Strings.male?1:2
+         genderId: selectedGender==Strings.male?1:2, 
+         phone: phone,
+         phoneCountry: widget.profileModel!.phoneCountry,
           );
         
           // Navigator.pop(context);

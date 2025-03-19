@@ -997,8 +997,14 @@ class PostModel {
     _visitsFormatted = json['visits_formatted'];
     _distanceInfo = json['distance_info'];
     _countPictures = json['count_pictures'];
+    log("LOGGED USER2 ${ json['picture'].runtimeType }");
     _picture =
-        json['picture'] != null ? Picture.fromJson(json['picture']) : null;
+        json['picture'] != null 
+        &&  json['picture'] .runtimeType != String 
+        
+        ? Picture.fromJson(json['picture']) : null;
+      
+
     _user = json['user'];
     _category = json['category'] != null
         ? Category.fromJson(json['category'])

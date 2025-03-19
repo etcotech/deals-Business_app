@@ -66,6 +66,8 @@ child: ErrorContainer(
   onRetry: (){
 context.read<ProfileProvider>().getUserProfile();
 context.read<ProfileProvider>().getUserStats();
+context.read<ProfileProvider>().getUserPosts();
+
   },
   onLogin: (){
 
@@ -192,7 +194,7 @@ Container(
         )
       ],),
       
-      Text(provider.profileModel!.name! , 
+      Text(provider.profileModel?.name??'' , 
       style: TextStyle(
     fontSize: 15, fontWeight: FontWeight.bold
       ),
@@ -403,6 +405,9 @@ SizedBox(height: 16,)
 Builder(builder: (context){
 
   if (_currentTab==0) {
+    if (provider.posts.isEmpty) {
+      return Center(child: Text(getTranslated(Strings.noPosts, context)!),);
+    }
   return  ListView.builder(
       shrinkWrap: true  ,
       physics:  NeverScrollableScrollPhysics(),
@@ -523,7 +528,7 @@ class ProfileListing extends StatelessWidget {
         
         PageTransitionType.leftToRight , 
         child: PostDetailsScreen(
-          postId: postModel!.id.toString(),
+          postId: postModel.id.toString(),
         )
         ));
       },
@@ -559,9 +564,12 @@ class ProfileListing extends StatelessWidget {
                  Image.network(
                   errorBuilder: (context, error, stackTrace) {
                     
-      return Center(child: Icon(Icons.image ,color: Colors.grey,),);
+      return Center(child: Icon(Icons.image ,
+      
+      size: 80,
+      color: Colors.grey,),);
                   },
-                  postModel!.picture!.url!.big!, 
+                  postModel.picture?.url?.big??'', 
             width:    MediaQuery.sizeOf(context).width*.30,
                 height: MediaQuery.sizeOf(context).height/7,
               fit: BoxFit.cover,
@@ -578,8 +586,8 @@ class ProfileListing extends StatelessWidget {
                        SizedBox(
                               width: MediaQuery.sizeOf(context).width*.35,
                               child: Text(
-                                  postModel!.category==null?'':
-                                postModel!.category!.name.toString(), 
+                                  postModel.category==null?'':
+                                postModel.category!.name.toString(), 
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -594,7 +602,7 @@ class ProfileListing extends StatelessWidget {
         
           SizedBox(
             width: MediaQuery.sizeOf(context).width*.35,
-            child: Text(postModel!.title!, 
+            child: Text(postModel.title!, 
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -610,7 +618,7 @@ class ProfileListing extends StatelessWidget {
                 iconData: Icons.schedule,
               ),
               SizedBox(width: 3,),
-              Text(postModel!.createdAtFormatted!.toString(), 
+              Text(postModel.createdAtFormatted!.toString(), 
               style: TextStyle(
                 color: Colors.grey
               ),
@@ -640,7 +648,7 @@ class ProfileListing extends StatelessWidget {
         
         PageTransitionType.leftToRight ,child: ReportScreen(
 
-          postId: postModel!.id.toString(),
+          postId: postModel.id.toString(),
         )
         )
       );

@@ -214,7 +214,7 @@ logout();
 }, (success){
 
 posts= [];
-posts.addAll(success.postPaginateModel.posts!);
+posts.addAll(success.posts);
 notifyListeners();
 
 
@@ -371,7 +371,7 @@ notifyListeners();
  Future<void> updateUserGender(  { 
  int? typeId,int? genderId,
   String? name, String? userName, 
-           String? email})async{
+           String? email,  String? phone ,String? phoneCountry})async{
 isLoading = true;
 errorData = null;
 notifyListeners();
@@ -379,8 +379,8 @@ notifyListeners();
       var result = await userRepository!.updateUser(
 type_id: typeId, 
 gender_id: genderId,
-        // phone:countryData!.$2+ phone! ,
-        //  countryCode: countryData!.$3, 
+        phone:"${phoneCountry!}$phone",
+         countryCode:phoneCountry, 
         email: email , 
         name: name , 
         userName: userName, 

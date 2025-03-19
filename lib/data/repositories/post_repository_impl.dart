@@ -15,10 +15,12 @@ import 'package:deals_and_business/data/models/post/new_post_model.dart';
 import 'package:deals_and_business/data/models/post/post_details_response_model.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/thread_message_list_response.dart';
+import 'package:deals_and_business/data/models/post/user_post_list_response_model.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
 typedef _PostDetailsDataSource = Future<PostDetailsResponseModel> Function();
 typedef _AddToFavouriteDataSource = Future<String> Function();
 typedef _FavoritePostChooser = Future<FavoritePostListResponseModel> Function();
+typedef _UserPostsDataSourceChooser = Future<UserPostListResponseModel> Function();
 
 typedef _DataSourceChooser = Future<PostListResponseModel> Function();
 typedef _AddPost = Future<Map<String ,dynamic>> Function();
@@ -95,7 +97,25 @@ Future<Either<ApiException, PostListResponseModel>> _postListProvider(
     //   return Left(NetworkFailure());
     // }
   }
-
+Future<Either<ApiException, UserPostListResponseModel>> _userPostListProvider(
+   _UserPostsDataSourceChooser getDataSource,
+      ) async {
+    // if (await networkInfo.isConnected) {
+      try {
+        final remoteResponse = await getDataSource();
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } 
+      
+        on ApiException catch (failure) {
+        return Left(failure);
+      }
+    // } else {
+    //   return Left(NetworkFailure());
+    // }
+  }
 
 
 Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
@@ -321,9 +341,9 @@ lang: localeLocalDatasource.getCurrentLocale()
   }
   
   @override
-  Future<Either<ApiException, PostListResponseModel>> getUserPosts(String userId) async{
+  Future<Either<ApiException, UserPostListResponseModel>> getUserPosts(String userId) async{
  
-  return  await _postListProvider((){
+  return  await _userPostListProvider((){
 
         return    postRemoteDatasource.getUserPosts(
           userId,

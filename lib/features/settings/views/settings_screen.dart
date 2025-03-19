@@ -1,6 +1,10 @@
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/settings/views/account_settings.dart';
+import 'package:deals_and_business/features/settings/views/faq_screen.dart';
+import 'package:deals_and_business/features/settings/views/privacy_policty_screen.dart';
+import 'package:deals_and_business/features/settings/views/spam_policy_screen.dart';
+import 'package:deals_and_business/features/settings/views/terms_and_conditions_screen.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -53,11 +57,46 @@ _title(context, Strings.accountSettings, Icons.person, (){
     )
   );
 }),
-_title(context, Strings.faq, Icons.question_mark, (){}),
-_title(context, Strings.privacy, Icons.fingerprint, (){}),
-_title(context, Strings.terms, Icons.policy, (){}),
+_title(context, Strings.faq, Icons.question_mark, (){
 
-_title(context, Strings.scam_ploicy, FontAwesomeIcons.shield, (){}),
+    Navigator.push(context,
+  
+  
+   PageTransition(type: PageTransitionType.leftToRight , 
+   
+   child: FaqScreen()
+   ));
+}),
+_title(context, Strings.privacy, Icons.fingerprint, (){
+
+  Navigator.push(context,
+  
+  
+   PageTransition(type: PageTransitionType.leftToRight , 
+   
+   child: PrivacyPolictyScreen()
+   ));
+}),
+_title(context, Strings.terms, Icons.policy, (){
+  Navigator.push(context,
+  
+  
+   PageTransition(type: PageTransitionType.leftToRight , 
+   
+   child: TermsAndConditionsScreen()
+   ));
+}),
+
+_title(context, Strings.scam_ploicy, FontAwesomeIcons.shield, (){
+
+  Navigator.of(context).push(
+
+    PageTransition(type: PageTransitionType.leftToRight, 
+    
+    child: SpamPolicyScreen()
+    )
+  );
+}),
 
 
 

@@ -10,3 +10,10 @@ String? getTranslated(String? key, BuildContext context) {
   }
   return text;
 }
+
+String? getCurrentLang( BuildContext context) {
+  String
+    text = AppLocalization.of(context)!.locale.languageCode=="ar"?"ar":"en";
+ 
+  return text;
+}

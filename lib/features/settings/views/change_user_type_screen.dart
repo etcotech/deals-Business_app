@@ -22,6 +22,12 @@ class _ChangeUserTypeScreenState extends State<ChangeUserTypeScreen> {
 List<String> types =[
  Strings.professionalUser ,Strings.individualUser
 ];
+String? extractPhone(String? phone){
+  if(phone==null || phone.isEmpty) return null;
+  var phoneWithouthFirstLetter=phone.substring(1);
+  var phoneWithoutSpaces = phoneWithouthFirstLetter.replaceAll(' ', ''); // Remove all spaces
+return phoneWithoutSpaces ;
+}
 @override
   void initState() {
     // TODO: implement initState
@@ -118,11 +124,19 @@ List<String> types =[
         color: Theme.of(context).primaryColor,
         title: getTranslated("save_changes", context),
         onTap: ()async{
+            String? phone;
+           var extractPhoneNumber =  extractPhone(widget.profileModel?.phoneNational);
+        if (extractPhoneNumber!=null) {
+                  phone =extractPhoneNumber;
+
+        }
         await  provider.updateUserGender(
         name: widget.profileModel!.name, 
         email:widget.profileModel!.email, 
         userName: widget.profileModel!.username,
-         typeId: selectedType==Strings.professionalUser?1:2
+         typeId: selectedType==Strings.professionalUser?1:2,
+           phone: phone,
+         phoneCountry: widget.profileModel!.phoneCountry,
           );
         
           // Navigator.pop(context);

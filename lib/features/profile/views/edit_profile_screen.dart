@@ -69,10 +69,14 @@ void initState() {
   super.initState();
   
   if (widget.profileModel!=null) {
-    emailconteoller.text = widget.profileModel!.name!;
+    emailconteoller.text = widget.profileModel!.email!;
         nameController.text = widget.profileModel!.name!;
         userNameController.text= widget.profileModel!.username!;
+ var extractPhoneNumber =  extractPhone(widget.profileModel?.phoneNational);
+        if (extractPhoneNumber!=null) {
+                  phoneController.text =extractPhoneNumber;
 
+        }
         // var phone =  extractPhone(widget.profileModel.)
         // phoneController =
 
@@ -80,29 +84,32 @@ void initState() {
 
 
 
-  WidgetsBinding.instance.addPostFrameCallback((_){
+//   WidgetsBinding.instance.addPostFrameCallback((_){
 
-context.read<ProfileProvider>().getUserProfile(
+// context.read<ProfileProvider>().getUserProfile(
 
-  userData: (user){
-       emailconteoller.text =user!.email!;
-        nameController.text =user.name!;
-        userNameController.text = user.username!;
-        var extractPhoneNumber =  extractPhone(user.phoneNational);
-        if (extractPhoneNumber!=null) {
-                  phoneController.text =extractPhoneNumber;
+//   userData: (user){
+//        emailconteoller.text =user!.email!;
+//         nameController.text =user.name!;
+//         userNameController.text = user.username!;
+//         var extractPhoneNumber =  extractPhone(user.phoneNational);
+//         if (extractPhoneNumber!=null) {
+//                   phoneController.text =extractPhoneNumber;
 
-        }
+//         }
 
-  }
-);
+//   }
+// );
 
-  });
+//   });
+
+
 }
 
 
 String? extractPhone(String? phone){
-  if(phone==null) return null;
+  log("message $phone");
+  if(phone==null || phone.isEmpty) return null;
   var phoneWithouthFirstLetter=phone.substring(1);
   var phoneWithoutSpaces = phoneWithouthFirstLetter.replaceAll(' ', ''); // Remove all spaces
 return phoneWithoutSpaces ;
@@ -343,7 +350,7 @@ body:SizedBox.expand(
         email: emailconteoller.text, 
         name: nameController.text , 
         userName: userNameController.text, 
-        phone: phoneController.text
+        phone: phoneController.text 
         
         
           );

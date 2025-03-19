@@ -125,234 +125,240 @@ body: Consumer<SearchProvider>(
                       , 
           
                                
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(getTranslated(Strings.filterBy, context)!, 
-                          
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,fontSize: 16
-                          ),
-                          
-                          )
-                                , 
-                                
-                                GestureDetector(
-                                  onTap: (){
-                                     showModalBottomSheet(
-                      context: context,
-                      isDismissible: false, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-                        return CategoriesBottomsheet(
-onDeleteCategory: (){
-                              context.read<SearchProvider>().remoteCategory();
-  context.read<SearchProvider>().applyCategorySearch();
-},
-                          onSelectCategory: (cat){
-                            context.read<SearchProvider>().setCategorory(cat);
-                              context.read<SearchProvider>().applyCategorySearch();
-
-                          },
-                        );
-                      },
-                                      );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                color: Colors.white ,
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 0), 
-                                    color: Colors.white54 , 
-                                    spreadRadius: 5, 
-                                    blurRadius: 3
-                                  )
-                                ]
-                                    ),
-                                    padding: EdgeInsets.all(8),
-                                  
-                                    child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(Icons.arrow_drop_down),
-                                  
-                            Text(getTranslated(Strings.allCategories, context)!, 
+                      Visibility(
+                        visible: provider.posts.isNotEmpty 
+                        || searchController.text.isNotEmpty,
+                        
+                        
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(getTranslated(Strings.filterBy, context)!, 
                             
                             style: TextStyle(
                               fontWeight: FontWeight.bold,fontSize: 16
                             ),
                             
-                            ),
-                                    Icon(Icons.category),
+                            )
+                                  , 
                                   
-                                  
-                                  
-                                  
-                                  ],
-                                    ),
-                                  ),
-                                ), 
-                                
-                                
-                                
-                                
-                                 PopupMenuButton(
-                                      onSelected: (choice){
-                                if (choice.contains('price')) {
-                                  showModalBottomSheet(
-                      context: context,
-                      isDismissible: true, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-return PriceFilterBottomsheet(setPrices: (start,end){
-  log(end.toString());
-provider.setStartPrice(start);
-provider.setEndPrice(end);
-
-} , 
-apply: (){
-provider.applyCategorySearch();
-},
-
-);
-                        }
-                                  );
-                                }else{
-
-                                   showModalBottomSheet(
-                    context: context,
-                    isDismissible: true, // Prevent dismissal
-                    enableDrag: false, // Prevent dragging to dismiss
-                    backgroundColor: Colors.transparent, // Make background transparent
-                    builder: (context) {
-                      return CityFilterBottomsheet(
-                        onSelectCity: (city){
-                        // provider.setCity(
-                        //   city
-                        // );
-                        },
-                      );
-                    },
-                                    );
-                                }
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      // initialValue: choices[_selection],
-                                      itemBuilder: (BuildContext context) {
-                      return [Strings.filtrtByPrice ,Strings.filterByCity].map((String choice) {
-                        return  PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(getTranslated(choice, context)!
-                        ,
-                         style: TextStyle(
-                        color: Colors.grey
-                      ),
-                        ),
-                      );}
-                      ).toList();
-                                      },
-                                      menuPadding: EdgeInsets.zero,
-                                    position: PopupMenuPosition.under,
-                                
-                                      child:
-                                      
-                                       Container(
-                                  
-                                    width: 35, height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8), 
-                                      color: Colors.white, 
-                                      boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        color: Colors.grey[300]!,
-                        blurRadius: 4,
-                        spreadRadius: 1
-                      )
-                                      ]
-                                    ),
-                                  
-                                    child: Center(
-                                      child: Icon(Icons.tune),
-                                    ),
-                                  ),
-                                
-                                    ), 
-                                
-                                
-                                 PopupMenuButton(
-                                  position: PopupMenuPosition.under,
-                                      onSelected: (choice){
+                                  GestureDetector(
+                                    onTap: (){
                                        showModalBottomSheet(
-                      context: context,
-                      isDismissible: true, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-                        return SortBottomsheet(
-selectedOrder: (order){
-provider.setSortOrder(order);
-},
-selectedSort: (sort){
-provider.setSortBy(sort);
-},
-apply:(){
-provider.applyCategorySearch();
-}
-
-                        );
-                      });
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      // initialValue: choices[_selection],
-                                      itemBuilder: (BuildContext context) {
-                      return [Strings.sortBy].map((String choice) {
-                        return  PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(getTranslated(choice, context)!, 
-                         style: TextStyle(
-                        color: Colors.grey
-                      ),
+                        context: context,
+                        isDismissible: false, // Prevent dismissal
+                        enableDrag: false, // Prevent dragging to dismiss
+                        backgroundColor: Colors.transparent, // Make background transparent
+                        builder: (context) {
+                          return CategoriesBottomsheet(
+                        onDeleteCategory: (){
+                                context.read<SearchProvider>().remoteCategory();
+                          context.read<SearchProvider>().applyCategorySearch();
+                        },
+                            onSelectCategory: (cat){
+                              context.read<SearchProvider>().setCategorory(cat);
+                                context.read<SearchProvider>().applyCategorySearch();
                         
+                            },
+                          );
+                        },
+                                        );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                  color: Colors.white ,
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0, 0), 
+                                      color: Colors.white54 , 
+                                      spreadRadius: 5, 
+                                      blurRadius: 3
+                                    )
+                                  ]
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                    
+                                      child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(Icons.arrow_drop_down),
+                                    
+                              Text(getTranslated(Strings.allCategories, context)!, 
+                              
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,fontSize: 16
+                              ),
+                              
+                              ),
+                                      Icon(Icons.category),
+                                    
+                                    
+                                    
+                                    
+                                    ],
+                                      ),
+                                    ),
+                                  ), 
+                                  
+                                  
+                                  
+                                  
+                                   PopupMenuButton(
+                                        onSelected: (choice){
+                                  if (choice.contains('price')) {
+                                    showModalBottomSheet(
+                        context: context,
+                        isDismissible: true, // Prevent dismissal
+                        enableDrag: false, // Prevent dragging to dismiss
+                        backgroundColor: Colors.transparent, // Make background transparent
+                        builder: (context) {
+                        return PriceFilterBottomsheet(setPrices: (start,end){
+                          log(end.toString());
+                        provider.setStartPrice(start);
+                        provider.setEndPrice(end);
+                        
+                        } , 
+                        apply: (){
+                        provider.applyCategorySearch();
+                        },
+                        
+                        );
+                          }
+                                    );
+                                  }else{
+                        
+                                     showModalBottomSheet(
+                                            context: context,
+                                            isDismissible: true, // Prevent dismissal
+                                            enableDrag: false, // Prevent dragging to dismiss
+                                            backgroundColor: Colors.transparent, // Make background transparent
+                                            builder: (context) {
+                        return CityFilterBottomsheet(
+                          onSelectCity: (city){
+                          // provider.setCity(
+                          //   city
+                          // );
+                          },
+                        );
+                                            },
+                                      );
+                                  }
+                                        },
+                                        padding: EdgeInsets.zero,
+                                        // initialValue: choices[_selection],
+                                        itemBuilder: (BuildContext context) {
+                        return [Strings.filtrtByPrice ,Strings.filterByCity].map((String choice) {
+                          return  PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(getTranslated(choice, context)!
+                          ,
+                           style: TextStyle(
+                          color: Colors.grey
                         ),
-                      );}
-                      ).toList();
-                                      },
-                                menuPadding: EdgeInsets.zero,
-                                      child: Container(
+                          ),
+                        );}
+                        ).toList();
+                                        },
+                                        menuPadding: EdgeInsets.zero,
+                                      position: PopupMenuPosition.under,
                                   
-                                    width: 35, height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8), 
-                                      color: Colors.white, 
-                                      boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        color: Colors.grey[300]!,
-                        blurRadius: 4,
-                        spreadRadius: 1
-                      )
-                                      ]
+                                        child:
+                                        
+                                         Container(
+                                    
+                                      width: 35, height: 35,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8), 
+                                        color: Colors.white, 
+                                        boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 1),
+                          color: Colors.grey[300]!,
+                          blurRadius: 4,
+                          spreadRadius: 1
+                        )
+                                        ]
+                                      ),
+                                    
+                                      child: Center(
+                                        child: Icon(Icons.tune),
+                                      ),
                                     ),
                                   
-                                    child: Center(
-                                      child: Icon(Icons.list),
+                                      ), 
+                                  
+                                  
+                                   PopupMenuButton(
+                                    position: PopupMenuPosition.under,
+                                        onSelected: (choice){
+                                         showModalBottomSheet(
+                        context: context,
+                        isDismissible: true, // Prevent dismissal
+                        enableDrag: false, // Prevent dragging to dismiss
+                        backgroundColor: Colors.transparent, // Make background transparent
+                        builder: (context) {
+                          return SortBottomsheet(
+                        selectedOrder: (order){
+                        provider.setSortOrder(order);
+                        },
+                        selectedSort: (sort){
+                        provider.setSortBy(sort);
+                        },
+                        apply:(){
+                        provider.applyCategorySearch();
+                        }
+                        
+                          );
+                        });
+                                        },
+                                        padding: EdgeInsets.zero,
+                                        // initialValue: choices[_selection],
+                                        itemBuilder: (BuildContext context) {
+                        return [Strings.sortBy].map((String choice) {
+                          return  PopupMenuItem<String>(
+                          value: choice,
+                          child: Text(getTranslated(choice, context)!, 
+                           style: TextStyle(
+                          color: Colors.grey
+                        ),
+                          
+                          ),
+                        );}
+                        ).toList();
+                                        },
+                                  menuPadding: EdgeInsets.zero,
+                                        child: Container(
+                                    
+                                      width: 35, height: 35,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8), 
+                                        color: Colors.white, 
+                                        boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 1),
+                          color: Colors.grey[300]!,
+                          blurRadius: 4,
+                          spreadRadius: 1
+                        )
+                                        ]
+                                      ),
+                                    
+                                      child: Center(
+                                        child: Icon(Icons.list),
+                                      ),
                                     ),
-                                  ),
-                                    ), 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                        ],
+                                      ), 
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                          ],
+                        ),
                       ), 
 
 
@@ -391,7 +397,7 @@ provider.applyCategorySearch();
                             height: 500,
                             child: Center(child: 
                             
-                            Text(getTranslated(Strings.noPosts, context)!)
+                            Text(getTranslated(Strings.noData, context)!)
                             ));
                         
                         }

@@ -13,12 +13,13 @@ import 'package:deals_and_business/data/models/post/new_post_model.dart';
 import 'package:deals_and_business/data/models/post/post_details_response_model.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/thread_message_list_response.dart';
+import 'package:deals_and_business/data/models/post/user_post_list_response_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart'; // For MediaType
 
 abstract class PostRemoteDatasource {
     Future<PostListResponseModel> getPosts(String token , {String? lang ='ar'});
-    Future<PostListResponseModel> getUserPosts(
+    Future<UserPostListResponseModel> getUserPosts(
       
       String userId,
       String token , {String? lang ='ar'});
@@ -449,12 +450,12 @@ return;
   }
   
   @override
-  Future<PostListResponseModel> getUserPosts(String userId, String token, {String? lang = 'ar'})async {
+  Future<UserPostListResponseModel> getUserPosts(String userId, String token, {String? lang = 'ar'})async {
   //&belongLoggedUser=1
-  var response2 = await apiClient!.get("$userApi/$userId/posts");
+  var response2 = await apiClient!.get("$userApi/$userId/posts?op=search&detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
  
- log("TYPE POSTS$response2");
-  return postListResponseModelFromJson(response2);
+ 
+  return userPostListResponseModelFromJson(response2 );
   }
 
 

@@ -7,11 +7,12 @@ import 'package:deals_and_business/data/models/post/new_post_model.dart';
 import 'package:deals_and_business/data/models/post/post_details_response_model.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/thread_message_list_response.dart';
+import 'package:deals_and_business/data/models/post/user_post_list_response_model.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 
 abstract class PostRepository {
   Future<Either<ApiException, PostListResponseModel>> getPosts();
-    Future<Either<ApiException, PostListResponseModel>> getUserPosts(String userId);
+    Future<Either<ApiException, UserPostListResponseModel>> getUserPosts(String userId);
 
   Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url);
 
