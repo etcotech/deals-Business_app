@@ -19,8 +19,7 @@ class UserPostListResponseModel {
   });
 
   factory UserPostListResponseModel.fromJson(Map<String, dynamic> json) {
-
-    log("NO PREOM REPSONE MODEL ${ json["result"]['posts'].runtimeType}");
+log( json['result']['posts'].toString());
     return UserPostListResponseModel(
         posts: json["result"]['posts'] != null
             ? List<PostModel>.from(json["result"]['posts'].map((x) => 

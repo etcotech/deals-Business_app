@@ -443,7 +443,7 @@ return;
   @override
   Future<UserPostListResponseModel> getUserPosts(String userId, String token, {String? lang = 'ar'})async {
   //&belongLoggedUser=1
-  var response2 = await apiClient!.get("$userApi/$userId/posts?op=search&detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
+  var response2 = await apiClient!.get("$userApi/$userId/posts?op=search&detailed=true&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at");
  
  
   return userPostListResponseModelFromJson(response2 );

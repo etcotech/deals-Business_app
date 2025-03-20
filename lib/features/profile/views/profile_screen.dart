@@ -569,7 +569,7 @@ class ProfileListing extends StatelessWidget {
       size: 80,
       color: Colors.grey,),);
                   },
-                  postModel.picture?.url?.big??'', 
+                  postModel.pictureUrlBig ??'', 
             width:    MediaQuery.sizeOf(context).width*.30,
                 height: MediaQuery.sizeOf(context).height/7,
               fit: BoxFit.cover,
@@ -656,7 +656,7 @@ class ProfileListing extends StatelessWidget {
               padding: EdgeInsets.zero,
               // initialValue: choices[_selection],
               itemBuilder: (BuildContext context) {
-                return ['Report'].map((String choice) {
+                return [Strings.reportApost].map((String choice) {
                   return  PopupMenuItem<String>(
                   value: choice,
                   child: Text(getTranslated(choice, context)!, 
