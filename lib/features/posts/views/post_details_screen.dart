@@ -483,7 +483,7 @@ child: GoogleMap(
     :0.0,
      
      provider.postDetailsModel!.city!.longitude!=null?
-     double.parse(provider.postDetailsModel!.city!.latitude.toString()):0.0)
+     double.parse(provider.postDetailsModel!.city!.longitude.toString()):0.0)
     )
   },
   initialCameraPosition: 

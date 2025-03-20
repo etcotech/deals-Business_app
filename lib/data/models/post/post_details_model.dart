@@ -160,6 +160,8 @@ class PostDetailsModel {
     cityId = json['city_id'];
     lat = json['lat'];
     lon = json['lon'];
+    log("LATITUDE $lat");
+    log("LONGITUDE $lon");
     createFromIp = json['create_from_ip'];
     latestUpdateIp = json['latest_update_ip'];
     visits = json['visits'];
@@ -522,6 +524,8 @@ class City {
     name = json['name'];
     latitude = json['latitude'];
     longitude = json['longitude'];
+    log("CITY LATITUDE $latitude");
+    log("CITY LONGITUDE $longitude");
     subadmin1Code = json['subadmin1_code'];
     subadmin2Code = json['subadmin2_code'];
     population = json['population'];

@@ -245,9 +245,11 @@ Future getFavouritePosts()async{
     var result = await postRepository!.getFavouritePosts();
     result.fold((failure){
 if (failure is UnauthorizedException) {
-  logout();
-  
-}
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+    return;
+  }
  error = failure.message.toString();
  errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -258,13 +260,24 @@ if (failure is UnauthorizedException) {
      notifyListeners();
 
     }, (success){
+
+
       favouritePosts =[];
       favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
+
 // postDetailsModel = success.postDetailsModel;
-isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
+// isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
 notifyListeners();
     });
   } catch (e) {
+          log(e.toString());
+
+    if (e is UnauthorizedException) {
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+    return;
+  }
     errorData = ErrorData(
     message: getErrorMessage(e.toString()), 
     icon: getErrorIcon(e.toString())
@@ -287,7 +300,12 @@ Future refreshFavouritePosts()async{
   try {
     var result = await postRepository!.getFavouritePosts();
     result.fold((failure){
-
+if (failure is UnauthorizedException) {
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+    return;
+  }
  error = failure.message.toString();
  errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -301,7 +319,7 @@ Future refreshFavouritePosts()async{
       favouritePosts =[];
       favouritePosts.addAll(success.favoritePostPaginateModel.posts!);
 // postDetailsModel = success.;
-isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
+// isFavourite= postDetailsModel!.savedByLoggedUser!.isNotEmpty;
 notifyListeners();
     });
   } catch (e) {

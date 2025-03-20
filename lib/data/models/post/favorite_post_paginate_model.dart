@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 class FavoritePostPaginateModel {
   Meta? meta;
   List<FavoritePostModel>? posts;
@@ -113,10 +115,10 @@ class FavoritePostModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['post_id'] = this.postId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['post_id'] = postId;
     return data;
   }
 }
