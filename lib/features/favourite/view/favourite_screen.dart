@@ -189,7 +189,9 @@ WidgetsBinding.instance.addPostFrameCallback((_){
           return Text(provider.errorData!.message.toString());
           return SizedBox();
         }
-            final item = postProvider.getItem(int.parse(widget.postId!));
+         else{
+
+             final item = postProvider.getItem(int.parse(widget.postId!));
         return
         
         
@@ -304,6 +306,7 @@ provider.addPostToFavourite(context, widget.postId!);
         
         ));
    
+         }
       
       }
     );

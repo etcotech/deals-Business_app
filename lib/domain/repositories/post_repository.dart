@@ -61,7 +61,7 @@ String email,
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();
 
-  Future<Either<Failure, MessageListResponseModel>> getMessages();
+  Future<Either<ApiException, MessageListResponseModel>> getMessages();
   Future<Either<Failure, ThreadMessageListResponse>> getThreadMessages(String threadId);
 
 }

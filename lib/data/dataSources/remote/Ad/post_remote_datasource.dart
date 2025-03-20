@@ -400,26 +400,9 @@ log(responseBody);
   
   @override
   Future<ThreadMessageListResponse> getThreadMessages(String threadId, String token, {String? lang = 'ar'}) async{
-   final response =
-        await client.get(Uri.parse('$baseUrl/api/threads/$threadId/messages?embed=user&sort=created_at&perPage=2'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang!, 
-            },
-          
-            
-            );
-    if (response.statusCode == 200) {
-      return threadMessagesListResponseModelFromJson(response.body);
-    } else if ( response.statusCode == 401) {
-      throw CredentialFailure(
-        message: 'token'
-      );
-    } else {
-      throw ServerException(message: 'server');
-    }
+   var response2 = await apiClient!.get("/api/threads/$threadId/messages?embed=user,messages&sort=created_at&perPage=10");
+    return threadMessagesListResponseModelFromJson(response2);
+  
   }
   
   @override

@@ -5,8 +5,8 @@ import 'package:deals_and_business/data/models/post/thread_message_paginate.dart
 
 import 'post_paginate_model.dart';
 
-ThreadMessageListResponse threadMessagesListResponseModelFromJson(String str) =>
-    ThreadMessageListResponse.fromJson(json.decode(str));
+ThreadMessageListResponse threadMessagesListResponseModelFromJson(Map<String,dynamic> str) =>
+    ThreadMessageListResponse.fromJson(str);
 
 String threadMessagesListResponseModelToJson(ThreadMessageListResponse data) =>
     json.encode(data.toJson());

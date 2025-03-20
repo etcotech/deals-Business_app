@@ -84,7 +84,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   
   @override
   Future<CategoryPostResponse> getCategoryPosts(String? categoryId, {String? lang = 'ar'})async {
-   var respone2 = await apiClient!.get('$categoriesApi$categoryId?embed=posts,user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package,fieldsValues&detailed=true');
+   var respone2 = await apiClient!.get('$categoriesApi$categoryId?embed=posts');
         
         log("CATEGIRY DATA${respone2['result']['posts']}");
         

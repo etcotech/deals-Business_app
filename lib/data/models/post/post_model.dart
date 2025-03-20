@@ -125,7 +125,7 @@
 //     postTypeId = json['post_type_id'];
 //     title = json['title'];
 //     description = json['description'];
-//     if (json['tags'] != dynamic) {
+//     if (json['tags'] != null) {
 //       tags = <String>[];
 //       json['tags'].forEach((v) {
 //         tags!.add(v);
@@ -179,7 +179,7 @@
 //     countPictures = json['count_pictures'];
 //     category = Category.fromJson(json['category']);
 //     picture =
-//         json['picture'] != dynamic ? Picture.fromJson(json['picture']) : dynamic;
+//         json['picture'] != null ? Picture.fromJson(json['picture']) : dynamic;
 //   }
 
 //   Map<String, dynamic> toJson() {
@@ -192,7 +192,7 @@
 //     data['post_type_id'] = postTypeId;
 //     data['title'] = title;
 //     data['description'] = description;
-//     if (tags != dynamic) {
+//     if (tags != null) {
 //       data['tags'] = tags;
 //     }
 //     data['price'] = price;
@@ -241,7 +241,7 @@
 //     data['visits_formatted'] = visitsFormatted;
 //     data['distance_info'] = distanceInfo;
 //     data['count_pictures'] = countPictures;
-//     if (picture != dynamic) {
+//     if (picture != null) {
 //       data['picture'] = picture!.toJson();
 //     }
 //     return data;
@@ -256,13 +256,13 @@
 
 //   Picture.fromJson(Map<String, dynamic> json) {
 //     filename = json['filename'];
-//     url = json['url'] != dynamic ? Url.fromJson(json['url']) : dynamic;
+//     url = json['url'] != null ? Url.fromJson(json['url']) : dynamic;
 //   }
 
 //   Map<String, dynamic> toJson() {
 //     final Map<String, dynamic> data = <String, dynamic>{};
 //     data['filename'] = filename;
-//     if (url != dynamic) {
+//     if (url != null) {
 //       data['url'] = url!.toJson();
 //     }
 //     return data;
@@ -308,58 +308,58 @@
 //       int? isForPermanent,
 //       int? active,
 //       String? pictureUrl}) {
-//     if (id != dynamic) {
+//     if (id != null) {
 //       _id = id;
 //     }
-//     if (parentId != dynamic) {
+//     if (parentId != null) {
 //       _parentId = parentId;
 //     }
-//     if (name != dynamic) {
+//     if (name != null) {
 //       _name = name;
 //     }
-//     if (slug != dynamic) {
+//     if (slug != null) {
 //       _slug = slug;
 //     }
-//     if (description != dynamic) {
+//     if (description != null) {
 //       _description = description;
 //     }
-//     if (hideDescription != dynamic) {
+//     if (hideDescription != null) {
 //       _hideDescription = hideDescription;
 //     }
-//     if (picture != dynamic) {
+//     if (picture != null) {
 //       _picture = picture;
 //     }
-//     if (iconClass != dynamic) {
+//     if (iconClass != null) {
 //       _iconClass = iconClass;
 //     }
-//     if (seoTitle != dynamic) {
+//     if (seoTitle != null) {
 //       _seoTitle = seoTitle;
 //     }
-//     if (seoDescription != dynamic) {
+//     if (seoDescription != null) {
 //       _seoDescription = seoDescription;
 //     }
-//     if (seoKeywords != dynamic) {
+//     if (seoKeywords != null) {
 //       _seoKeywords = seoKeywords;
 //     }
-//     if (lft != dynamic) {
+//     if (lft != null) {
 //       _lft = lft;
 //     }
-//     if (rgt != dynamic) {
+//     if (rgt != null) {
 //       _rgt = rgt;
 //     }
-//     if (depth != dynamic) {
+//     if (depth != null) {
 //       _depth = depth;
 //     }
-//     if (type != dynamic) {
+//     if (type != null) {
 //       _type = type;
 //     }
-//     if (isForPermanent != dynamic) {
+//     if (isForPermanent != null) {
 //       _isForPermanent = isForPermanent;
 //     }
-//     if (active != dynamic) {
+//     if (active != null) {
 //       _active = active;
 //     }
-//     if (pictureUrl != dynamic) {
+//     if (pictureUrl != null) {
 //       _pictureUrl = pictureUrl;
 //     }
 //   }
@@ -512,6 +512,9 @@ class PostModel {
   String? _emailVerifiedAt;
   String? _phoneVerifiedAt;
  dynamic _acceptTerms;
+ dynamic _pictureUrlSmall;
+  dynamic _pictureUrlMedium;
+  dynamic _pictureUrlBig;
  dynamic _acceptMarketingOffers;
  dynamic _isPermanent;
   String? _reviewedAt;
@@ -606,196 +609,211 @@ class PostModel {
      dynamic postType,
       City? city,
      dynamic payment,
+     dynamic pictureUrlSmall,
+     dynamic pictureUrlMedium,
+      dynamicpictureUrlBig,
       List<dynamic>? savedByLoggedUser,
       List<Pictures>? pictures}) {
-    if (id != dynamic) {
+    if (id != null) {
       _id = id;
     }
-    if (countryCode != dynamic) {
+    if (countryCode != null) {
       _countryCode = countryCode;
     }
-    if (userId != dynamic) {
+    if (userId != null) {
       _userId = userId;
     }
-    if (paymentId != dynamic) {
+    if (paymentId != null) {
       _paymentId = paymentId;
     }
-    if (categoryId != dynamic) {
+    if (categoryId != null) {
       _categoryId = categoryId;
     }
-    if (postTypeId != dynamic) {
+    if (postTypeId != null) {
       _postTypeId = postTypeId;
     }
-    if (title != dynamic) {
+    if (title != null) {
       _title = title;
     }
-    if (description != dynamic) {
+    if (description != null) {
       _description = description;
     }
-    if (tags != dynamic) {
+    if (tags != null) {
       _tags = tags;
     }
-    if (price != dynamic) {
+    if (price != null) {
       _price = price;
     }
-    if (currencyCode != dynamic) {
+    if (currencyCode != null) {
       _currencyCode = currencyCode;
     }
-    if (negotiable != dynamic) {
+    if (negotiable != null) {
       _negotiable = negotiable;
     }
-    if (contactName != dynamic) {
+    if (contactName != null) {
       _contactName = contactName;
     }
-    if (authField != dynamic) {
+    if (authField != null) {
       _authField = authField;
     }
-    if (email != dynamic) {
+    if (email != null) {
       _email = email;
     }
-    if (phone != dynamic) {
+    if (phone != null) {
       _phone = phone;
     }
-    if (phoneNational != dynamic) {
+    if (phoneNational != null) {
       _phoneNational = phoneNational;
     }
-    if (phoneCountry != dynamic) {
+    if (phoneCountry != null) {
       _phoneCountry = phoneCountry;
     }
-    if (phoneHidden != dynamic) {
+    if (phoneHidden != null) {
       _phoneHidden = phoneHidden;
     }
-    if (address != dynamic) {
+    if (address != null) {
       _address = address;
     }
-    if (cityId != dynamic) {
+    if (cityId != null) {
       _cityId = cityId;
     }
-    if (lat != dynamic) {
+    if (lat != null) {
       _lat = lat;
     }
-    if (lon != dynamic) {
+    if (lon != null) {
       _lon = lon;
     }
-    if (createFromIp != dynamic) {
+    if (createFromIp != null) {
       _createFromIp = createFromIp;
     }
-    if (latestUpdateIp != dynamic) {
+    if (latestUpdateIp != null) {
       _latestUpdateIp = latestUpdateIp;
     }
-    if (visits != dynamic) {
+    if (visits != null) {
       _visits = visits;
     }
-    if (tmpToken != dynamic) {
+    if (tmpToken != null) {
       _tmpToken = tmpToken;
     }
-    if (emailToken != dynamic) {
+    if (emailToken != null) {
       _emailToken = emailToken;
     }
-    if (phoneToken != dynamic) {
+    if (phoneToken != null) {
       _phoneToken = phoneToken;
     }
-    if (emailVerifiedAt != dynamic) {
+    if (emailVerifiedAt != null) {
       _emailVerifiedAt = emailVerifiedAt;
     }
-    if (phoneVerifiedAt != dynamic) {
+    if (phoneVerifiedAt != null) {
       _phoneVerifiedAt = phoneVerifiedAt;
     }
-    if (acceptTerms != dynamic) {
+    if (acceptTerms != null) {
       _acceptTerms = acceptTerms;
     }
-    if (acceptMarketingOffers != dynamic) {
+    if (acceptMarketingOffers != null) {
       _acceptMarketingOffers = acceptMarketingOffers;
     }
-    if (isPermanent != dynamic) {
+    if (isPermanent != null) {
       _isPermanent = isPermanent;
     }
-    if (reviewedAt != dynamic) {
+    if (reviewedAt != null) {
       _reviewedAt = reviewedAt;
     }
-    if (featured != dynamic) {
+    if (featured != null) {
       _featured = featured;
     }
-    if (archivedAt != dynamic) {
+    if (archivedAt != null) {
       _archivedAt = archivedAt;
     }
-    if (archivedManuallyAt != dynamic) {
+    if (archivedManuallyAt != null) {
       _archivedManuallyAt = archivedManuallyAt;
     }
-    if (deletionMailSentAt != dynamic) {
+    if (deletionMailSentAt != null) {
       _deletionMailSentAt = deletionMailSentAt;
     }
-    if (fbProfile != dynamic) {
+    if (fbProfile != null) {
       _fbProfile = fbProfile;
     }
-    if (partner != dynamic) {
+    if (partner != null) {
       _partner = partner;
     }
-    if (createdAt != dynamic) {
+    if (createdAt != null) {
       _createdAt = createdAt;
     }
-    if (updatedAt != dynamic) {
+    if (updatedAt != null) {
       _updatedAt = updatedAt;
     }
-    if (reference != dynamic) {
+    if (reference != null) {
       _reference = reference;
     }
-    if (slug != dynamic) {
+    if (slug != null) {
       _slug = slug;
     }
-    if (url != dynamic) {
+    if (url != null) {
       _url = url;
     }
-    if (phoneIntl != dynamic) {
+    if (phoneIntl != null) {
       _phoneIntl = phoneIntl;
     }
-    if (createdAtFormatted != dynamic) {
+    if (createdAtFormatted != null) {
       _createdAtFormatted = createdAtFormatted;
     }
-    if (userPhotoUrl != dynamic) {
+    if (userPhotoUrl != null) {
       _userPhotoUrl = userPhotoUrl;
     }
-    if (countryFlagUrl != dynamic) {
+    if (countryFlagUrl != null) {
       _countryFlagUrl = countryFlagUrl;
     }
-    if (priceLabel != dynamic) {
+    if (priceLabel != null) {
       _priceLabel = priceLabel;
     }
-    if (priceFormatted != dynamic) {
+    if (priceFormatted != null) {
       _priceFormatted = priceFormatted;
     }
-    if (visitsFormatted != dynamic) {
+    if (visitsFormatted != null) {
       _visitsFormatted = visitsFormatted;
     }
-    if (distanceInfo != dynamic) {
+    if (distanceInfo != null) {
       _distanceInfo = distanceInfo;
     }
-    if (countPictures != dynamic) {
+    if (countPictures != null) {
       _countPictures = countPictures;
     }
-    if (picture != dynamic) {
+    if (picture != null) {
       _picture = picture;
     }
-    if (user != dynamic) {
+    if (user != null) {
       _user = user;
     }
-    if (category != dynamic) {
+    if (category != null) {
       _category = category;
     }
-    if (postType != dynamic) {
+    if (postType != null) {
       _postType = postType;
     }
-    if (city != dynamic) {
+    if (city != null) {
       _city = city;
     }
-    if (payment != dynamic) {
+    if (payment != null) {
       _payment = payment;
     }
-    if (savedByLoggedUser != dynamic) {
+    if (savedByLoggedUser != null) {
       _savedByLoggedUser = savedByLoggedUser;
     }
-    if (pictures != dynamic) {
+    if (pictures != null) {
       _pictures = pictures;
+    }
+   if (pictureUrlSmall!=null){
+     _pictureUrlSmall=pictureUrlSmall;
+     
+   }
+    if (pictureUrlMedium!=null){
+      _pictureUrlMedium=pictureUrlMedium;
+      
+    }
+    if (pictureUrlBig!=null){
+      _pictureUrlBig=pictureUrlBig;
+      
     }
   }
 
@@ -936,6 +954,17 @@ class PostModel {
   List<Pictures>? get pictures => _pictures;
   set pictures(List<Pictures>? pictures) => _pictures = pictures;
 
+dynamic  get pictureUrlSmall => _pictureUrlSmall;
+  set pictureUrlSmall(dynamic pictureUrlSmall) => _pictureUrlSmall = pictureUrlSmall;
+
+dynamic  get pictureUrlMedium => _pictureUrlMedium;
+  set pictureUrlMedium(dynamic pictureUrlMedium) => _pictureUrlMedium = pictureUrlMedium;
+
+dynamic  get pictureUrlBig => _pictureUrlBig;
+  set pictureUrlBig(dynamic pictureUrlBig) => _pictureUrlBig = pictureUrlBig;
+
+
+
   PostModel.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _countryCode = json['country_code'];
@@ -945,12 +974,16 @@ class PostModel {
     _postTypeId = json['post_type_id'];
     _title = json['title'];
     _description = json['description'];
-    if (json['tags'] != dynamic) {
+    if (json['tags'] != null) {
       _tags = <dynamic>[];
       // json['tags'].forEach((v) {
         // _tags!.add(dynamic.fromJson(v));
       // });
     }
+    _pictureUrlSmall = json['picture_url_small'];
+    _pictureUrlMedium = json['picture_url_medium'];
+    _pictureUrlBig = json['picture_url_big'];
+    
     _price = json['price'];
     _currencyCode = json['currency_code'];
     _negotiable = json['negotiable'];
@@ -1020,7 +1053,7 @@ class PostModel {
         _savedByLoggedUser!.add(v);
       });
     }
-    if (json['pictures'] != dynamic) {
+    if (json['pictures'] != null) {
       _pictures = <Pictures>[];
       // json['pictures'].forEach((v) {
       //   _pictures!.add(Pictures.fromJson(v));
@@ -1040,7 +1073,7 @@ class PostModel {
     data['post_type_id'] = _postTypeId;
     data['title'] = _title;
     data['description'] = _description;
-    if (_tags != dynamic) {
+    if (_tags != null) {
       data['tags'] = _tags!.map((v) => v.toJson()).toList();
     }
     data['price'] = _price;
@@ -1089,23 +1122,26 @@ class PostModel {
     data['visits_formatted'] = _visitsFormatted;
     data['distance_info'] = _distanceInfo;
     data['count_pictures'] = _countPictures;
-    if (_picture != dynamic) {
+    data['picture_url_small'] = _pictureUrlSmall;
+    data['picture_url_medium'] = _pictureUrlMedium;
+    data['picture_url_big'] = _pictureUrlBig;
+    if (_picture != null) {
       data['picture'] = _picture!.toJson();
     }
     data['user'] = _user;
-    if (_category != dynamic) {
+    if (_category != null) {
       data['category'] = _category!.toJson();
     }
     data['postType'] = _postType;
-    if (_city != dynamic) {
+    if (_city != null) {
       data['city'] = _city!.toJson();
     }
     data['payment'] = _payment;
-    if (_savedByLoggedUser != dynamic) {
+    if (_savedByLoggedUser != null) {
       data['savedByLoggedUser'] =
           _savedByLoggedUser!.map((v) => v.toJson()).toList();
     }
-    if (_pictures != dynamic) {
+    if (_pictures != null) {
       data['pictures'] = _pictures!.map((v) => v.toJson()).toList();
     }
     return data;
@@ -1117,10 +1153,10 @@ class Picture {
   Url? _url;
 
   Picture({String? filename, Url? url}) {
-    if (filename != dynamic) {
+    if (filename != null) {
       _filename = filename;
     }
-    if (url != dynamic) {
+    if (url != null) {
       _url = url;
     }
   }
@@ -1138,7 +1174,7 @@ class Picture {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['filename'] = _filename;
-    if (_url != dynamic) {
+    if (_url != null) {
       data['url'] = _url!.toJson();
     }
     return data;
@@ -1152,16 +1188,16 @@ class Url {
   String? _big;
 
   Url({String? full, String? small, String? medium, String? big}) {
-    if (full != dynamic) {
+    if (full != null) {
       _full = full;
     }
-    if (small != dynamic) {
+    if (small != null) {
       _small = small;
     }
-    if (medium != dynamic) {
+    if (medium != null) {
       _medium = medium;
     }
-    if (big != dynamic) {
+    if (big != null) {
       _big = big;
     }
   }
@@ -1233,61 +1269,61 @@ class Category {
       int? active,
       String? pictureUrl,
       Parent? parent}) {
-    if (id != dynamic) {
+    if (id != null) {
       _id = id;
     }
-    if (parentId != dynamic) {
+    if (parentId != null) {
       _parentId = parentId;
     }
-    if (name != dynamic) {
+    if (name != null) {
       _name = name;
     }
-    if (slug != dynamic) {
+    if (slug != null) {
       _slug = slug;
     }
-    if (description != dynamic) {
+    if (description != null) {
       _description = description;
     }
-    if (hideDescription != dynamic) {
+    if (hideDescription != null) {
       _hideDescription = hideDescription;
     }
-    if (picture != dynamic) {
+    if (picture != null) {
       _picture = picture;
     }
-    if (iconClass != dynamic) {
+    if (iconClass != null) {
       _iconClass = iconClass;
     }
-    if (seoTitle != dynamic) {
+    if (seoTitle != null) {
       _seoTitle = seoTitle;
     }
-    if (seoDescription != dynamic) {
+    if (seoDescription != null) {
       _seoDescription = seoDescription;
     }
-    if (seoKeywords != dynamic) {
+    if (seoKeywords != null) {
       _seoKeywords = seoKeywords;
     }
-    if (lft != dynamic) {
+    if (lft != null) {
       _lft = lft;
     }
-    if (rgt != dynamic) {
+    if (rgt != null) {
       _rgt = rgt;
     }
-    if (depth != dynamic) {
+    if (depth != null) {
       _depth = depth;
     }
-    if (type != dynamic) {
+    if (type != null) {
       _type = type;
     }
-    if (isForPermanent != dynamic) {
+    if (isForPermanent != null) {
       _isForPermanent = isForPermanent;
     }
-    if (active != dynamic) {
+    if (active != null) {
       _active = active;
     }
-    if (pictureUrl != dynamic) {
+    if (pictureUrl != null) {
       _pictureUrl = pictureUrl;
     }
-    if (parent != dynamic) {
+    if (parent != null) {
       _parent = parent;
     }
   }
@@ -1353,7 +1389,7 @@ class Category {
     _active = json['active'];
     _pictureUrl = json['picture_url'];
     // _parent =
-    //     json['parent'] != dynamic ? Parent.fromJson(json['parent']) : dynamic;
+    //     json['parent'] != null ? Parent.fromJson(json['parent']) : dynamic;
   }
 
   Map<String, dynamic> toJson() {
@@ -1376,7 +1412,7 @@ class Category {
     data['is_for_permanent'] = _isForPermanent;
     data['active'] = _active;
     data['picture_url'] = _pictureUrl;
-    if (_parent != dynamic) {
+    if (_parent != null) {
       data['parent'] = _parent!.toJson();
     }
     return data;
@@ -1424,61 +1460,61 @@ class Parent {
       int? active,
       String? pictureUrl,
      dynamic parent}) {
-    if (id != dynamic) {
+    if (id != null) {
       _id = id;
     }
-    if (parentId != dynamic) {
+    if (parentId != null) {
       _parentId = parentId;
     }
-    if (name != dynamic) {
+    if (name != null) {
       _name = name;
     }
-    if (slug != dynamic) {
+    if (slug != null) {
       _slug = slug;
     }
-    if (description != dynamic) {
+    if (description != null) {
       _description = description;
     }
-    if (hideDescription != dynamic) {
+    if (hideDescription != null) {
       _hideDescription = hideDescription;
     }
-    if (picture != dynamic) {
+    if (picture != null) {
       _picture = picture;
     }
-    if (iconClass != dynamic) {
+    if (iconClass != null) {
       _iconClass = iconClass;
     }
-    if (seoTitle != dynamic) {
+    if (seoTitle != null) {
       _seoTitle = seoTitle;
     }
-    if (seoDescription != dynamic) {
+    if (seoDescription != null) {
       _seoDescription = seoDescription;
     }
-    if (seoKeywords != dynamic) {
+    if (seoKeywords != null) {
       _seoKeywords = seoKeywords;
     }
-    if (lft != dynamic) {
+    if (lft != null) {
       _lft = lft;
     }
-    if (rgt != dynamic) {
+    if (rgt != null) {
       _rgt = rgt;
     }
-    if (depth != dynamic) {
+    if (depth != null) {
       _depth = depth;
     }
-    if (type != dynamic) {
+    if (type != null) {
       _type = type;
     }
-    if (isForPermanent != dynamic) {
+    if (isForPermanent != null) {
       _isForPermanent = isForPermanent;
     }
-    if (active != dynamic) {
+    if (active != null) {
       _active = active;
     }
-    if (pictureUrl != dynamic) {
+    if (pictureUrl != null) {
       _pictureUrl = pictureUrl;
     }
-    if (parent != dynamic) {
+    if (parent != null) {
       _parent = parent;
     }
   }
@@ -1596,37 +1632,37 @@ class City {
       String? timeZone,
       int? active,
       int? postsCount}) {
-    if (id != dynamic) {
+    if (id != null) {
       _id = id;
     }
-    if (countryCode != dynamic) {
+    if (countryCode != null) {
       _countryCode = countryCode;
     }
-    if (name != dynamic) {
+    if (name != null) {
       _name = name;
     }
-    if (latitude != dynamic) {
+    if (latitude != null) {
       _latitude = latitude;
     }
-    if (longitude != dynamic) {
+    if (longitude != null) {
       _longitude = longitude;
     }
-    if (subadmin1Code != dynamic) {
+    if (subadmin1Code != null) {
       _subadmin1Code = subadmin1Code;
     }
-    if (subadmin2Code != dynamic) {
+    if (subadmin2Code != null) {
       _subadmin2Code = subadmin2Code;
     }
-    if (population != dynamic) {
+    if (population != null) {
       _population = population;
     }
-    if (timeZone != dynamic) {
+    if (timeZone != null) {
       _timeZone = timeZone;
     }
-    if (active != dynamic) {
+    if (active != null) {
       _active = active;
     }
-    if (postsCount != dynamic) {
+    if (postsCount != null) {
       _postsCount = postsCount;
     }
   }
@@ -1702,25 +1738,25 @@ class Pictures {
       int? position,
       int? active,
       Url? url}) {
-    if (id != dynamic) {
+    if (id != null) {
       _id = id;
     }
-    if (postId != dynamic) {
+    if (postId != null) {
       _postId = postId;
     }
-    if (filename != dynamic) {
+    if (filename != null) {
       _filename = filename;
     }
-    if (mimeType != dynamic) {
+    if (mimeType != null) {
       _mimeType = mimeType;
     }
-    if (position != dynamic) {
+    if (position != null) {
       _position = position;
     }
-    if (active != dynamic) {
+    if (active != null) {
       _active = active;
     }
-    if (url != dynamic) {
+    if (url != null) {
       _url = url;
     }
   }
@@ -1747,7 +1783,7 @@ class Pictures {
     _mimeType = json['mime_type'];
     _position = json['position'];
     _active = json['active'];
-    // _url = json['url'] != dynamic ? Url.fromJson(json['url']) : dynamic;
+    // _url = json['url'] != null ? Url.fromJson(json['url']) : dynamic;
   }
 
   Map<String, dynamic> toJson() {
@@ -1758,7 +1794,7 @@ class Pictures {
     data['mime_type'] = _mimeType;
     data['position'] = _position;
     data['active'] = _active;
-    if (_url != dynamic) {
+    if (_url != null) {
       data['url'] = _url!.toJson();
     }
     return data;

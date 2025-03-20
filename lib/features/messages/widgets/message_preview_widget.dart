@@ -51,18 +51,21 @@ class MessagePreviewWidget extends StatelessWidget {
       
       
             Text(messageModel!.subject.toString(), 
-            
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16 , fontWeight: FontWeight.bold
             ),
             ), 
-      Text(messageModel!.latestMessage!.body.toString(), 
-            
-            style: TextStyle(
-              fontSize: 14 , fontWeight: FontWeight.w500, 
-              color: Colors.grey
-            ),
-            ), 
+       SizedBox(
+              width: 250,
+        child: Text(messageModel!.latestMessage!.body.toString(), 
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 14 , fontWeight: FontWeight.w500, 
+                color: Colors.grey
+              ),
+              ),
+      ), 
       
       
           ],

@@ -249,7 +249,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
   }
 
   @override
-  Future<Either<Failure, MessageListResponseModel>> getMessages()async {
+  Future<Either<ApiException, MessageListResponseModel>> getMessages()async {
    try {
         final remoteResponse = await postRemoteDatasource.
         getMessages(
@@ -263,19 +263,7 @@ lang: localeLocalDatasource.getCurrentLocale()
        
         return Right(remoteResponse);
       } 
-      on CredentialFailure{
-        return Left(CredentialFailure(message: 'token'));
-      }
-          on TimeoutException{
-        return Left(TimeoutFailure(message: 'timeout'));
-  }
-  on SocketException{
-    log('SPOCLe');
-        return Left(NetworkFailure(message: 'network'));
-  }
-   
-      
-      on Failure catch (failure) {
+     on ApiException catch (failure) {
         return Left(failure);
       }
   }

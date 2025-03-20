@@ -140,7 +140,7 @@ style: TextStyle(
     , 
 SizedBox(height: 16,),
 provider.posts.isEmpty?
-Center(child: Text(getTranslated("${Strings.noPostIncategory}" " (${widget.categoryModel!.name})", context)!,
+Center(child: Text("${getTranslated(Strings.noPostIncategory , context)!}  (${widget.categoryModel!.name})" ,
 style: TextStyle(
   color: Colors.grey, 
   fontWeight: FontWeight.bold
@@ -203,14 +203,14 @@ class CategoryPost extends StatelessWidget {
              borderRadius: BorderRadius.circular(15.0),
           
              child:
-//  postModel?.picture?.url?.big==null?
-//              Center(child: Icon(Icons.image,size: 50 ,color: Colors.grey,),):
+ postModel!.pictureUrlBig==null?
+             Center(child: Icon(Icons.image,size: 50 ,color: Colors.grey,),):
               Image.network(
                errorBuilder: (context, error, stackTrace) {
                  
           return Center(child: Icon(Icons.image,size: 50 ,color: Colors.grey,),);
                },
-                postModel!.picture?.url?.big??'', 
+                postModel!.pictureUrlBig.toString(), 
          width:    MediaQuery.sizeOf(context).width*.30,
              height: MediaQuery.sizeOf(context).height/7,
            fit: BoxFit.cover,
@@ -278,40 +278,40 @@ class CategoryPost extends StatelessWidget {
        ), 
        
        
-       // Icon(Icons.more_vert_outlined, color: Colors.grey,)
-       PopupMenuButton(
+    //    // Icon(Icons.more_vert_outlined, color: Colors.grey,)
+    //    PopupMenuButton(
           
-         menuPadding: EdgeInsets.zero,
+    //      menuPadding: EdgeInsets.zero,
           
-           onSelected: (choice){
-          Navigator.of(context).push(
-     PageTransition(type: 
+    //        onSelected: (choice){
+    //       Navigator.of(context).push(
+    //  PageTransition(type: 
      
-     PageTransitionType.leftToRight ,child: ReportScreen(
+    //  PageTransitionType.leftToRight ,child: ReportScreen(
     
-       postId: postModel!.id.toString(),
-     )
-     )
-          );
-           },
-           padding: EdgeInsets.zero,
-           // initialValue: choices[_selection],
-           itemBuilder: (BuildContext context) {
-             return ['Report'].map((String choice) {
-               return  PopupMenuItem<String>(
-               value: choice,
-               child: Text(getTranslated(choice, context)!, 
-             style: TextStyle(
-               color: Colors.grey
-             ),
-               ),
-             );}
-             ).toList();
-           },
-         position: PopupMenuPosition.under,
+    //    postId: postModel!.id.toString(),
+    //  )
+    //  )
+    //       );
+    //        },
+    //        padding: EdgeInsets.zero,
+    //        // initialValue: choices[_selection],
+    //        itemBuilder: (BuildContext context) {
+    //          return ['Report'].map((String choice) {
+    //            return  PopupMenuItem<String>(
+    //            value: choice,
+    //            child: Text(getTranslated(choice, context)!, 
+    //          style: TextStyle(
+    //            color: Colors.grey
+    //          ),
+    //            ),
+    //          );}
+    //          ).toList();
+    //        },
+    //      position: PopupMenuPosition.under,
           
          
-         ), 
+    //      ), 
           
        
          ],
