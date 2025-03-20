@@ -478,12 +478,12 @@ child: GoogleMap(
     Marker(markerId: MarkerId('city'), 
     
     position: LatLng(
-    provider.postDetailsModel!.lat!=provider?
-    double.parse(provider.postDetailsModel!.lat.toString())
+    provider.postDetailsModel!.city!.latitude!=null?
+    double.parse(provider.postDetailsModel!.city!.latitude.toString())
     :0.0,
      
-     provider.postDetailsModel!.lon!=null?
-     double.parse(provider.postDetailsModel!.lon.toString()):0.0)
+     provider.postDetailsModel!.city!.longitude!=null?
+     double.parse(provider.postDetailsModel!.city!.latitude.toString()):0.0)
     )
   },
   initialCameraPosition: 
