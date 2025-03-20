@@ -6,8 +6,8 @@ import 'package:deals_and_business/data/models/user/signup_user_model.dart';
 
 import 'user_model.dart';
 
-ProfileResponseModel profileResponseModelFromJson(String str) =>
-    ProfileResponseModel.fromJson(json.decode(str));
+ProfileResponseModel profileResponseModelFromJson(Map<String,dynamic> str) =>
+    ProfileResponseModel.fromJson(str);
 
 String profileResponseModelToJson(ProfileResponseModel data) =>
     json.encode(data.toJson());

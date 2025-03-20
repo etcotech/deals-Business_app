@@ -27,7 +27,8 @@ class ApiClient {
   ApiClient(this.baseUrl);
 
   Future<dynamic> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$baseUrl$endpoint'), 
+    try {
+      final response = await http.get(Uri.parse('$baseUrl$endpoint'), 
     
      headers: { 
 
@@ -41,8 +42,19 @@ class ApiClient {
     );
 
     return _handleResponse(response);
+    } 
+    on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
   }
  Future<dynamic> getPaginate(String url) async {
+  try {
     final response = await http.get(Uri.parse(url), 
     
      headers: { 
@@ -60,7 +72,19 @@ class ApiClient {
 log(response.body);
     return _handleResponse(response);
   }
+  on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
+  }
   Future<dynamic> post(String endpoint, {Map<String, dynamic>? body}) async {
+   
+   try {
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: { 
@@ -76,6 +100,17 @@ log(response.body);
     );
 
     return _handleResponse(response);
+
+   }
+   on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
   }
 
 
@@ -88,6 +123,8 @@ log(response.body);
    , 
    String? method='POST'
    }) async {
+
+    try {
      var request = http.MultipartRequest(
     method!,
     Uri.parse('$baseUrl$endpoint'),
@@ -137,6 +174,16 @@ request.headers.addAll({
     // );
 var response = await http.Response.fromStream(res);
     return _handleResponse( response);
+    }
+    on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
   }
   
 
@@ -150,6 +197,8 @@ var response = await http.Response.fromStream(res);
    , 
    String? method='POST'
    }) async {
+
+    try {
     var dio = Dio();
     dio.options.baseUrl= baseUrl; 
     dio.options.headers= {
@@ -210,6 +259,17 @@ request.headers.addAll({
     // );
 var response = await http.Response.fromStream(res);
     return _handleResponse( response);
+
+    }
+    on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
   }
   
   dynamic _handleResponse(http.Response response) {

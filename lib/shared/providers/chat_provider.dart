@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/domain/repositories/post_repository.dart';
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
@@ -78,6 +79,14 @@ try {
 
 
   result.fold((failure){
+
+
+    if (failure is UnauthorizedException ) {
+      
+  logout();
+  showErrorMessage(context, getTranslated('session_expired', context));
+      return;
+    }
  if(failure is ValidationException){
 //handle validation errors
 

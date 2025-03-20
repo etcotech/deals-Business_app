@@ -16,7 +16,7 @@ abstract class PostRepository {
 
   Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url);
 
-    Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts();
+    Future<Either<ApiException, FavoritePostListResponseModel>> getFavouritePosts();
 
   Future<Either<ApiException, Map<String,dynamic>>> addPost(
     NewPostModel newPostModel 

@@ -4,8 +4,8 @@ import 'package:deals_and_business/data/models/post/favorite_post_paginate_model
 
 import 'post_paginate_model.dart';
 
-FavoritePostListResponseModel favPostListResponseModelFromJson(String str) =>
-    FavoritePostListResponseModel.fromJson(json.decode(str));
+FavoritePostListResponseModel favPostListResponseModelFromJson(Map<String,dynamic> str) =>
+    FavoritePostListResponseModel.fromJson(str);
 
 String favPostListResponseModelToJson(FavoritePostListResponseModel data) =>
     json.encode(data.toJson());

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/error/dio_exceptions.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/core/error/failure.dart';
@@ -23,6 +24,7 @@ import 'package:deals_and_business/domain/repositories/post_repository.dart';
 import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
 import 'package:deals_and_business/main.dart';
+import 'package:deals_and_business/shared/views/success_screen.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -204,8 +206,18 @@ selectedCity=null;
 selectedCountry=null;
 files=[];
 notifyListeners();
-showSuccessMessage(context, 'Post Sent!');
-Navigator.pop(context);
+// showSuccessMessage(context, 'Post Sent!');
+
+// Navigator.pop(context);
+
+ Navigator.pushAndRemoveUntil(context, 
+                PageTransition(type: 
+                
+                PageTransitionType.leftToRight , 
+
+                child: SuccessScreen()
+                )
+                , (route)=> false);
 
   });
 } 
@@ -232,7 +244,10 @@ Future getFavouritePosts()async{
   try {
     var result = await postRepository!.getFavouritePosts();
     result.fold((failure){
-
+if (failure is UnauthorizedException) {
+  logout();
+  
+}
  error = failure.message.toString();
  errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -509,6 +524,12 @@ notifyListeners();
 try {
   var result = await postRepository!.getMessages();
 result.fold((failure){
+
+ if (failure is UnauthorizedException) {
+    logout();
+showErrorMessage(context,getTranslated("session_expired", context));
+    return;
+  }
   error = failure.message.toString();
  errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
@@ -645,6 +666,14 @@ try {
    );
 
   result.fold((failure){
+
+
+    if (failure is UnauthorizedException ) {
+      
+  logout();
+  showErrorMessage(context, getTranslated('session_expired', context));
+      return;
+    }
     if(failure is ValidationException){
 //handle validation errors
 
@@ -742,6 +771,8 @@ try {
 
     if (failure is UnauthorizedException) {
   logout();
+  showErrorMessage(context,getTranslated("session_expired", context));
+
 }
 if(failure is ValidationException){
 //handle validation errors

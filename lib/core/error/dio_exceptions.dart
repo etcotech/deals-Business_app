@@ -31,3 +31,11 @@ class ValidationException extends ApiException {
 class InternalServerErrorException extends ApiException {
   InternalServerErrorException(String message) : super(message, 500);
 }
+
+class InternetException extends ApiException {
+  InternetException(String message) : super('internet', 1000);
+}
+
+class TimeoutException extends ApiException {
+  TimeoutException(String message) : super('timeout', 1001);
+}

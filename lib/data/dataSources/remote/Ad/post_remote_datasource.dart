@@ -230,31 +230,35 @@ files: newPostModel.pictures
   
   @override
   Future<FavoritePostListResponseModel> getFavouritePosts(String token, {String? lang = 'ar'})async {
-       final response =
-        await client.get(Uri.parse('$baseUrl$savedPostAPi''?embed=null&sort=created_at&perPage=20'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization':'Bearer $token' ,
-              'Content-Language':lang!,
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang
-            },
+     var response2 = await apiClient!.get("$savedPostAPi?embed=null&sort=created_at&perPage=20");
+    return favPostListResponseModelFromJson(response2);
+     
+     
+    //    final response =
+    //     await client.get(Uri.parse('$baseUrl$savedPostAPi''?embed=null&sort=created_at&perPage=20'),
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           'Authorization':'Bearer $token' ,
+    //           'Content-Language':lang!,
+    //           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+    //           Strings.contentLang: lang
+    //         },
           
             
-            );
-            log(token);
-    if (response.statusCode == 200) {
-      log(response.body);
-      return favPostListResponseModelFromJson(response.body);
-    }
+    //         );
+    //         log(token);
+    // if (response.statusCode == 200) {
+    //   log(response.body);
+    //   return favPostListResponseModelFromJson(response.body);
+    // }
     
-     else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure(
-      message: 'token'
-      );
-    } else {
-      throw ServerException();
-    }
+    //  else if (response.statusCode == 400 || response.statusCode == 401) {
+    //   throw CredentialFailure(
+    //   message: 'token'
+    //   );
+    // } else {
+    //   throw ServerException();
+    // }
    
   }
   
@@ -376,26 +380,30 @@ log(responseBody);
   
   @override
   Future<MessageListResponseModel> getMessages(String token, {String? lang = 'ar'})async {
-    final response =
-        await client.get(Uri.parse('$baseUrl/api/threads'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              Strings.contentLang: lang!, 
-            },
+   var response2 = await apiClient!.get("/api/threads");
+    return messageListResponseModelFromJson(response2);
+   
+   
+    // final response =
+    //     await client.get(Uri.parse('$baseUrl/api/threads'),
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           'Authorization': 'Bearer $token',
+    //           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+    //           Strings.contentLang: lang!, 
+    //         },
           
             
-            );
-    if (response.statusCode == 200) {
-      return messageListResponseModelFromJson(response.body);
-    } else if ( response.statusCode == 401) {
-      throw CredentialFailure(
-        message: 'token'
-      );
-    } else {
-      throw ServerException(message: 'server');
-    }
+    //         );
+    // if (response.statusCode == 200) {
+    //   return messageListResponseModelFromJson(response.body);
+    // } else if ( response.statusCode == 401) {
+    //   throw CredentialFailure(
+    //     message: 'token'
+    //   );
+    // } else {
+    //   throw ServerException(message: 'server');
+    // }
   }
   
   @override

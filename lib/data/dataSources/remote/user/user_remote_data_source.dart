@@ -197,33 +197,38 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   
   @override
   Future<ProfileResponseModel> getUserprofile(String userId, String? token, {String? lang = 'ar'})async {
-   try {
-      final response =
-        await client.get(Uri.parse('$baseUrl$userApi/$userId?embed=null'),
-            headers: {
-              'Content-Type': 'application/json',
-              'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
-              'Authorization':'Bearer ${token!}', 
-              Strings.contentLang:
-              lang!
-            },
+  var response2 = await httpClient!.get("$userApi/$userId?embed=null");
+
+  return profileResponseModelFromJson(response2);
+  
+  
+  //  try {
+  //     final response =
+  //       await client.get(Uri.parse('$baseUrl$userApi/$userId?embed=null'),
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=', 
+  //             'Authorization':'Bearer ${token!}', 
+  //             Strings.contentLang:
+  //             lang!
+  //           },
             
-            );
-    if (response.statusCode == 200) {
-      log(response.body);
-      return profileResponseModelFromJson(response.body);
-    } else if (response.statusCode == 400 || response.statusCode == 401) {
-      throw CredentialFailure(
-        message: 'expire,token'
-      );
-    } else {
-      log(response.statusCode.toString());
-      throw ServerException();
-    }
-  } catch (e) {
-    log(e.toString());
-    throw ServerFailure();
-  }
+  //           );
+  //   if (response.statusCode == 200) {
+  //     log(response.body);
+  //     return profileResponseModelFromJson(response.body);
+  //   } else if (response.statusCode == 400 || response.statusCode == 401) {
+  //     throw CredentialFailure(
+  //       message: 'expire,token'
+  //     );
+  //   } else {
+  //     log(response.statusCode.toString());
+  //     throw ServerException();
+  //   }
+  // } catch (e) {
+  //   log(e.toString());
+  //   throw ServerFailure();
+  // }
   }
   
   @override

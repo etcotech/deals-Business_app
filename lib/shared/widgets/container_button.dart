@@ -10,6 +10,7 @@ class ContainerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
 width: MediaQuery.sizeOf(context).width,
       height: 50 ,
       decoration: BoxDecoration(

@@ -90,6 +90,13 @@ notifyListeners();
     try {
       var result = await userRepository!.getUserProfile();
 result.fold((failure){
+  if (failure is UnauthorizedException) {
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+
+    return;
+  }
   errorData = ErrorData(
     message: getErrorMessage(failure.message.toString()), 
     icon: getErrorIcon(failure.message.toString())
@@ -261,9 +268,12 @@ gender_id: genderId,
 result.fold((failure){
 
 
-  if (failure is UnauthorizedException) {
-  logout();
-}
+if (failure is UnauthorizedException) {
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+    return;
+  }
 if(failure is ValidationException){
 //handle validation errors
 
@@ -389,10 +399,12 @@ gender_id: genderId,
       );
 result.fold((failure){
 
-
-  if (failure is UnauthorizedException) {
-  logout();
-}
+if (failure is UnauthorizedException) {
+    logout();
+showErrorMessage(navigatorKey.currentContext!,getTranslated("session_expired",
+ navigatorKey.currentContext!));
+    return;
+  }
 if(failure is ValidationException){
 //handle validation errors
 

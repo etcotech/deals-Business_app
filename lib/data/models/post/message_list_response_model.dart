@@ -4,8 +4,8 @@ import 'package:deals_and_business/data/models/post/message_list_paginate_model.
 
 import 'post_paginate_model.dart';
 
-MessageListResponseModel messageListResponseModelFromJson(String str) =>
-    MessageListResponseModel.fromJson(json.decode(str));
+MessageListResponseModel messageListResponseModelFromJson(Map<String,dynamic> str) =>
+    MessageListResponseModel.fromJson(str);
 
 String messageListResponseModelToJson(MessageListResponseModel data) =>
     json.encode(data.toJson());

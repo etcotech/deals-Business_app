@@ -79,7 +79,10 @@ var formKey = GlobalKey<FormState>();
                          ),
                     InputArea(
                       errorText: provider.bodyError,
-                      controller: descriptionController, hintText: 'desc' ,
+                      controller: descriptionController, hintText:
+                      
+                      getTranslated('desc', context)!
+                       ,
                     validator: (str){
 
                       var error = descValidator(str);

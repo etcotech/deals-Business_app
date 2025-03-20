@@ -1,3 +1,4 @@
+import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/data/models/error_data.dart';
@@ -47,7 +48,8 @@ onRetry!();
     }
   },
   title: errorData!.message!.isTokenExpired()?
-  'Login again':'Rety'
+
+getTranslated('login_now', context):getTranslated(Strings.retry, context)
   ,
 )
 

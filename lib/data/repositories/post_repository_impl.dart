@@ -51,7 +51,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
 
-  Future<Either<Failure, FavoritePostListResponseModel>> _favoritePostListProvider(
+  Future<Either<ApiException, FavoritePostListResponseModel>> _favoritePostListProvider(
    _FavoritePostChooser getDataSource,
       ) async {
     // if (await networkInfo.isConnected) {
@@ -63,20 +63,9 @@ class PostRepositoryImpl implements PostRepository {
         return Right(remoteResponse);
       } 
       
-      on SocketException{
-        return Left(NetworkFailure(message: 'network'));
-      }
-      on CredentialFailure{
-                return Left(CredentialFailure(message: 'token'));
-
-      }
-      
-      on Failure catch (failure) {
+        on ApiException catch (failure) {
         return Left(failure);
       }
-    // } else {
-    //   return Left(NetworkFailure());
-    // }
   }
 Future<Either<ApiException, PostListResponseModel>> _postListProvider(
    _DataSourceChooser getDataSource,
@@ -199,7 +188,7 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
   }
   
   @override
-  Future<Either<Failure, FavoritePostListResponseModel>> getFavouritePosts()async {
+  Future<Either<ApiException, FavoritePostListResponseModel>> getFavouritePosts()async {
     return  await _favoritePostListProvider((){
 
         return    postRemoteDatasource.getFavouritePosts(localDataSource.getToken().toString(), 

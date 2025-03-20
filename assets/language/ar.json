@@ -138,14 +138,13 @@
 "phone_should_be_9_digits":"يجب ان يحتوي رقم الهاتف على ٩ خانات" ,
 "title_required":"يجب اضافة العنوان" ,
 "desc_required":"الوصف مطلوب" ,
-
+"desc":"الوصف" ,
 "price_required":"السعر مطلوب", 
 "invalid_email":"البريد الالكتروني غير صالح" ,
 "message_required":"هذا الحقل مطلوب" , 
 "message_sent":"تم ارسال الرسالة",
 "send_a_message":"ارسل رسالة", 
 "report_sent":"تم ارسال البلاغ" 
-
 , 
 "change_user_gender":"تغيير جنس المستخدم"
  ,
@@ -175,7 +174,11 @@
 "no_cities":"لا توجد مدن" 
 , 
 "no_post_in_category":"لا توجد اعلانات في  فئة " 
-
-
+,
+"session_expired":"انتهت الجلسة سجل مرة اخرى",
+"success":"نجاح" ,
+"post_sent_succssfully":"تم نشر الاعلان بنجاح" ,
+"report_sent_succssfully":"تم الابلاغ عن الاعلان",
+"back_to_home":"العودة للشاشة الرئيسية"
 }
   

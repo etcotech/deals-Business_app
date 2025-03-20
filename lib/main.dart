@@ -13,6 +13,8 @@ import 'package:deals_and_business/features/splash/providers/splash_provider.dar
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
 import 'package:deals_and_business/shared/providers/chat_provider.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
+import 'package:deals_and_business/shared/views/error_screen.dart';
+import 'package:deals_and_business/shared/views/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +66,7 @@ class GlobalContext {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+   const MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,10 @@ supportedLocales: locals,
             
           ),
          
-          home: SplashScreen()
+          home: 
+          // SuccessScreen()
+          // NetworkErrorScreen(onRetry: (){})
+          SplashScreen()
         );
       }
     );

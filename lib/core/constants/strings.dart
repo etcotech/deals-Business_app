@@ -130,5 +130,12 @@ static const String  selectCity = "select_city_first";
 static const String  selectImages= "select_images_first";
 static const String  subCategoriesIn= "sub_categories_in";
 static const String  noPostIncategory= "no_post_in_category";
+static const String succss = "success";
+static const String postSentSuccesfully ="post_sent_succssfully";
+static const String reportSentSuccesfully ="report_sent_succssfully";
+
+
+static const String backToHome ="back_to_home";
+
 
 }

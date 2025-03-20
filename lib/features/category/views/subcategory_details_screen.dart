@@ -4,7 +4,6 @@ import 'package:deals_and_business/data/models/category/category_model.dart';
 import 'package:deals_and_business/data/models/category/category_subcategoory_model.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/category/providers/category_provider.dart';
-import 'package:deals_and_business/features/category/views/subcategory_details_screen.dart';
 import 'package:deals_and_business/features/category/widgets/sub_category_widget.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
@@ -15,15 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-class CategoryDetailsScreen extends StatefulWidget {
+class SubcategoryDetailsScreen extends StatefulWidget {
   final CategorySubcategoryModel? categoryModel;
-  const CategoryDetailsScreen({super.key, this.categoryModel, });
+  final String? categoryId;
+    final String? title;
+
+  const SubcategoryDetailsScreen({super.key, this.categoryModel, this.categoryId, this.title});
 
   @override
-  State<CategoryDetailsScreen> createState() => _CategoryDetailsScreenState();
+  State<SubcategoryDetailsScreen> createState() => _CategoryDetailsScreenState();
 }
 
-class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
+class _CategoryDetailsScreenState extends State<SubcategoryDetailsScreen> {
 
 @override
   void initState() {
@@ -31,7 +33,7 @@ class _CategoryDetailsScreenState extends State<CategoryDetailsScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
 
-   context.read<CategoryProvider>().getCategoryPosts(widget.categoryModel!.id.toString());
+   context.read<CategoryProvider>().getCategoryPosts(widget.categoryId!);
 
     });
   }
@@ -83,13 +85,13 @@ leading: MyBackButton(
     Navigator.of(context).pop();
   },
 ),
+centerTitle: true,
   title: Text(
-    widget.categoryModel!.name.toString(), 
+    widget.title.toString(), 
     style: TextStyle(
       fontWeight: FontWeight.bold
     ),
   ),
-  centerTitle: true,
 
 ),
 
@@ -107,7 +109,7 @@ body: SizedBox.expand(
     ),
     
     child: Text(
-      "${getTranslated(Strings.subCategoriesIn, context)!} ${widget.categoryModel!.name}", 
+      "${getTranslated(Strings.subCategoriesIn, context)!} ${widget.title}", 
 style: TextStyle(
   fontWeight: FontWeight.bold, 
   fontSize: 14
@@ -116,42 +118,7 @@ style: TextStyle(
 
     ),
     ), 
-    
-    
-    SizedBox(height: 16,),
-    
-    
-    SizedBox(
-    width: MediaQuery.sizeOf(context).width,
-     height:  MediaQuery.sizeOf(context).width*.29,
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      shrinkWrap: true ,
-      itemCount:widget.categoryModel!.children!.length,
-      itemBuilder: (context ,index){
-        var SubCategory= widget.categoryModel!.children![index];
-        return Center(
-          child: GestureDetector(
-            onTap: (){
-              Navigator.of(context).push(
-                PageTransition(type: PageTransitionType.rightToLeft, child: SubcategoryDetailsScreen(
-                  categoryId: SubCategory.id.toString(),
-                  categoryModel:widget.categoryModel,
-                  title: SubCategory.name,
-                ))
-              );
-            },
-            child: SubCategoryWidget(
-              title: SubCategory.name
-            ),
-          ),
-        );
-      
-    
-    
-    }),
-    )
-    , 
+  
 SizedBox(height: 16,),
 provider.posts.isEmpty?
 

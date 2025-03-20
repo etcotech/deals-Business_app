@@ -181,6 +181,8 @@
  ,
  "mrs":"Mrs"
  , 
+ "desc":"Description" ,
+
  "sub_categories_in":"Sub categories in",
  "continue":"Continue" ,
 "are_you_sure_delete_account":"Are you sure you want to delete your account? you can't undo that!"
@@ -188,9 +190,14 @@
    "no_sub_categories":"No sub categories" ,
    "countries":"countries" ,
    "cities":"Cities" ,
-   "no_cities":"No cities" ,
-"no_post_in_category":"No posts in the category"
+   "session_expired":"Session expired login again",
 
+   "no_cities":"No cities" ,
+"no_post_in_category":"No posts in the category",
+"success":"Sucess" ,
+"post_sent_succssfully":"Post sent successfully" ,
+"report_sent_succssfully":"Report sent successfully",
+"back_to_home":"Back to Home"
 
 }
   

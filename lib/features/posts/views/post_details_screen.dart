@@ -7,6 +7,7 @@ import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/add_to_favourite_button.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/contact_with_us_button.dart';
+import 'package:deals_and_business/shared/widgets/error_container.dart';
 import 'package:deals_and_business/shared/widgets/main_button_with_icon.dart';
 import 'package:deals_and_business/shared/widgets/not_authenticated_alert_dialog.dart';
 import 'package:deals_and_business/shared/widgets/report_button.dart';
@@ -56,14 +57,24 @@ context.read<PostProvider>().getPost(widget.postId!);
               }
                 else if (provider.error!=null) {
                 return Scaffold(
-                  body: SizedBox.expand(
-                    child: Center(
-                      child: Text(
-                      provider.error.toString()
-                      ),
-                    ),
-                  ),
-                );
+    body: SizedBox.expand(
+      child: Center(
+
+child: ErrorContainer(
+  onRetry: (){
+context.read<PostProvider>().getPost(widget.postId!);
+  },
+  onLogin: (){
+
+
+  },
+  errorData: 
+  provider.errorData!),
+
+      ),
+    ),
+  );
+
               }
      // ignore: curly_braces_in_flow_control_structures
      else    return Scaffold(
