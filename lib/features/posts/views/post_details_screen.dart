@@ -471,6 +471,7 @@ child: SizedBox(
   width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.35,
 child: GoogleMap(
+  
   zoomControlsEnabled: true,
   zoomGesturesEnabled: true,
   markers: {
