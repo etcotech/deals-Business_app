@@ -24,9 +24,9 @@ class HomeSearchContainer extends StatelessWidget {
       child: Container(
       
         width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height/4.2,
+        height: MediaQuery.sizeOf(context).height/5,
         padding: EdgeInsets.symmetric(
-          horizontal: 8,vertical: 16
+          horizontal: 8,vertical: 15
         ),
         decoration: BoxDecoration(
           color:Colors.black87,
@@ -35,7 +35,8 @@ class HomeSearchContainer extends StatelessWidget {
         ),
       
         child: Column(
-          spacing: 16,
+          spacing: 10,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -79,7 +80,7 @@ class HomeSearchContainer extends StatelessWidget {
         ),
       )
          ,
-        SizedBox(height: 8,), 
+        // SizedBox(height: 16,), 
 
           ],
         ),

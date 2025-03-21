@@ -10,6 +10,7 @@ import 'package:deals_and_business/features/posts/views/post_details_screen.dart
 import 'package:deals_and_business/features/search/providers/search_provider.dart';
 import 'package:deals_and_business/features/search/widgets/search_input_field.dart';
 import 'package:deals_and_business/features/search/widgets/selected_category_widget.dart';
+import 'package:deals_and_business/shared/views/post_preview_image_widget.dart';
 import 'package:deals_and_business/shared/widgets/app_drawer.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/categories_bottomsheet.dart';
@@ -841,6 +842,8 @@ class SearchPost extends StatelessWidget {
             // mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+PostPreviewImageWidget(imageUrl: postSearchModel!.pictureUrlBig!),
+              /*
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image.network(postSearchModel!.pictureUrlBig!, 
@@ -850,6 +853,10 @@ class SearchPost extends StatelessWidget {
                 ),
                 
                 ),
+          
+          */
+          
+          
           SizedBox(width: 5,),
           
               Padding(

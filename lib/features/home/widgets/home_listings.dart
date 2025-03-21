@@ -7,6 +7,7 @@ import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
 import 'package:deals_and_business/features/report/views/report_screen.dart';
+import 'package:deals_and_business/shared/views/post_preview_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -306,6 +307,9 @@ final double itemWidth = size.width*.45;
             mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
+PostPreviewImageWidget(imageUrl: postModel!.picture!.url!.big!),
+/*
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
       
@@ -322,6 +326,9 @@ final double itemWidth = size.width*.45;
                 ),
                 
                 ),
+          
+          
+          */
           SizedBox(width: 5,),
           
               Column(

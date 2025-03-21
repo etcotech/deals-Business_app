@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
@@ -121,14 +122,24 @@ child: SizedBox(
   width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.35,
 
-  child: Image.network(
-    provider.postDetailsModel!.picture!.url!.full!,
+  child:
   
-   width: MediaQuery.sizeOf(context).width,
+  CachedNetworkImage(
+  imageUrl:  provider.postDetailsModel!.picture!.url!.full!,
+    width: MediaQuery.sizeOf(context).width,
     height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
+  placeholder: (context, url) => CircularProgressIndicator(),
+  errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined,size:100),
+)
+  
+  //  Image.network(
+  //   provider.postDetailsModel!.picture!.url!.full!,
+  
+  //  width: MediaQuery.sizeOf(context).width,
+  //   height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
   
   
-  ),
+  // ),
 ),
 
 

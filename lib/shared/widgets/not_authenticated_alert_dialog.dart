@@ -50,7 +50,7 @@ class _NotAuthenticatedAlertDialogState extends State<NotAuthenticatedAlertDialo
     , (_)=>false);
   },
   title: 
-  'Please login'
+ getTranslated('login_now', context)
   ,
 )
                 // Row(

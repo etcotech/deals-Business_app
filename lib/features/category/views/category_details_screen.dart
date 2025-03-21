@@ -9,6 +9,7 @@ import 'package:deals_and_business/features/category/widgets/sub_category_widget
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
 import 'package:deals_and_business/features/report/views/report_screen.dart';
+import 'package:deals_and_business/shared/views/post_preview_image_widget.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/error_container.dart';
 import 'package:flutter/material.dart';
@@ -222,6 +223,8 @@ class CategoryPost extends StatelessWidget {
            mainAxisSize: MainAxisSize.min,
            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
+PostPreviewImageWidget(imageUrl: postModel!.pictureUrlBig),
+            /*
              ClipRRect(
                borderRadius: BorderRadius.circular(15.0),
             
@@ -240,6 +243,9 @@ class CategoryPost extends StatelessWidget {
                ),
                
                ),
+        
+        
+        */
          SizedBox(width: 5,),
          
              Column(

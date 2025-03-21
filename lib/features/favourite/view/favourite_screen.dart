@@ -9,6 +9,7 @@ import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
+import 'package:deals_and_business/shared/views/post_preview_image_widget.dart';
 import 'package:deals_and_business/shared/widgets/app_drawer.dart';
 import 'package:deals_and_business/shared/widgets/countries_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/error_container.dart';
@@ -218,6 +219,8 @@ WidgetsBinding.instance.addPostFrameCallback((_){
             mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+PostPreviewImageWidget(imageUrl:item!.picture!.url!.big!),
+              /*
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
       
@@ -234,6 +237,9 @@ WidgetsBinding.instance.addPostFrameCallback((_){
                 ),
                 
                 ),
+         */
+         
+         
           SizedBox(width: 5,),
           
               Column(
