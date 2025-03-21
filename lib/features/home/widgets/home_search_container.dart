@@ -24,7 +24,7 @@ class HomeSearchContainer extends StatelessWidget {
       child: Container(
       
         width: MediaQuery.sizeOf(context).width,
-        height: MediaQuery.sizeOf(context).height/4.5,
+        height: MediaQuery.sizeOf(context).height/4.2,
         padding: EdgeInsets.symmetric(
           horizontal: 8,vertical: 16
         ),
@@ -35,7 +35,8 @@ class HomeSearchContainer extends StatelessWidget {
         ),
       
         child: Column(
-          spacing: 5,
+          spacing: 16,
+          
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
       Text(getTranslated('promote_text1', context)!,
@@ -46,12 +47,12 @@ class HomeSearchContainer extends StatelessWidget {
         color: Theme.of(context).primaryColor
       ),)
       , 
-      SizedBox(height: 8,), 
+      // SizedBox(height: 8,), 
       Text(getTranslated('promote_text2', context)!,  style: TextStyle(
         color: Colors.white54
       ),), 
 
-            SizedBox(height: 16,), 
+            // SizedBox(height: 16,), 
 
       Container(
         padding: EdgeInsets.all(8),
@@ -77,6 +78,9 @@ class HomeSearchContainer extends StatelessWidget {
       ],
         ),
       )
+         ,
+        SizedBox(height: 8,), 
+
           ],
         ),
       ),

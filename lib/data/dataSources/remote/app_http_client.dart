@@ -88,7 +88,7 @@ log(response.body);
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
       headers: { 
-
+"Accept": "application/json",
         'Content-Type': 'application/json',
           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
       'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
@@ -96,9 +96,9 @@ log(response.body);
      
      
       },
+      
       body: jsonEncode(body),
     );
-
     return _handleResponse(response);
 
    }

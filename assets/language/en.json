@@ -6,7 +6,7 @@
   ,
     "password":"Password" , 
     "password_confirm":"Confirm password", 
-    "email":"Your em" , 
+    "email":"Your email" , 
     "password_required":"The password field is required" ,
     "email_required":  "This field is required" ,
     "name_requied":"The name field is required" ,
@@ -198,6 +198,11 @@
 "post_sent_succssfully":"Post sent successfully" ,
 "report_sent_succssfully":"Report sent successfully",
 "back_to_home":"Back to Home"
-
+,
+"reset_password":"اعادة تعيين كلمة المرور" ,
+"enter_email":"please enter your email  to reset your account password" 
+,
+"we_emailed":"We have emailed you a link to reset your password. Please check your email." ,
+"enter_valid_email":"Please enter a valid email address"
 }
   

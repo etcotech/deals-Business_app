@@ -3,6 +3,7 @@ import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/features/dashboard/widgets/app_bar.dart';
 import 'package:deals_and_business/features/posts/widgets/add_images_container.dart';
+import 'package:deals_and_business/features/settings/views/terms_and_conditions_screen.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/categories_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/cities_bottomsheet.dart';
@@ -14,7 +15,9 @@ import 'package:deals_and_business/shared/widgets/input_field_no_icon.dart';
 import 'package:deals_and_business/shared/widgets/main_button.dart';
 import 'package:deals_and_business/shared/widgets/select_category_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -224,7 +227,13 @@ var formKey = GlobalKey<FormState>();
                      ),
                       children: [
                               TextSpan(
-                              
+                              recognizer: TapGestureRecognizer()..onTap = (){
+                                Navigator.push(context, 
+                                
+                                PageTransition(type: PageTransitionType.leftToRight, child: TermsAndConditionsScreen())
+                                );
+                                
+                              },
                     text: ' ${getTranslated('terms_and_conditions', context)!}', 
                     
                     style: TextStyle(

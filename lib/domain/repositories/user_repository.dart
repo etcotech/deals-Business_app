@@ -13,6 +13,8 @@ abstract class UserRepository {
   Future<Either<ApiException, LoginResponseModel>> signIn(
     
     String email , String password);
+        Future<Either<ApiException, void>> forgotPassword(String email);
+
   Future<Either<ApiException, SignupResponseModel>> signUp(String name, String email  ,String password );
   // Future<Either<Failure, NoParams>> signOut();
   // Future<Either<Failure, User>> getCachedUser();

@@ -61,7 +61,7 @@ log("BOTTOM OF GRID");
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;    
 /*24 is for notification bar on Android*/
-final double itemHeight = (size.height - kToolbarHeight - 24) *.40; 
+final double itemHeight = (size.height - kToolbarHeight - 24) *.35; 
 final double itemWidth = size.width*.45;
     return  Consumer<HomeProvider>(
      builder: (context, provider, child)=>  Builder(
@@ -219,7 +219,7 @@ physics: NeverScrollableScrollPhysics(),
                   controller: _gridtScrollController,
                   shrinkWrap: true,
                   crossAxisSpacing: 5,
-                  mainAxisSpacing: 0,
+                  mainAxisSpacing: 5,
       //              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       //   crossAxisCount: 2,
       //   mainAxisExtent: 150, // Set fixed height for each item
@@ -233,6 +233,7 @@ physics: NeverScrollableScrollPhysics(),
                   
                   
                   crossAxisCount: 2,
+                
                 children: provider.posts.map((post)=>  HomePost(
                   isList: false,postModel: post,
                 )).toList(),
@@ -267,7 +268,7 @@ class HomePost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 var size = MediaQuery.of(context).size;    
-final double itemHeight = (size.height - kToolbarHeight - 24) *.40; 
+final double itemHeight = (size.height - kToolbarHeight - 24) *.35; 
 final double itemWidth = size.width*.45;
     return AnimatedCrossFade(firstChild: 
     GestureDetector(
@@ -514,7 +515,12 @@ final double itemWidth = size.width*.45;
        Column(
          spacing: 5,
          children: [
-           Row(
+          Row(
+
+            children: [
+
+
+               Row(
          children: [
            ListingIcon(
         iconData: Icons.location_on_outlined,
@@ -522,13 +528,23 @@ final double itemWidth = size.width*.45;
        
        SizedBox(width: 5,),
            SizedBox(
-            width: itemWidth*.50,
+            width: itemWidth*.25,
 
              child: Text(
                postModel!.city==null?
                '':
-              postModel!.city!.name.toString() ,style: TextStyle(
-                     color: Colors.grey
+              postModel!.city!.name.toString()
+              
+              ,
+             maxLines: 2,
+              overflow: TextOverflow.ellipsis
+             
+              
+               ,style: TextStyle(
+                     color: Colors.grey , 
+                                          fontWeight: FontWeight.w600,
+
+                     fontSize: 10
              ),),
            )
        
@@ -551,9 +567,18 @@ final double itemWidth = size.width*.45;
            ),
        
        SizedBox(width: 5,),
-           Text(postModel!.createdAtFormatted.toString() ,style: TextStyle(
-        color: Colors.grey
-           ),)
+           SizedBox(
+            width:  itemWidth*.30,
+            
+             child: Text(postModel!.createdAtFormatted.toString() ,
+             maxLines: 1,
+              overflow: TextOverflow.ellipsis
+             ,style: TextStyle(
+              fontSize: 10,
+                     color: Colors.grey, 
+                     fontWeight: FontWeight.w600
+             ),),
+           )
        
        
        
@@ -562,6 +587,8 @@ final double itemWidth = size.width*.45;
          ],
        )
        
+            ],
+          )
        
        , 
        
@@ -573,11 +600,15 @@ final double itemWidth = size.width*.45;
        
        SizedBox(width: 5,),
            SizedBox(
-            width: 120,
+            width: itemWidth*.70,
              child: Text(postModel!.contactName.toString()
              ,maxLines: 1,overflow: TextOverflow.ellipsis
               ,style: TextStyle(
-                     color: Colors.grey
+                fontSize: 10,
+                     color: Colors.grey, 
+
+                                          fontWeight: FontWeight.w600
+
              ),),
            )
        

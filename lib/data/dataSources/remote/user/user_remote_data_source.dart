@@ -22,6 +22,9 @@ abstract class UserRemoteDataSource {
     Future<String?> signOut(String? token ,  int userId);
 
   Future<SignupResponseModel> signUp(String userName,String email, String password);
+
+    Future<void> forgotPassword(String email);
+
   Future<ProfileResponseModel> getUserprofile(String userId,String? token,  {String? lang='ar'});
 
   Future<StatsResponseModel> getUserStats(String userId,
@@ -317,6 +320,7 @@ method: 'POST',
 body: body, 
 
 );
+
 return;
  var request = http.MultipartRequest('PUT',
   Uri.parse("$baseUrl/api/users/$userId"));
@@ -384,6 +388,19 @@ log(res.statusCode.toString());
     }
 
 
+  }
+  
+  @override
+  Future<void> forgotPassword(String email)async {
+    var response =await httpClient!.post('/api/auth/password/email',
+
+    body: {
+      'email':email, 
+      'auth_field':'email'
+    }
+    );
+    log(response.toString());
+    // return;
   }
 
 

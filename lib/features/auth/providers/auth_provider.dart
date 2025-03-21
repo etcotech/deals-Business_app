@@ -8,6 +8,7 @@ import 'package:deals_and_business/domain/repositories/user_repository.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/view/dashboard.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
+import 'package:deals_and_business/shared/widgets/email_sent_alert.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -189,6 +190,62 @@ showSuccessMessage(context, 'you signed out');
                   PageTransition(type: PageTransitionType.fade ,child:  
     SplashScreen()));
   } catch (e) {
+    showErrorMessage(context, e.toString());
+  }
+    isLoading= false;
+  notifyListeners();
+
+}
+
+
+
+
+
+Future<void> forgotPassowed(BuildContext context, String email)async{
+  isLoading= true;
+  notifyListeners();
+
+  try {
+   var result= await userRepository!.forgotPassword(email);
+// showSuccessMessage(context, 'you signed out');
+//   Navigator.push(context,
+//                   PageTransition(type: PageTransitionType.fade ,child:  
+//     SplashScreen()));
+
+result.fold((failure){
+
+  if (failure is ValidationException) {
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'email') {
+       emailError ='';
+  for (var emailValitionError in  errors[error]) {
+    log(emailValitionError);
+   
+     emailError =  emailValitionError +"\n";
+  }
+ 
+    }
+notifyListeners();
+  }
+  return;
+  }
+    showErrorMessage(context, failure.message.toString());
+
+}, (success){
+  
+showDialog(context: context, builder:(context)=> EmailSentAlert(), 
+
+
+);
+});
+
+
+  } catch (e) {
+    log(e.toString());
     showErrorMessage(context, e.toString());
   }
     isLoading= false;

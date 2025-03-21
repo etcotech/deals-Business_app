@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:deals_and_business/core/constants/strings.dart';
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/favourite/view/favourite_screen.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/view/home_screen.dart';
@@ -149,12 +151,12 @@ if (index==1) {
   BottomNavigationBarItem(icon: Icon(Icons.home,),
 
   
-    label: 'Home'), 
-  BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favourite'), 
+    label: getTranslated('home', context)), 
+  BottomNavigationBarItem(icon: Icon(Icons.favorite), label: getTranslated('favourite', context)), 
     BottomNavigationBarItem(icon: SizedBox(), label: ''), 
 
-  BottomNavigationBarItem(icon: Icon(Icons.search),label: 'Search'), 
-  BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Messages'), 
+  BottomNavigationBarItem(icon: Icon(Icons.search),label:  getTranslated('advacnce_search', context)), 
+  BottomNavigationBarItem(icon: Icon(Icons.mail), label: getTranslated('messages', context)), 
 
 
 

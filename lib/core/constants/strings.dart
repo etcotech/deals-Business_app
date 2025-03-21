@@ -136,6 +136,7 @@ static const String reportSentSuccesfully ="report_sent_succssfully";
 
 
 static const String backToHome ="back_to_home";
-
-
+static const String resetPassword ="reset_password";
+static const String enterEmail ="enter_email";
+static const String enterValidEmail ="enter_valid_email";
 }

@@ -3,6 +3,7 @@ import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
+import 'package:deals_and_business/features/auth/views/forgot_password_screen.dart';
 import 'package:deals_and_business/features/auth/views/signup_screen.dart';
 import 'package:deals_and_business/features/dashboard/view/dashboard.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
@@ -100,7 +101,8 @@ var formKey =  GlobalKey<FormState>();
            SizedBox(height: 16,),
           
           TextButton(onPressed: (){
-         
+         Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight ,
+              child:    ForgotPasswordScreen()));
           }, child: Text(
             getTranslated('forgot_password', context)!, 
              style: TextStyle(

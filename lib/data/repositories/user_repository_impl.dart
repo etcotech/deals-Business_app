@@ -342,5 +342,17 @@ localDataSource.getCounryName()
                void setUserPhoto(String photo) {
                localDataSource.savePhoto(photo);
                }
+               
+                 @override
+                 Future<Either<ApiException, void>> forgotPassword(String email)async {
+                  try {
+                  var response = await remoteDataSource.forgotPassword(email);
+                  return Right(response);
+                  }
+                   on ApiException catch (failure) {
+        log(failure.message.toString());
+        return Left(failure);
+      }
+                 }
 
 }
