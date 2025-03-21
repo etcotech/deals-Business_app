@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
@@ -43,20 +44,25 @@ class _AppDrawerState extends State<AppDrawer> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white ,
-                          shape: BoxShape.circle
-                        ),
-                        child: CircleAvatar(radius: 40,
-                        backgroundColor: Colors.grey[300],
-backgroundImage: profileProvider.getUserPhoto()!.isEmpty?
-AssetImage(Images.user): NetworkImage( profileProvider.getUserPhoto()!)
-,
-
-
-                        // child: Icon(Icons.person , color: Colors.white,size: 40,),
+                      Hero(
+                        tag: profileProvider.getUserPhoto()!,
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white ,
+                            shape: BoxShape.circle
+                          ),
+                          child: CircleAvatar(radius: 40,
+                          backgroundColor: Colors.grey[300],
+                        backgroundImage: profileProvider.getUserPhoto()!.isEmpty?
+                        AssetImage(Images.user):
+                        CachedNetworkImageProvider(profileProvider.getUserPhoto()!),
+                        //  NetworkImage( profileProvider.getUserPhoto()!)
+                        // ,
+                        
+                        
+                          // child: Icon(Icons.person , color: Colors.white,size: 40,),
+                          ),
                         ),
                       ),
                       Text(profileProvider.getUserName())

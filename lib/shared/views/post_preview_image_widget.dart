@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class PostPreviewImageWidget extends StatelessWidget {
   final String? imageUrl;
-  const PostPreviewImageWidget({super.key,  this.imageUrl});
+  final int? postId;
+  const PostPreviewImageWidget({super.key,  this.imageUrl,required  this.postId});
 
   @override
   Widget build(BuildContext context) {

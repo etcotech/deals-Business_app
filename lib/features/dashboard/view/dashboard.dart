@@ -52,7 +52,18 @@ Container(),
 
 
 
-body: _screens[_selectedPage],
+body: 
+
+// PageView(
+
+  
+//   physics: NeverScrollableScrollPhysics(),
+//   children: [
+//     for (var screen in _screens) screen
+//   ],
+// ),
+
+_screens[_selectedPage],
 
 floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 

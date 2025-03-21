@@ -150,8 +150,10 @@ initHome();
 
           Visibility(
             visible: provider.isPaginateLoading,
-            child: CircularProgressIndicator(
-              color: Theme.of(context).primaryColor,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
             ))
               ],
             ),

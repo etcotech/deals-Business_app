@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/data/models/post/message_model.dart';
 import 'package:deals_and_business/features/messages/views/chat_screen.dart';
@@ -39,7 +40,7 @@ class MessagePreviewWidget extends StatelessWidget {
           radius: 40,
           backgroundImage:   
           messageModel!.pCreator!.photoUrl!=null?
-        NetworkImage(messageModel!.pCreator!.photoUrl!)
+        CachedNetworkImageProvider(messageModel!.pCreator!.photoUrl!)
         :AssetImage(Images.user)
           
           ,

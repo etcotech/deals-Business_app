@@ -22,7 +22,11 @@ String sort_order ='asc';
   List<PostSearchModel> posts =[];
   bool isLoading =false;
 String? category;
+clear(){
+  posts=[];
 
+  notifyListeners();
+}
 
 setCategorory(CategorySubcategoryModel? categoryModel){
   category = categoryModel!.name!.toString();

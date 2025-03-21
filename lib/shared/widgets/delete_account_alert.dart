@@ -16,59 +16,65 @@ class DeleteAccountAlert extends StatefulWidget {
 class _DeleteAccountAlertState extends State<DeleteAccountAlert> {
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(35), // Rounded corners
-        ),
-        child: SizedBox(
-          height: MediaQuery.sizeOf(context).height*.15,
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SizedBox( width: MediaQuery.sizeOf(context).width,
-                  child: Text(
-                    getTranslated("are_you_sure_delete_account", context)!, 
-               
-               maxLines: 2,
-               textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                   color: Colors.grey[400],
-                    )
-                  ),
-                ),
-              ),
-             Spacer(),
-          Container(
-               height: (MediaQuery.sizeOf(context).height*.15)/3,
-                    width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(
-                color: Colors.grey[400],
-                borderRadius:BorderRadius.vertical(
-                  bottom: Radius.circular(35)
-                )), 
-                child: Center(
-                  child: Text(
-                    getTranslated('continue', context)!, 
-                    style: TextStyle(
-                      color: Colors.red, 
-                      fontWeight: FontWeight.w400, 
-                      fontSize: 22
+    return ScaleTransition(
+          scale: CurvedAnimation(
+            parent: ModalRoute.of(context)!.animation!,
+            curve: Curves.easeInOut,
+          ),
+      child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(35), // Rounded corners
+          ),
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height*.15,
+            width: MediaQuery.sizeOf(context).width,
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: SizedBox( width: MediaQuery.sizeOf(context).width,
+                    child: Text(
+                      getTranslated("are_you_sure_delete_account", context)!, 
+                 
+                 maxLines: 2,
+                 textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                     color: Colors.grey[400],
+                      )
                     ),
                   ),
                 ),
-              
+               Spacer(),
+            Container(
+                 height: (MediaQuery.sizeOf(context).height*.15)/3,
+                      width: MediaQuery.sizeOf(context).width,
+              decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius:BorderRadius.vertical(
+                    bottom: Radius.circular(35)
+                  )), 
+                  child: Center(
+                    child: Text(
+                      getTranslated('continue', context)!, 
+                      style: TextStyle(
+                        color: Colors.red, 
+                        fontWeight: FontWeight.w400, 
+                        fontSize: 22
+                      ),
+                    ),
+                  ),
+                
+              ),
+            
+            
+              ],
             ),
-          
-          
-            ],
           ),
         ),
-      );
+    );
   }
 }

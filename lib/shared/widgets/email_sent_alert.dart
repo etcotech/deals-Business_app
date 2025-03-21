@@ -39,51 +39,57 @@ class _DeleteAccountAlertState extends State<EmailSentAlert>  with SingleTickerP
   }
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(35), // Rounded corners
-        ),
-        child: SizedBox(
-          height: MediaQuery.sizeOf(context).height*.20,
-          width: MediaQuery.sizeOf(context).width,
-          child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-
-ScaleTransition(
-              scale: _animation,
-              child: Icon(
-                Icons.check_circle,
-                color: Colors.green,
-                size: 80,
-              ),
-            ),
-            SizedBox(height: 16),
-
-
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SizedBox( width: MediaQuery.sizeOf(context).width,
-                  child: Text(
-                    getTranslated("we_emailed", context)!, 
-               
-               maxLines: 2,
-               textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                   color: Colors.grey[400],
-                    )
-                  ),
+    return ScaleTransition(
+          scale: CurvedAnimation(
+            parent: ModalRoute.of(context)!.animation!,
+            curve: Curves.easeInOut,
+          ),
+      child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(35), // Rounded corners
+          ),
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height*.20,
+            width: MediaQuery.sizeOf(context).width,
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+      
+      ScaleTransition(
+                scale: _animation,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 80,
                 ),
               ),
+              SizedBox(height: 16),
+      
+      
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: SizedBox( width: MediaQuery.sizeOf(context).width,
+                    child: Text(
+                      getTranslated("we_emailed", context)!, 
+                 
+                 maxLines: 2,
+                 textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                     color: Colors.grey[400],
+                      )
+                    ),
+                  ),
+                ),
+              
             
-          
-          
-            ],
+            
+              ],
+            ),
           ),
         ),
-      );
+    );
   }
 }

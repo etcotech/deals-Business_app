@@ -34,7 +34,9 @@ context.read<HomeProvider>().getCountries(context);
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context,  provider, child) {
-        return Container(
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
           height: MediaQuery.sizeOf(context).height/2,
           decoration: BoxDecoration(
             color: Colors.white,

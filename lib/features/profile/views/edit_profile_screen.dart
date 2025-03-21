@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
@@ -162,38 +163,42 @@ body:SizedBox.expand(
         
         SizedBox(height: screenHeight*.05,)
         ,
-           Container(
-                
-                 padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    // borderRadius: BorderRadius.circular(8), 
-                    color:
-                    profileProvider.photoError!=null? Colors.red:
-                    
-                     Colors.white, 
-                    boxShadow: [
-                    //  BoxShadow(
-                    //     offset: Offset(0, 1),
-                    //     color: Colors.grey[300]!,
-                    //     blurRadius: 4,
-                    //     spreadRadius: 1
-                    //   )
+           Hero(
           
-                    ]
-                  ),
-                  child: CircleAvatar(
-                    radius: 50,
-                backgroundColor: Colors.grey[300],    
-        backgroundImage: image!=null?
-        
-        FileImage(File(image!.path))
-        : profileProvider.getUserPhoto()!.isEmpty?
-        AssetImage(Images.user): NetworkImage( profileProvider.getUserPhoto()!)
-        ,
-        // child: Image.file(File(image!.path),)
-                  ),
-             ),
+        tag:       provider.getUserPhoto()!,
+             child: Container(
+                  
+                   padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      // borderRadius: BorderRadius.circular(8), 
+                      color:
+                      profileProvider.photoError!=null? Colors.red:
+                      
+                       Colors.white, 
+                      boxShadow: [
+                      //  BoxShadow(
+                      //     offset: Offset(0, 1),
+                      //     color: Colors.grey[300]!,
+                      //     blurRadius: 4,
+                      //     spreadRadius: 1
+                      //   )
+                       
+                      ]
+                    ),
+                    child: CircleAvatar(
+                      radius: 50,
+                  backgroundColor: Colors.grey[300],    
+                     backgroundImage: image!=null?
+                     
+                     FileImage(File(image!.path))
+                     : profileProvider.getUserPhoto()!.isEmpty?
+                     AssetImage(Images.user): CachedNetworkImageProvider( profileProvider.getUserPhoto()!)
+                     ,
+                     // child: Image.file(File(image!.path),)
+                    ),
+               ),
+           ),
              Visibility(
               visible: profileProvider.photoError!=null,
               child: 

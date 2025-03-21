@@ -1,6 +1,7 @@
 
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
@@ -208,7 +209,59 @@ else{
 
 
 
+                  AnimatedCrossFade(
+                    
+                    firstCurve: Curves.elasticInOut,
+                    secondCurve: Curves.elasticInOut,  
+                    firstChild: 
+ ListView( 
+  controller: _listScrollController,
+  shrinkWrap: true,
+physics: NeverScrollableScrollPhysics(),
+                  
+                children: provider.posts.map((post)=>  HomePost(
+                  isList: true,postModel: post,
+                )).toList(),)
+, 
+secondChild:             GridView.count(
+                  controller: _gridtScrollController,
+                  shrinkWrap: true,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+      //              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //   crossAxisCount: 2,
+      //   mainAxisExtent: 150, // Set fixed height for each item
+      // ),
+      // itemCount: provider.posts.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  childAspectRatio: 
+                  itemWidth/
+                 itemHeight
+                  ,
+                  
+                  
+                  crossAxisCount: 2,
+                
+                children: provider.posts.map((post)=>  HomePost(
+                  isList: false,postModel: post,
+                )).toList(),
+// itemBuilder: (context, index) {
+//   var post =  provider.posts[index];
+//   return   HomePost(
+//                   isList: false,postModel: post,
+//                 );
+// },
 
+
+                ) , 
+
+crossFadeState: isList?
+CrossFadeState.showFirst:CrossFadeState.showSecond
+, duration: Duration(
+milliseconds: 800
+))
+                  ])
+/*
 if (isList) ListView( 
   controller: _listScrollController,
   shrinkWrap: true,
@@ -216,7 +269,9 @@ physics: NeverScrollableScrollPhysics(),
                   
                 children: provider.posts.map((post)=>  HomePost(
                   isList: true,postModel: post,
-                )).toList(),) else GridView.count(
+                )).toList(),) else 
+                
+                GridView.count(
                   controller: _gridtScrollController,
                   shrinkWrap: true,
                   crossAxisSpacing: 5,
@@ -247,8 +302,10 @@ physics: NeverScrollableScrollPhysics(),
 
 
                 )
-              ],
-            ),
+*/
+          
+            //   ],
+            // ),
           );
         
 }
@@ -308,7 +365,10 @@ final double itemWidth = size.width*.45;
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
-PostPreviewImageWidget(imageUrl: postModel!.picture!.url!.big!),
+PostPreviewImageWidget(imageUrl: postModel!.picture!.url!.big!, 
+
+postId: postModel!.id,
+),
 /*
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
@@ -485,12 +545,31 @@ PostPreviewImageWidget(imageUrl: postModel!.picture!.url!.big!),
                    child: ClipRRect(
                                    borderRadius: BorderRadius.circular(15.0),
                                    child: 
-                                   Image.network(postModel!.picture!.url!.full!, 
+
+
+                                   CachedNetworkImage(
+                                    
+                                           imageUrl: postModel!.picture!.url!.full!,
+                                          height:   itemHeight*.60,
+                                          fit: BoxFit.cover,
+                                                width:    itemWidth,
+                                               //  scale: 5,
+                                                     // height: MediaQuery.sizeOf(context).height/7,
+                                           placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                           errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined , 
+                                           size: 50,
+                                         
+                                           ),
+                                         ),
+                  //                  Image.network(postModel!.picture!.url!.full!, 
                                    
-                   fit: BoxFit.cover,
-                   scale: 5,
+                  //  fit: BoxFit.cover,
+                  //  scale: 5,
        
-                                   )),
+                  //                  )
+                                   
+                                   
+                                   ),
                  ),
              
                    PositionedDirectional(

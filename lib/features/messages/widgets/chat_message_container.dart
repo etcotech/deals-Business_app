@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/data/models/post/thread_message_model.dart';
 import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
@@ -49,9 +50,9 @@ Row(
 
         widget.isMe!?
         profileProvider.getUserPhoto()!.isEmpty?
-       NetworkImage(Images.user): 
+       CachedNetworkImageProvider(Images.user): 
 
-       NetworkImage(profileProvider.getUserPhoto()!)
+       CachedNetworkImageProvider(profileProvider.getUserPhoto()!)
 :        AssetImage(Images.user)
 
 

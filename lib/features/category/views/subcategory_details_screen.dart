@@ -191,7 +191,7 @@ class CategoryPost extends StatelessWidget {
            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
 
-PostPreviewImageWidget(imageUrl: postModel!.pictureUrlBig),
+PostPreviewImageWidget(imageUrl: postModel!.pictureUrlBig, postId: postModel!.id,),
             /*
              ClipRRect(
                borderRadius: BorderRadius.circular(15.0),

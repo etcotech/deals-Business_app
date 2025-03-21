@@ -124,13 +124,21 @@ child: SizedBox(
 
   child:
   
-  CachedNetworkImage(
-  imageUrl:  provider.postDetailsModel!.picture!.url!.full!,
-    width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
-  placeholder: (context, url) => CircularProgressIndicator(),
-  errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined,size:100),
-)
+  Hero(tag: 
+  
+  
+   provider.postDetailsModel!.picture!.url!.full.toString()
+  
+  
+  ,
+    child: CachedNetworkImage(
+    imageUrl:  provider.postDetailsModel!.picture!.url!.full!,
+      width: MediaQuery.sizeOf(context).width,
+      height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
+    placeholder: (context, url) => CircularProgressIndicator(),
+    errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined,size:100),
+    ),
+  )
   
   //  Image.network(
   //   provider.postDetailsModel!.picture!.url!.full!,
@@ -500,6 +508,7 @@ child: GoogleMap(
   initialCameraPosition: 
 
 CameraPosition(
+  zoom: 10,
   target: LatLng(
      provider.postDetailsModel!.lat!=null?
      double.parse( provider.postDetailsModel!.lat.toString()):

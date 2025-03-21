@@ -34,21 +34,34 @@ class AdvanceSearchScreen extends StatefulWidget {
   State<AdvanceSearchScreen> createState() => _AdvanceSearchScreenState();
 }
 
-class _AdvanceSearchScreenState extends State<AdvanceSearchScreen> {
+class _AdvanceSearchScreenState extends State<AdvanceSearchScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
     var scaffoldKey = GlobalKey<ScaffoldState>();
     var searchController = TextEditingController();
-
-@override
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_){
+     WidgetsBinding.instance.addPostFrameCallback((_){
 // context.read<SearchProvider>().search();
+context.read<SearchProvider>().clear();
 
 
     });
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
+    _controller.forward();
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
 
 
 
@@ -126,239 +139,246 @@ body: Consumer<SearchProvider>(
                       , 
           
                                
-                      Visibility(
-                        visible: provider.posts.isNotEmpty 
-                        || searchController.text.isNotEmpty,
-                        
-                        
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(getTranslated(Strings.filterBy, context)!, 
-                            
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,fontSize: 16
-                            ),
-                            
-                            )
-                                  , 
-                                  
-                                  GestureDetector(
-                                    onTap: (){
-                                       showModalBottomSheet(
-                        context: context,
-                        isDismissible: false, // Prevent dismissal
-                        enableDrag: false, // Prevent dragging to dismiss
-                        backgroundColor: Colors.transparent, // Make background transparent
-                        builder: (context) {
-                          return CategoriesBottomsheet(
-                        onDeleteCategory: (){
-                                context.read<SearchProvider>().remoteCategory();
-                          context.read<SearchProvider>().applyCategorySearch();
-                        },
-                            onSelectCategory: (cat){
-                              context.read<SearchProvider>().setCategorory(cat);
-                                context.read<SearchProvider>().applyCategorySearch();
-                        
-                            },
-                          );
-                        },
-                                        );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                  color: Colors.white ,
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(0, 0), 
-                                      color: Colors.white54 , 
-                                      spreadRadius: 5, 
-                                      blurRadius: 3
-                                    )
-                                  ]
-                                      ),
-                                      padding: EdgeInsets.all(8),
-                                    
-                                      child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Icon(Icons.arrow_drop_down),
-                                    
-                              Text(getTranslated(Strings.allCategories, context)!, 
+                      AnimatedOpacity(
+                        duration: Duration(milliseconds: 500),
+                        opacity: provider.posts.isNotEmpty
+                        || searchController.text.isNotEmpty?1:0,
+curve: Curves.easeInOut,
+
+                        child: Visibility(
+                          visible: provider.posts.isNotEmpty 
+                          || searchController.text.isNotEmpty,
+                          
+                          
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(getTranslated(Strings.filterBy, context)!, 
                               
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,fontSize: 16
                               ),
                               
-                              ),
-                                      Icon(Icons.category),
+                              )
+                                    , 
                                     
-                                    
-                                    
-                                    
-                                    ],
-                                      ),
-                                    ),
-                                  ), 
-                                  
-                                  
-                                  
-                                  
-                                   PopupMenuButton(
-                                        onSelected: (choice){
-                                  if (choice.contains('price')) {
-                                    showModalBottomSheet(
-                        context: context,
-                        isDismissible: true, // Prevent dismissal
-                        enableDrag: false, // Prevent dragging to dismiss
-                        backgroundColor: Colors.transparent, // Make background transparent
-                        builder: (context) {
-                        return PriceFilterBottomsheet(setPrices: (start,end){
-                          log(end.toString());
-                        provider.setStartPrice(start);
-                        provider.setEndPrice(end);
-                        
-                        } , 
-                        apply: (){
-                        provider.applyCategorySearch();
-                        },
-                        
-                        );
-                          }
-                                    );
-                                  }else{
-                        
-                                     showModalBottomSheet(
-                                            context: context,
-                                            isDismissible: true, // Prevent dismissal
-                                            enableDrag: false, // Prevent dragging to dismiss
-                                            backgroundColor: Colors.transparent, // Make background transparent
-                                            builder: (context) {
-                        return CityFilterBottomsheet(
-                          onSelectCity: (city){
-                          // provider.setCity(
-                          //   city
-                          // );
-                          },
-                        );
-                                            },
-                                      );
-                                  }
-                                        },
-                                        padding: EdgeInsets.zero,
-                                        // initialValue: choices[_selection],
-                                        itemBuilder: (BuildContext context) {
-                        return [Strings.filtrtByPrice ,Strings.filterByCity].map((String choice) {
-                          return  PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(getTranslated(choice, context)!
-                          ,
-                           style: TextStyle(
-                          color: Colors.grey
-                        ),
-                          ),
-                        );}
-                        ).toList();
-                                        },
-                                        menuPadding: EdgeInsets.zero,
-                                      position: PopupMenuPosition.under,
-                                  
-                                        child:
-                                        
-                                         Container(
-                                    
-                                      width: 35, height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8), 
-                                        color: Colors.white, 
-                                        boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 1),
-                          color: Colors.grey[300]!,
-                          blurRadius: 4,
-                          spreadRadius: 1
-                        )
-                                        ]
-                                      ),
-                                    
-                                      child: Center(
-                                        child: Icon(Icons.tune),
-                                      ),
-                                    ),
-                                  
-                                      ), 
-                                  
-                                  
-                                   PopupMenuButton(
-                                    position: PopupMenuPosition.under,
-                                        onSelected: (choice){
+                                    GestureDetector(
+                                      onTap: (){
                                          showModalBottomSheet(
-                        context: context,
-                        isDismissible: true, // Prevent dismissal
-                        enableDrag: false, // Prevent dragging to dismiss
-                        backgroundColor: Colors.transparent, // Make background transparent
-                        builder: (context) {
-                          return SortBottomsheet(
-                        selectedOrder: (order){
-                        provider.setSortOrder(order);
-                        },
-                        selectedSort: (sort){
-                        provider.setSortBy(sort);
-                        },
-                        apply:(){
-                        provider.applyCategorySearch();
-                        }
-                        
-                          );
-                        });
-                                        },
-                                        padding: EdgeInsets.zero,
-                                        // initialValue: choices[_selection],
-                                        itemBuilder: (BuildContext context) {
-                        return [Strings.sortBy].map((String choice) {
-                          return  PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(getTranslated(choice, context)!, 
-                           style: TextStyle(
-                          color: Colors.grey
-                        ),
+                          context: context,
+                          isDismissible: false, // Prevent dismissal
+                          enableDrag: false, // Prevent dragging to dismiss
+                          backgroundColor: Colors.transparent, // Make background transparent
+                          builder: (context) {
+                            return CategoriesBottomsheet(
+                          onDeleteCategory: (){
+                                  context.read<SearchProvider>().remoteCategory();
+                            context.read<SearchProvider>().applyCategorySearch();
+                          },
+                              onSelectCategory: (cat){
+                                context.read<SearchProvider>().setCategorory(cat);
+                                  context.read<SearchProvider>().applyCategorySearch();
                           
+                              },
+                            );
+                          },
+                                          );
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                    color: Colors.white ,
+                                    borderRadius: BorderRadius.circular(50),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0, 0), 
+                                        color: Colors.white54 , 
+                                        spreadRadius: 5, 
+                                        blurRadius: 3
+                                      )
+                                    ]
+                                        ),
+                                        padding: EdgeInsets.all(8),
+                                      
+                                        child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Icon(Icons.arrow_drop_down),
+                                      
+                                Text(getTranslated(Strings.allCategories, context)!, 
+                                
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,fontSize: 16
+                                ),
+                                
+                                ),
+                                        Icon(Icons.category),
+                                      
+                                      
+                                      
+                                      
+                                      ],
+                                        ),
+                                      ),
+                                    ), 
+                                    
+                                    
+                                    
+                                    
+                                     PopupMenuButton(
+                                          onSelected: (choice){
+                                    if (choice.contains('price')) {
+                                      showModalBottomSheet(
+                          context: context,
+                          isDismissible: true, // Prevent dismissal
+                          enableDrag: false, // Prevent dragging to dismiss
+                          backgroundColor: Colors.transparent, // Make background transparent
+                          builder: (context) {
+                          return PriceFilterBottomsheet(setPrices: (start,end){
+                            log(end.toString());
+                          provider.setStartPrice(start);
+                          provider.setEndPrice(end);
+                          
+                          } , 
+                          apply: (){
+                          provider.applyCategorySearch();
+                          },
+                          
+                          );
+                            }
+                                      );
+                                    }else{
+                          
+                                       showModalBottomSheet(
+                                              context: context,
+                                              isDismissible: true, // Prevent dismissal
+                                              enableDrag: false, // Prevent dragging to dismiss
+                                              backgroundColor: Colors.transparent, // Make background transparent
+                                              builder: (context) {
+                          return CityFilterBottomsheet(
+                            onSelectCity: (city){
+                            // provider.setCity(
+                            //   city
+                            // );
+                            },
+                          );
+                                              },
+                                        );
+                                    }
+                                          },
+                                          padding: EdgeInsets.zero,
+                                          // initialValue: choices[_selection],
+                                          itemBuilder: (BuildContext context) {
+                          return [Strings.filtrtByPrice ,Strings.filterByCity].map((String choice) {
+                            return  PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(getTranslated(choice, context)!
+                            ,
+                             style: TextStyle(
+                            color: Colors.grey
                           ),
-                        );}
-                        ).toList();
-                                        },
-                                  menuPadding: EdgeInsets.zero,
-                                        child: Container(
+                            ),
+                          );}
+                          ).toList();
+                                          },
+                                          menuPadding: EdgeInsets.zero,
+                                        position: PopupMenuPosition.under,
                                     
-                                      width: 35, height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8), 
-                                        color: Colors.white, 
-                                        boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 1),
-                          color: Colors.grey[300]!,
-                          blurRadius: 4,
-                          spreadRadius: 1
-                        )
-                                        ]
+                                          child:
+                                          
+                                           Container(
+                                      
+                                        width: 35, height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8), 
+                                          color: Colors.white, 
+                                          boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            color: Colors.grey[300]!,
+                            blurRadius: 4,
+                            spreadRadius: 1
+                          )
+                                          ]
+                                        ),
+                                      
+                                        child: Center(
+                                          child: Icon(Icons.tune),
+                                        ),
                                       ),
                                     
-                                      child: Center(
-                                        child: Icon(Icons.list),
+                                        ), 
+                                    
+                                    
+                                     PopupMenuButton(
+                                      position: PopupMenuPosition.under,
+                                          onSelected: (choice){
+                                           showModalBottomSheet(
+                          context: context,
+                          isDismissible: true, // Prevent dismissal
+                          enableDrag: false, // Prevent dragging to dismiss
+                          backgroundColor: Colors.transparent, // Make background transparent
+                          builder: (context) {
+                            return SortBottomsheet(
+                          selectedOrder: (order){
+                          provider.setSortOrder(order);
+                          },
+                          selectedSort: (sort){
+                          provider.setSortBy(sort);
+                          },
+                          apply:(){
+                          provider.applyCategorySearch();
+                          }
+                          
+                            );
+                          });
+                                          },
+                                          padding: EdgeInsets.zero,
+                                          // initialValue: choices[_selection],
+                                          itemBuilder: (BuildContext context) {
+                          return [Strings.sortBy].map((String choice) {
+                            return  PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(getTranslated(choice, context)!, 
+                             style: TextStyle(
+                            color: Colors.grey
+                          ),
+                            
+                            ),
+                          );}
+                          ).toList();
+                                          },
+                                    menuPadding: EdgeInsets.zero,
+                                          child: Container(
+                                      
+                                        width: 35, height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8), 
+                                          color: Colors.white, 
+                                          boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            color: Colors.grey[300]!,
+                            blurRadius: 4,
+                            spreadRadius: 1
+                          )
+                                          ]
+                                        ),
+                                      
+                                        child: Center(
+                                          child: Icon(Icons.list),
+                                        ),
                                       ),
-                                    ),
-                                      ), 
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                                  
-                          ],
+                                        ), 
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                            ],
+                          ),
                         ),
                       ), 
 
@@ -433,377 +453,8 @@ body: Consumer<SearchProvider>(
 
       );
     
-    
-     Scaffold(
-      key: scaffoldKey,
-
-      appBar:  MyAppBar(context, currentCountry: 'assets/images/ksa.png',
-      title: getTranslated('advance_search', context),
-        onTapDrawer: (){
-          scaffoldKey.currentState!.openDrawer();
-        },
-        onCountryTap: (){
-showModalBottomSheet(
-              context: context,
-              isDismissible: false, // Prevent dismissal
-              enableDrag: false, // Prevent dragging to dismiss
-              backgroundColor: Colors.transparent, // Make background transparent
-              builder: (context) {
-                return CountriesBottomsheet();
-              },
-            );
-        }, 
-        isGuest: widget.asGuest!
-      ),
-
-drawer: AppDrawer(),
-drawerEnableOpenDragGesture: false, 
-      backgroundColor: Colors.white,
-
-      body: Consumer<SearchProvider>(
-        builder: (context, provider,child) {
-          return CustomScrollView(
-            slivers: [
-        //  Sliver
-
-        SliverAppBar(
-          pinned: true,
-          floating: true,
-          leading: SizedBox(),
-          toolbarHeight: 150,
-          backgroundColor: Colors.white,
-          actions: []
-          ,
-        
-        flexibleSpace: 
-        
-        Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            spacing: 8,
-          
-            children: [
-             SearchInputField(
-                            
-                            onChange: provider.onSearchChanged,
-                            controller: searchController, hintText: getTranslated('search_now',
-                                 context)!, iconData: Icons.search,)
-                      , 
-          
-                               
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(getTranslated(Strings.filterBy, context)!, 
-                          
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,fontSize: 16
-                          ),
-                          
-                          )
-                                , 
-                                
-                                GestureDetector(
-                                  onTap: (){
-                                     showModalBottomSheet(
-                      context: context,
-                      isDismissible: false, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-                        return CategoriesBottomsheet(
-onDeleteCategory: (){
-                              context.read<SearchProvider>().remoteCategory();
-  context.read<SearchProvider>().applyCategorySearch();
-},
-                          onSelectCategory: (cat){
-                            context.read<SearchProvider>().setCategorory(cat);
-                              context.read<SearchProvider>().applyCategorySearch();
-
-                          },
-                        );
-                      },
-                                      );
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                color: Colors.white ,
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0, 0), 
-                                    color: Colors.white54 , 
-                                    spreadRadius: 5, 
-                                    blurRadius: 3
-                                  )
-                                ]
-                                    ),
-                                    padding: EdgeInsets.all(8),
-                                  
-                                    child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(Icons.arrow_drop_down),
-                                  
-                            Text(getTranslated(Strings.allCategories, context)!, 
-                            
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,fontSize: 16
-                            ),
-                            
-                            ),
-                                    Icon(Icons.category),
-                                  
-                                  
-                                  
-                                  
-                                  ],
-                                    ),
-                                  ),
-                                ), 
-                                
-                                
-                                
-                                
-                                 PopupMenuButton(
-                                      onSelected: (choice){
-                                if (choice.contains('price')) {
-                                  showModalBottomSheet(
-                      context: context,
-                      isDismissible: true, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-return PriceFilterBottomsheet(setPrices: (start,end){
-provider.setStartPrice(start);
-provider.setEndPrice(end);
-} , 
-apply: (){
-provider.applyCategorySearch();
-},
-
-);
-                        }
-                                  );
-                                }else{
-
-                                   showModalBottomSheet(
-                    context: context,
-                    isDismissible: true, // Prevent dismissal
-                    enableDrag: false, // Prevent dragging to dismiss
-                    backgroundColor: Colors.transparent, // Make background transparent
-                    builder: (context) {
-                      return CityFilterBottomsheet(
-                        onSelectCity: (city){
-                        // provider.setCity(
-                        //   city
-                        // );
-                        },
-                      );
-                    },
-                                    );
-                                }
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      // initialValue: choices[_selection],
-                                      itemBuilder: (BuildContext context) {
-                      return [Strings.filtrtByPrice ,Strings.filterByCity].map((String choice) {
-                        return  PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(getTranslated(choice, context)!
-                        ,
-                         style: TextStyle(
-                        color: Colors.grey
-                      ),
-                        ),
-                      );}
-                      ).toList();
-                                      },
-                                      menuPadding: EdgeInsets.zero,
-                                    position: PopupMenuPosition.under,
-                                
-                                      child:
-                                      
-                                       Container(
-                                  
-                                    width: 35, height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8), 
-                                      color: Colors.white, 
-                                      boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        color: Colors.grey[300]!,
-                        blurRadius: 4,
-                        spreadRadius: 1
-                      )
-                                      ]
-                                    ),
-                                  
-                                    child: Center(
-                                      child: Icon(Icons.tune),
-                                    ),
-                                  ),
-                                
-                                    ), 
-                                
-                                
-                                 PopupMenuButton(
-                                  position: PopupMenuPosition.under,
-                                      onSelected: (choice){
-                                       showModalBottomSheet(
-                      context: context,
-                      isDismissible: true, // Prevent dismissal
-                      enableDrag: false, // Prevent dragging to dismiss
-                      backgroundColor: Colors.transparent, // Make background transparent
-                      builder: (context) {
-                        return SortBottomsheet(
-selectedOrder: (order){
-provider.setSortOrder(order);
-},
-selectedSort: (sort){
-provider.setSortBy(sort);
-},
-apply:(){
-provider.applyCategorySearch();
-}
-
-                        );
-                      });
-                                      },
-                                      padding: EdgeInsets.zero,
-                                      // initialValue: choices[_selection],
-                                      itemBuilder: (BuildContext context) {
-                      return [Strings.sortBy].map((String choice) {
-                        return  PopupMenuItem<String>(
-                        value: choice,
-                        child: Text(getTranslated(choice, context)!, 
-                         style: TextStyle(
-                        color: Colors.grey
-                      ),
-                        
-                        ),
-                      );}
-                      ).toList();
-                                      },
-                                menuPadding: EdgeInsets.zero,
-                                      child: Container(
-                                  
-                                    width: 35, height: 35,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8), 
-                                      color: Colors.white, 
-                                      boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 1),
-                        color: Colors.grey[300]!,
-                        blurRadius: 4,
-                        spreadRadius: 1
-                      )
-                                      ]
-                                    ),
-                                  
-                                    child: Center(
-                                      child: Icon(Icons.list),
-                                    ),
-                                  ),
-                                    ), 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                        ],
-                      ), 
-
-
-                      Visibility(
-                        
-                        visible: provider.category!=null,
-                        child: 
-                      SelectedCategoryWidget(title: provider.category,
-                      onTap: (){
-                        provider.remoteCategory();
-                        provider.applyCategorySearch();
-                      },
-                      )
-                      )
-          ],),
-        ),
-       
-        ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SizedBox(
-                      height: MediaQuery.sizeOf(context).width,
-                      child: Column(
-                        spacing: 16,
-                        children: [
-                               
-                        
-                        
-                        Builder(
-                          builder: (context) {
-                        if (provider.error!=null) {
-                           return SizedBox(
-                            height: 500,
-                      child: Center(child: Text(provider.error.toString()),),
-                           );
-                        }
-                        if (provider.isLoading) {
-                          return SizedBox(
-                            height: 500,
-                            child: Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),));
-                        
-                        }
-                        
-                        if (provider.posts.isEmpty) {
-                          return SizedBox(
-                            height: 500,
-                            child: Center(child: 
-                            
-                            Text(getTranslated(Strings.noPosts, context)!)
-                            ));
-                        
-                        }
-                            
-                            return 
-                            
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              var post  =  provider.posts[index];
-                                                
-                              return SearchPost(postSearchModel: post,);
-                            },
-                            itemCount: provider.posts.length,
-                            
-                            );
-                         
-                          }
-                        )
-                        
-                        
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-          , 
-
-         
-            ],
-          );
-        }
-      ),
-    );
+ 
+ 
   }
 }
 
@@ -842,7 +493,7 @@ class SearchPost extends StatelessWidget {
             // mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-PostPreviewImageWidget(imageUrl: postSearchModel!.pictureUrlBig!),
+PostPreviewImageWidget(imageUrl: postSearchModel!.pictureUrlBig!, postId: postSearchModel!.id,),
               /*
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),

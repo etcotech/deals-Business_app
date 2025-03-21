@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
@@ -272,30 +273,33 @@ Container(
       top: 1,
       child:
       
-       Container(
-            
-             padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                // borderRadius: BorderRadius.circular(8), 
-                color: Colors.white, 
-                boxShadow: [
-                //  BoxShadow(
-                //     offset: Offset(0, 1),
-                //     color: Colors.grey[300]!,
-                //     blurRadius: 4,
-                //     spreadRadius: 1
-                //   )
-      
-                ]
-              ),
-              child: CircleAvatar(
-                radius: MediaQuery.sizeOf(context).height*.04,
-            backgroundColor: Colors.grey[300],    
-backgroundImage: provider.getUserPhoto()!.isEmpty?
-AssetImage(Images.user): NetworkImage( provider.getUserPhoto()!)
-              ),
-         ),
+       Hero(
+        tag:       provider.getUserPhoto()!,
+         child: Container(
+              
+               padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  // borderRadius: BorderRadius.circular(8), 
+                  color: Colors.white, 
+                  boxShadow: [
+                  //  BoxShadow(
+                  //     offset: Offset(0, 1),
+                  //     color: Colors.grey[300]!,
+                  //     blurRadius: 4,
+                  //     spreadRadius: 1
+                  //   )
+               
+                  ]
+                ),
+                child: CircleAvatar(
+                  radius: MediaQuery.sizeOf(context).height*.04,
+              backgroundColor: Colors.grey[300],    
+         backgroundImage: provider.getUserPhoto()!.isEmpty?
+         AssetImage(Images.user): CachedNetworkImageProvider( provider.getUserPhoto()!)
+                ),
+           ),
+       ),
    
    
     ),

@@ -219,7 +219,7 @@ WidgetsBinding.instance.addPostFrameCallback((_){
             mainAxisSize: MainAxisSize.min,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-PostPreviewImageWidget(imageUrl:item!.picture!.url!.big!),
+PostPreviewImageWidget(imageUrl:item!.picture!.url!.big!, postId: item.id,),
               /*
               ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
