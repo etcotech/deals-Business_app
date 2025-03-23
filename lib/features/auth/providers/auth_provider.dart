@@ -58,9 +58,7 @@ void setPasswordError(String? error){
 showErrorMessage(context, failure.message.toString());
 if (failure is ValidationException) {
   
- final errors = Map<String, dynamic>.from(json.decode(failure.message)['errors']);
- 
-  
+ final errors = Map<String, dynamic>.from(json.decode(failure.message)['errors']); 
   final errorMessages = errors.entries.map((entry) {
     log('${entry.key}: ${entry.value.join(', ')}');
     return '${entry.key}: ${entry.value.join(', ')}';
