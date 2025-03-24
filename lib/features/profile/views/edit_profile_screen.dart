@@ -70,9 +70,9 @@ void initState() {
   super.initState();
   
   if (widget.profileModel!=null) {
-    emailconteoller.text = widget.profileModel!.email!;
-        nameController.text = widget.profileModel!.name!;
-        userNameController.text= widget.profileModel!.username!;
+    emailconteoller.text = widget.profileModel!.email??'';
+        nameController.text = widget.profileModel!.name??'';
+        userNameController.text= widget.profileModel!.username??'';
  var extractPhoneNumber =  extractPhone(widget.profileModel?.phoneNational);
         if (extractPhoneNumber!=null) {
                   phoneController.text =extractPhoneNumber;

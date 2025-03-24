@@ -121,8 +121,9 @@ log(response.body);
 "Accept": "application/json",
         'Content-Type': 'application/json',
           'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
-      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
-     
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar',
+           "Authorization":"Bearer ${globalSharedPrefs.getString(Strings.token)}"
+
      
      
       },

@@ -154,7 +154,7 @@ style: TextStyle(
     )
     , 
 SizedBox(height: 16,),
-provider.posts.isEmpty?
+provider.categoryPosts.isEmpty?
 
 Center(child: Text("${getTranslated(Strings.noPostIncategory , context)!}  (${widget.categoryModel!.name})" ,
 style: TextStyle(
@@ -166,9 +166,9 @@ style: TextStyle(
     ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: provider.posts.length,
+      itemCount: provider.categoryPosts.length,
       itemBuilder: (BuildContext context, int index) {
-        var post = provider.posts[index];
+        var post = provider.categoryPosts[index];
         return CategoryPost(postModel: post);
       },
     )

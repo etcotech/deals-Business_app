@@ -16,7 +16,8 @@ class CategoryProvider extends ChangeNotifier {
 ErrorData? errorData;
 bool isCategoryLoading = false;
 List<CategorySubcategoryModel> categoris =[];
-List<PostModel> posts =[];
+List<PostModel> categoryPosts =[];
+List<PostModel> subCategoryposts =[];
 
   Future<void> getCategorDetails()async{
     isLoading = true;
@@ -89,8 +90,51 @@ result.fold(
 }
 , (success){           
 
-  posts =[];        
-posts.addAll(success.posts);
+  categoryPosts =[];        
+categoryPosts.addAll(success.posts);
+notifyListeners();
+}
+  );
+     isLoading = false;
+    notifyListeners();  
+    } catch (e) {
+
+      log(e.toString());
+      isLoading = false;
+      errorData = ErrorData(message: getErrorMessage(e.toString()),
+      
+      icon: getErrorIcon(e.toString())
+       );
+
+       notifyListeners();
+    }
+
+     isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> getSubCategoryPosts(String categoryId)async{
+    isLoading = true;
+    errorData = null;
+    notifyListeners();
+  
+
+  
+
+
+            
+    try {
+      var result = await categoryRepository!.getCategoryPosts(categoryId);
+result.fold(
+  
+  (failre)
+{
+  errorData = ErrorData(message: failre.toString(), icon: getErrorIcon(failre.message.toString()));
+}
+, (success){           
+
+  subCategoryposts =[];        
+subCategoryposts.addAll(success.posts);
 notifyListeners();
 }
   );

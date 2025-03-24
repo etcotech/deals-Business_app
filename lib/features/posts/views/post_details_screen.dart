@@ -3,11 +3,13 @@ import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
+import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 import 'package:deals_and_business/features/report/views/report_screen.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/add_to_favourite_button.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
 import 'package:deals_and_business/shared/widgets/contact_with_us_button.dart';
+import 'package:deals_and_business/shared/widgets/delete_account_alert.dart';
 import 'package:deals_and_business/shared/widgets/error_container.dart';
 import 'package:deals_and_business/shared/widgets/main_button_with_icon.dart';
 import 'package:deals_and_business/shared/widgets/not_authenticated_alert_dialog.dart';
@@ -41,6 +43,9 @@ context.read<PostProvider>().getPost(widget.postId!);
 
   @override
   Widget build(BuildContext context) {
+    var userProvider = Provider.of<ProfileProvider>(context);
+
+    var homeProvider= Provider.of<HomeProvider>(context);
     return  Consumer<PostProvider>(
             builder: (context,provider,child) {
 
@@ -89,6 +94,24 @@ context.read<PostProvider>().getPost(widget.postId!);
         ),
         actions: [
           ReportButton(
+            isDelete: provider.postDetailsModel!.userId.toString()
+            == userProvider.getUserId()
+            ,
+            onDelete: (){
+               showDialog(context: context,
+       builder: (_)=> DeleteAccountAlert(
+        isDelete: true, 
+        onConfirm: (){
+provider.delete(context,  provider.postDetailsModel!.id.toString(),
+ (){
+homeProvider.refreshPosts(context);
+Navigator.pop(context);
+ });
+        },
+        title: getTranslated(Strings.areYouSureDeletePost, context),
+       ));
+
+            },
             onTap: (){
               Navigator.of(context).push(
         PageTransition(type: 

@@ -34,7 +34,7 @@ class _CategoryDetailsScreenState extends State<SubcategoryDetailsScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
 
-   context.read<CategoryProvider>().getCategoryPosts(widget.categoryId!);
+   context.read<CategoryProvider>().getSubCategoryPosts(widget.categoryId!);
 
     });
   }
@@ -121,7 +121,7 @@ style: TextStyle(
     ), 
   
 SizedBox(height: 16,),
-provider.posts.isEmpty?
+provider.subCategoryposts.isEmpty?
 
 Center(child: Text("${getTranslated(Strings.noPostIncategory , context)!}  (${widget.categoryModel!.name})" ,
 style: TextStyle(
@@ -133,9 +133,9 @@ style: TextStyle(
     ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: provider.posts.length,
+      itemCount: provider.subCategoryposts.length,
       itemBuilder: (BuildContext context, int index) {
-        var post = provider.posts[index];
+        var post = provider.subCategoryposts[index];
         return CategoryPost(postModel: post);
       },
     )

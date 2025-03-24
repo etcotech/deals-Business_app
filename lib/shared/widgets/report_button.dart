@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 class ReportButton extends StatelessWidget {
   final Function? onTap;
-  const ReportButton({super.key, this.onTap});
+  final bool? isDelete;
+  final Function?  onDelete;
+  const ReportButton({super.key, this.onTap, this.isDelete=false, this.onDelete});
 
 
   @override
@@ -15,13 +17,24 @@ class ReportButton extends StatelessWidget {
       child: 
                       PopupMenuButton(
                                       onSelected: (choice){
+                        if (choice==Strings.reportApost) {
+                                                          onTap!();
+
+                        }
                         
-                                onTap!();
+                        if(choice==Strings.deleteThePost){
+                                onDelete!();
+
+                        }
                                       },
                                       padding: EdgeInsets.zero,
                                       // initialValue: choices[_selection],
                                       itemBuilder: (BuildContext context) {
-                      return [Strings.reportThePost].map((String choice) {
+                      return [
+                      isDelete!?
+                      Strings.deleteThePost:
+                        
+                        Strings.reportThePost].map((String choice) {
                         return  PopupMenuItem<String>(
                         value: choice,
                         child: Text(getTranslated(choice, context)!
