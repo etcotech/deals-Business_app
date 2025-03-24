@@ -24,6 +24,7 @@ abstract class UserRemoteDataSource {
   Future<SignupResponseModel> signUp(String userName,String email, String password);
 
     Future<void> forgotPassword(String email);
+    Future<void> deleteAccount(String email);
 
   Future<ProfileResponseModel> getUserprofile(String userId,String? token,  {String? lang='ar'});
 
@@ -401,6 +402,18 @@ log(res.statusCode.toString());
     );
     log(response.toString());
     // return;
+  }
+  
+  @override
+  Future<void> deleteAccount(String userId)async {
+   var response =await httpClient!.delete('/api/users/${userId}',
+
+    body: {
+     
+    }
+    );
+    log(response.toString());
+    //
   }
 
 

@@ -112,6 +112,36 @@ log(response.body);
       throw HttpException(e.toString(), 500);
     }
   }
+ Future<dynamic> delete(String endpoint, {Map<String, dynamic>? body}) async {
+   
+   try {
+    final response = await http.delete(
+      Uri.parse('$baseUrl$endpoint'),
+      headers: { 
+"Accept": "application/json",
+        'Content-Type': 'application/json',
+          'X-AppApiToken': 'T0NlRzBVSE1OcWNVREhRcDAwaWgxMlVjcVh3bUlZc1o=',
+      'Content-Language': globalSharedPrefs.getString(Strings.currentLanguage)??'ar'
+     
+     
+     
+      },
+      
+      body: jsonEncode(body),
+    );
+    return _handleResponse(response);
+
+   }
+   on SocketException {
+      throw InternetException('No Internet Connection');
+    }
+    on TimeoutException {
+      throw TimeoutException('Request TimeOut');
+    }
+    catch (e) {
+      throw HttpException(e.toString(), 500);
+    }
+  }
 
 
    Future<dynamic> postFormData(String endpoint, 

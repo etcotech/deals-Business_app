@@ -39,6 +39,9 @@ String email,
     String msg,
     String token
      , {String? lang ='ar'});
+
+      Future<void> deletePost(String postId, 
+   );
   Future<void> sendMessage(String postId, 
   String name,
 String email,
@@ -447,6 +450,14 @@ return;
  
  
   return userPostListResponseModelFromJson(response2 );
+  }
+  
+  @override
+  Future<void> deletePost(String postId) async{
+    var response2 = await apiClient!.delete("/api/posts/$postId", 
+    body: {}
+    );
+ return;
   }
 
 

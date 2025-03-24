@@ -332,6 +332,23 @@ lang: localeLocalDatasource.getCurrentLocale()
  
 
   }
+  
+  @override
+  Future<Either<ApiException, void>> deletePost(String postId) async{
+     try {
+        final remoteResponse = await postRemoteDatasource.deletePost(
+         postId
+        
+        );
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } 
+        on ApiException catch (failure) {
+        return Left(failure);
+      }
+  }
 
 
 

@@ -46,7 +46,7 @@ PostDetailsModel? postDetailsModel;
 List<FavoritePostModel> favouritePosts=[];
 List<MessageModel> messages=[];
 List<ThreadMessageModel> threadMessages=[];
-
+bool isDeleteLoading = false;
 String? error;
 String? titleError;
 String? bodyError;
@@ -769,6 +769,108 @@ Navigator.pop(context);
 }
 
  
+Future<void> delete(BuildContext context , 
+String? postId,
+Function()? onDeleted
+ )async{
+  isDeleteLoading =true;
+  errorData = null;
+    messageError=null;
+
+  notifyListeners();
+try {
+
+  var result = await  postRepository!.deletePost(postId.toString(),
+ 
+   );
+
+  result.fold((failure){
+
+
+    if (failure is UnauthorizedException ) {
+      
+  logout();
+  showErrorMessage(context, getTranslated('session_expired', context));
+      return;
+    }
+    if(failure is ValidationException){
+//handle validation errors
+
+
+  final errors = Map<String, dynamic>.
+  from(json.decode(failure.message));
+  for (var error in errors.keys) {
+    
+    if (error == 'title') {
+       titleError ='';
+  for (var titleValidationError in  errors[error]) {
+    log(titleValidationError);
+   
+     titleError =  titleValidationError +"\n";
+  }
+ 
+    }
+
+
+  if (error == 'message') {
+       messageError ='';
+  for (var messageValidationError in  errors[error]) {
+   
+   
+     messageError =  messageValidationError +"\n";
+  }
+ 
+    }
+        notifyListeners();
+
+return;
+
+  }
+ 
+ 
+  final errorMessages = errors.entries.map((entry) {
+    return '${entry.key}: ${entry.value.join(', ')}';
+  }).join('\n');
+
+
+
+
+return;
+
+
+
+}
+
+if (failure is UnauthorizedException) {
+  logout();
+}
+showErrorMessage(context, failure.message.toString());
+
+  }, (success){
+//     selectedCat=null;
+// selectedCity=null;
+// selectedCountry=null;
+// files=[];
+notifyListeners();
+showSuccessMessage(context, getTranslated("post_deleted_succssfully", context));
+// Navigator.pop(context); 
+onDeleted!();
+
+
+  });
+} catch (e) {
+  
+
+    isDeleteLoading =false;
+  notifyListeners();
+
+  showErrorMessage(context, e.toString());
+}
+
+  isDeleteLoading =false;
+  notifyListeners();
+}
+
 Future<void> sendMessage(BuildContext context , 
 String? postId,
 String name,

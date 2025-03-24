@@ -165,8 +165,14 @@
 , 
 "sub_categories_in":"الفئات الفرعية في ", 
 "continue":"استمرار" ,
-"are_you_sure_delete_account":"هل انت متأكد من أنك تريد حذف الحساب؟ لا يمكنك التراجع عن ذلك!"
-,"categories":"الفئات" ,
+"are_you_sure_delete_account":"هل انت متأكد من أنك تريد حذف الحساب؟ لا يمكنك التراجع عن ذلك!", 
+
+"are_you_sure_delete_post":"هل انت متأكد من أنك تريد حذف الاعلان؟ لا يمكنك التراجع عن ذلك!",
+"post_deleted_succssfully":"تم حدف الاعلان" ,
+
+"delete_the_post":"حذف الاعلان"  ,
+"account_deleted":"تم حدف الحساب",
+"categories":"الفئات" ,
 "no_sub_categories":"لا توجد فئات فرعية" ,
 "no_categories":"لا توجد فئات" ,
 "countries":"الدول" ,

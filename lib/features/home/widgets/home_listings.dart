@@ -2,13 +2,17 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/data/models/post/post_model.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/home/widgets/listing_icon.dart';
 import 'package:deals_and_business/features/posts/views/post_details_screen.dart';
+import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 import 'package:deals_and_business/features/report/views/report_screen.dart';
+import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/views/post_preview_image_widget.dart';
+import 'package:deals_and_business/shared/widgets/delete_account_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -328,6 +332,10 @@ class HomePost extends StatelessWidget {
 var size = MediaQuery.of(context).size;    
 final double itemHeight = (size.height - kToolbarHeight - 24) *.35; 
 final double itemWidth = size.width*.45;
+var provider = Provider.of<PostProvider>(context);
+var userProvider =  Provider.of<ProfileProvider>(context);
+var homeProvider =  Provider.of<HomeProvider>(context);
+
     return AnimatedCrossFade(firstChild: 
     GestureDetector(
       onTap: (){
@@ -456,7 +464,8 @@ postId: postModel!.id,
             menuPadding: EdgeInsets.zero,
       
               onSelected: (choice){
-      Navigator.of(context).push(
+     if (choice== Strings.reportApost) {
+        Navigator.of(context).push(
         PageTransition(type: 
         
         PageTransitionType.leftToRight ,child: ReportScreen(
@@ -465,11 +474,30 @@ postId: postModel!.id,
         )
         )
       );
+     }else{
+      showDialog(context: context,
+       builder: (_)=> DeleteAccountAlert(
+        isDelete: true, 
+        onConfirm: (){
+provider.delete(context, postModel!.id.toString(),
+ (){
+homeProvider.refreshPosts(context);
+ });
+        },
+        title: getTranslated(Strings.areYouSureDeletePost, context),
+       ));
+
+     }
               },
               padding: EdgeInsets.zero,
               // initialValue: choices[_selection],
               itemBuilder: (BuildContext context) {
-                return ['Report'].map((String choice) {
+                return [
+                  
+                  
+                  postModel!.userId.toString()== userProvider.getUserId()?
+                Strings.deleteThePost:
+                 Strings.reportApost].map((String choice) {
                   return  PopupMenuItem<String>(
                   value: choice,
                   child: Text(getTranslated(choice, context)!, 

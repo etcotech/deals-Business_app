@@ -196,13 +196,21 @@
 "no_post_in_category":"No posts in the category",
 "success":"Sucess" ,
 "post_sent_succssfully":"Post sent successfully" ,
+"post_deleted_succssfully":"Post deleted successfully" ,
+
 "report_sent_succssfully":"Report sent successfully",
 "back_to_home":"Back to Home"
 ,
-"reset_password":"اعادة تعيين كلمة المرور" ,
+"reset_password":"Reset password" ,
 "enter_email":"please enter your email  to reset your account password" 
 ,
+"are_you_sure_delete_post":"Are you sure you want to delete your post? you can't undo that!",
+
+"delete_the_post":"Delete"  ,
 "we_emailed":"We have emailed you a link to reset your password. Please check your email." ,
-"enter_valid_email":"Please enter a valid email address"
+"enter_valid_email":"Please enter a valid email address", 
+
+"account_deleted":"Account deleted"
+
 }
   

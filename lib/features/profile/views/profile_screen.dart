@@ -10,7 +10,9 @@ import 'package:deals_and_business/features/posts/views/post_details_screen.dart
 import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
 import 'package:deals_and_business/features/profile/views/edit_profile_screen.dart';
 import 'package:deals_and_business/features/report/views/report_screen.dart';
+import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/widgets/back_button.dart';
+import 'package:deals_and_business/shared/widgets/delete_account_alert.dart';
 import 'package:deals_and_business/shared/widgets/error_container.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -526,6 +528,8 @@ class ProfileListing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<PostProvider>(context);
+var userProvider =  Provider.of<ProfileProvider>(context);
     return   GestureDetector(
       onTap: (){
         Navigator.push(context, PageTransition(type: 
@@ -647,7 +651,8 @@ class ProfileListing extends StatelessWidget {
             menuPadding: EdgeInsets.zero,
       
               onSelected: (choice){
-      Navigator.of(context).push(
+       if (choice== Strings.reportApost) {
+        Navigator.of(context).push(
         PageTransition(type: 
         
         PageTransitionType.leftToRight ,child: ReportScreen(
@@ -656,11 +661,29 @@ class ProfileListing extends StatelessWidget {
         )
         )
       );
+     }else{
+      showDialog(context: context,
+       builder: (_)=> DeleteAccountAlert(
+        isDelete: true, 
+        onConfirm: (){
+provider.delete(context, postModel.id.toString(),
+ (){
+// homeProvider.refreshPosts(context);
+userProvider.refreshUserPosts();
+ });
+        },
+        title: getTranslated(Strings.areYouSureDeletePost, context),
+       ));
+
+     }
               },
               padding: EdgeInsets.zero,
               // initialValue: choices[_selection],
               itemBuilder: (BuildContext context) {
-                return [Strings.reportApost].map((String choice) {
+                return [
+                  postModel.userId.toString()==userProvider.getUserId()?
+                  Strings.deleteThePost:
+                  Strings.reportApost].map((String choice) {
                   return  PopupMenuItem<String>(
                   value: choice,
                   child: Text(getTranslated(choice, context)!, 

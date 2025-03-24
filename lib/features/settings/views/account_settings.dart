@@ -226,7 +226,12 @@ initialValue: provider.profileModel?.userTypeId.toString(),
         _title(context, Strings.deleteAccount, Icons.delete_outline, (){
         
         showDialog(context: context, builder: (context){
-          return DeleteAccountAlert();
+          return DeleteAccountAlert(
+            onConfirm: (){
+              provider.delete(context, provider.getUserId(),
+               (){});
+            },
+          );
         });
         
         

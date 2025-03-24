@@ -139,4 +139,12 @@ static const String backToHome ="back_to_home";
 static const String resetPassword ="reset_password";
 static const String enterEmail ="enter_email";
 static const String enterValidEmail ="enter_valid_email";
+
+static const String deleteThePost ="delete_the_post";
+
+static const String areYouSureDeletePost ="are_you_sure_delete_post";
+
+
+static const String reportSent ="report_sent_succssfully";
+
 }

@@ -14,6 +14,7 @@ abstract class UserRepository {
     
     String email , String password);
         Future<Either<ApiException, void>> forgotPassword(String email);
+        Future<Either<ApiException, void>> deleteAccount(String userId);
 
   Future<Either<ApiException, SignupResponseModel>> signUp(String name, String email  ,String password );
   // Future<Either<Failure, NoParams>> signOut();

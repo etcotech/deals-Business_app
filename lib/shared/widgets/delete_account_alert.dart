@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class DeleteAccountAlert extends StatefulWidget {
-  const DeleteAccountAlert({super.key});
+  final bool? isDelete;
+  final Function()? onConfirm;
+  final String? title;
+  const DeleteAccountAlert({super.key, this.isDelete =false, this.onConfirm, this.title});
 
   @override
   State<DeleteAccountAlert> createState() => _DeleteAccountAlertState();
@@ -36,6 +39,7 @@ class _DeleteAccountAlertState extends State<DeleteAccountAlert> {
                   padding: const EdgeInsets.all(14.0),
                   child: SizedBox( width: MediaQuery.sizeOf(context).width,
                     child: Text(
+                      widget.title??
                       getTranslated("are_you_sure_delete_account", context)!, 
                  
                  maxLines: 2,
@@ -49,26 +53,32 @@ class _DeleteAccountAlertState extends State<DeleteAccountAlert> {
                   ),
                 ),
                Spacer(),
-            Container(
-                 height: (MediaQuery.sizeOf(context).height*.15)/3,
-                      width: MediaQuery.sizeOf(context).width,
-              decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  borderRadius:BorderRadius.vertical(
-                    bottom: Radius.circular(35)
-                  )), 
-                  child: Center(
-                    child: Text(
-                      getTranslated('continue', context)!, 
-                      style: TextStyle(
-                        color: Colors.red, 
-                        fontWeight: FontWeight.w400, 
-                        fontSize: 22
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+                widget.onConfirm!();
+              },
+              child: Container(
+                   height: (MediaQuery.sizeOf(context).height*.15)/3,
+                        width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                    color: Colors.grey[400],
+                    borderRadius:BorderRadius.vertical(
+                      bottom: Radius.circular(35)
+                    )), 
+                    child: Center(
+                      child: Text(
+                        getTranslated('continue', context)!, 
+                        style: TextStyle(
+                          color: Colors.red, 
+                          fontWeight: FontWeight.w400, 
+                          fontSize: 22
+                        ),
                       ),
                     ),
-                  ),
-                
-              ),
+                  
+                ),
+            ),
             
             
               ],

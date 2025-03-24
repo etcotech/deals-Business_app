@@ -39,7 +39,12 @@ String email,
     String msg
   ,
   );
-
+ Future<Either<ApiException, void>> deletePost(
+   String postId, 
+  
+  
+  
+  );
   Future<Either<ApiException, void>> sendMessage(
   String postId, 
   

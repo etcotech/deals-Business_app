@@ -354,5 +354,17 @@ localDataSource.getCounryName()
         return Left(failure);
       }
                  }
+                 
+                   @override
+                   Future<Either<ApiException, void>> deleteAccount(String userId)async {
+                        try {
+                  var response = await remoteDataSource.deleteAccount(userId);
+                  return Right(response);
+                  }
+                   on ApiException catch (failure) {
+        log(failure.message.toString());
+        return Left(failure);
+      }
+                   }
 
 }
