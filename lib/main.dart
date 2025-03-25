@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:deals_and_business/configs/app_localization.dart';
 import 'package:deals_and_business/configs/custom_delegate.dart';
 import 'package:deals_and_business/configs/theme.dart';
+import 'package:deals_and_business/core/services/package_info_service.dart';
+import 'package:deals_and_business/core/services/remote_config_services.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
 import 'package:deals_and_business/features/category/providers/category_provider.dart';
 import 'package:deals_and_business/features/home/providers/home_provider.dart';
@@ -16,6 +19,7 @@ import 'package:deals_and_business/shared/providers/chat_provider.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/views/error_screen.dart';
 import 'package:deals_and_business/shared/views/success_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +35,35 @@ void main()async {
 
   try {
     globalSharedPrefs= await SharedPreferences.getInstance();
+
+try {
+  if (Platform.isAndroid) {
+  await Firebase.initializeApp(
+    // name: 'SecondaryApp',
+    options: const FirebaseOptions(
+        appId: '1:1031436334714:android:cf1a2e0cbb9190f1786dc3',
+        apiKey: 'AIzaSyAuHUkWGjuUbx9e9X0uQMmgzAWNV_eS8_Q',
+        messagingSenderId: '1031436334714',
+        projectId: 'newapps-f7e05'
+    )
+);
+}else{
+await Firebase.initializeApp(
+   
+);
+}
+await  RemoteConfigServices.initialize();
+PackageInfoService().initialize();
+} catch (e) {
+  log(e.toString());
+}
    await di.init();
+
+
+
+
+
+
   } catch (e) {
     log("///////////////////////////////////   $e");
   }

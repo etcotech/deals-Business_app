@@ -4,6 +4,7 @@ import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/shared/widgets/main_button_with_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewVersionScreen extends StatefulWidget {
   const NewVersionScreen({super.key});
@@ -71,11 +72,7 @@ Padding(
     icon: Icons.update,
     title: getTranslated('update_now', context),
   onTap: (){
-if(Platform.isAndroid){
-
-}else{
-  
-}
+_launchStore();
 
   },
   ),
@@ -88,5 +85,23 @@ SizedBox(height: 100,)
         ),
       ),
     );
+
+
+
   }
+
+
+
+void _launchStore() async {
+  const appStoreUrl = 'https://apps.apple.com/us/app/com.dealsandbusiness.app'; // iOS
+  const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.dealsandbusiness.app'; // Android
+  
+  final url = Platform.isAndroid ? playStoreUrl : appStoreUrl;
+  
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launchUrl(Uri.parse(url));
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }

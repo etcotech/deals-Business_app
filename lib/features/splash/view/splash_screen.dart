@@ -1,13 +1,16 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
+import 'package:deals_and_business/core/services/remote_config_services.dart';
 import 'package:deals_and_business/features/auth/views/login_screen.dart';
 import 'package:deals_and_business/features/dashboard/view/dashboard.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/features/version/views/new_version_screen.dart';
 import 'package:deals_and_business/packages/ripple_effect/src/ripple_effect.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -38,16 +41,25 @@ init();
   });
  }
 
+Future<bool>  
 checkVersion()async{
-
+// Firebase.initializeApp();
    //firebase get app version and build number
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
-final remoteConfig = FirebaseRemoteConfig.instance;
+final remoteConfig = RemoteConfigServices();
 
-var appleRevarmoteBuild =remoteConfig.getString(Strings.appleCurrentBuild);
-var googleRemoteBuild=remoteConfig.getString(Strings.googleCurrentBuild);
-var googleRemoteVersion=remoteConfig.getString(Strings.googleCurrentVersion);
-var appleRemoteVersion= remoteConfig.getString(Strings.appleCurrentVersion);
+var appleRevarmoteBuild =remoteConfig.getValue(Strings.appleCurrentBuild);
+var googleRemoteBuild=remoteConfig.getValue(Strings.googleCurrentBuild);
+var googleRemoteVersion=remoteConfig.getValue(Strings.googleCurrentVersion);
+var appleRemoteVersion= remoteConfig.getValue(Strings.appleCurrentVersion);
+log("APPL VERSON $appleRemoteVersion");
+log("APPL BUILD $appleRevarmoteBuild");
+log("GOOGLE VERSON $googleRemoteVersion");
+log("GOOGLE BUILD $googleRemoteBuild");
+
+
+
+
 
 String appName = packageInfo.appName;
 String packageName = packageInfo.packageName;
@@ -55,46 +67,41 @@ String version = packageInfo.version;
 String buildNumber = packageInfo.buildNumber;
 var localBuild = packageInfo.buildNumber;
 var localVersion = packageInfo.version;
+bool isOldVersion= Platform.isIOS?
+"$appleRemoteVersion+$appleRevarmoteBuild" !=  "$localVersion+$localBuild"
+: 
+"$googleRemoteVersion+$googleRemoteBuild" !=  "$localVersion+$localBuild"
+;
 
-  if (Platform.isIOS) {
-    if ("$appleRemoteVersion+$appleRevarmoteBuild" !=  "$localVersion+$localBuild" ) {
-      //go to new version screen
 
-      Navigator.push(context,
-      
-       PageTransition(type: PageTransitionType.leftToRight, 
-       
-       child: NewVersionScreen()
-       ), 
-      
-    
-      );
+ 
+  return    isOldVersion;
 
-      return;
-    }
-  }else{
-if ("$googleRemoteVersion+$googleRemoteBuild" !=  "$localVersion+$localBuild" ) {
-      //go to new version screen
-       Navigator.push(context,
-      
-       PageTransition(type: PageTransitionType.leftToRight, 
-       
-       child: NewVersionScreen()
-       ), 
-      
-    
-      );
-return;
-    }
-  }
 }
 
 init()async{
 
-//  await checkVersion();
+ var isOldVersion =await checkVersion();
+ 
+ 
+
+  if (isOldVersion) {
+    log("OLD VERSION");
+   RippleEffect.start(effectKey, (){
+
+  Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:  
+    NewVersionScreen()));
+ });
+ 
+ 
+     
+      return;
+  }
+//  return;
 
 
-  var provider = Provider.of<SplashProvider>(context ,listen: false);
+ else{
+   var provider = Provider.of<SplashProvider>(context ,listen: false);
 if (provider.isFirstTime()) {
    RippleEffect.start(effectKey, (){
 
@@ -111,9 +118,12 @@ if (provider.isLoggedIn()) {
   Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:  
     Dashboard()));
  });
+ 
+ return;
+ }
 
 
-  return;
+  // return;
 }
 
 

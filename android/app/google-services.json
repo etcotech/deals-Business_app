@@ -1,0 +1,124 @@
+{
+  "project_info": {
+    "project_number": "1031436334714",
+    "project_id": "newapps-f7e05",
+    "storage_bucket": "newapps-f7e05.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:9b153a818bab5a9f786dc3",
+        "android_client_info": {
+          "package_name": "com.almones.sa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:07bf59017dd9624c786dc3",
+        "android_client_info": {
+          "package_name": "com.dates.sa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:cf1a2e0cbb9190f1786dc3",
+        "android_client_info": {
+          "package_name": "com.dealsandbusiness.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:54d0f0a0e7b2d832786dc3",
+        "android_client_info": {
+          "package_name": "com.million.saha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:b14e62acb14c16b7786dc3",
+        "android_client_info": {
+          "package_name": "com.rozabellah.sa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031436334714:android:fb29558c40949bfb786dc3",
+        "android_client_info": {
+          "package_name": "com.sell_and_buy.sa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7TtIzMC9aTZPiO5T3_qL9Qe9QQRBMhf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
