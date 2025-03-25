@@ -210,7 +210,12 @@
 "we_emailed":"We have emailed you a link to reset your password. Please check your email." ,
 "enter_valid_email":"Please enter a valid email address", 
 
-"account_deleted":"Account deleted"
+"account_deleted":"Account deleted",
+"new_update_available":"NEW UPDATE IS AVAILABLE" ,
+"please_update_app":"Update your application to the latest version" , 
+"update_from_store_apple":"A new version of Deals & Business is available on App store, please update your app to use all of our amazing features",
+"update_from_store_google":"A new version of Deals & Business is available on Google play, please update your app to use all of our amazing features",
 
+"update_now":"Update now!"
 }
   

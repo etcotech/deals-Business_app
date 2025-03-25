@@ -11,6 +11,7 @@ import 'package:deals_and_business/features/profile/providers/profile_provider.d
 import 'package:deals_and_business/features/search/providers/search_provider.dart';
 import 'package:deals_and_business/features/splash/providers/splash_provider.dart';
 import 'package:deals_and_business/features/splash/view/splash_screen.dart';
+import 'package:deals_and_business/features/version/views/new_version_screen.dart';
 import 'package:deals_and_business/shared/providers/chat_provider.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:deals_and_business/shared/views/error_screen.dart';
@@ -106,6 +107,7 @@ supportedLocales: locals,
           ),
          
           home: 
+          // NewVersionScreen()
           // SuccessScreen()
           // NetworkErrorScreen(onRetry: (){})
           SplashScreen()

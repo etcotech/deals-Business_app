@@ -147,4 +147,16 @@ static const String areYouSureDeletePost ="are_you_sure_delete_post";
 
 static const String reportSent ="report_sent_succssfully";
 
+
+
+
+
+//remote config keys
+
+static const String appleCurrentVersion ="apple_current_version";
+static const String googleCurrentVersion ="google_current_version";
+static const String googleCurrentBuild ="google_current_build";
+static const String appleCurrentBuild ="apple_current_build";
+
+
 }
