@@ -22,7 +22,7 @@ typedef _AddToFavouriteDataSource = Future<String> Function();
 typedef _FavoritePostChooser = Future<FavoritePostListResponseModel> Function();
 typedef _UserPostsDataSourceChooser = Future<UserPostListResponseModel> Function();
 
-typedef _DataSourceChooser = Future<PostListResponseModel> Function();
+typedef _DataSourceChooser = Future<PostListResponseModel> Function( );
 typedef _AddPost = Future<Map<String ,dynamic>> Function();
 
 class PostRepositoryImpl implements PostRepository {
@@ -39,15 +39,26 @@ class PostRepositoryImpl implements PostRepository {
   });
 
   @override
-  Future<Either<ApiException, PostListResponseModel>> getPosts() async{
-    return  await _postListProvider((){
-
-        return    postRemoteDatasource.getPosts(
+  Future<Either<ApiException, PostListResponseModel>> getPosts( {int currentPage=1}) async{
+    try {
+        final remoteResponse = await postRemoteDatasource.getPosts(
+          currentPage: currentPage,
           localDataSource.getToken().toString(), 
         
         lang: localeLocalDatasource.getCurrentLocale()
         );
-    });
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } 
+      
+        on ApiException catch (failure) {
+        return Left(failure);
+      }
+   
+   
+    
   }
 
 
@@ -68,7 +79,7 @@ class PostRepositoryImpl implements PostRepository {
       }
   }
 Future<Either<ApiException, PostListResponseModel>> _postListProvider(
-   _DataSourceChooser getDataSource,
+   _DataSourceChooser getDataSource, {int currentPage=1}
       ) async {
     // if (await networkInfo.isConnected) {
       try {

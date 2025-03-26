@@ -18,7 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart'; // For MediaType
 
 abstract class PostRemoteDatasource {
-    Future<PostListResponseModel> getPosts(String token , {String? lang ='ar'});
+    Future<PostListResponseModel> getPosts(String token , {String? lang ='ar' , int currentPage=1});
     Future<UserPostListResponseModel> getUserPosts(
       
       String userId,
@@ -78,11 +78,11 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
     required this.client});
   
   @override
-  Future<PostListResponseModel> getPosts(String token, {String? lang ='ar'}) async{
+  Future<PostListResponseModel> getPosts(String token, {String? lang ='ar' , int currentPage=1}) async{
 
 
     //&belongLoggedUser=1
-  var response2 = await apiClient!.get("$postsApi?op=latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=1");
+  var response2 = await apiClient!.get("$postsApi?op=search,latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=$currentPage");
  
  log(response2.runtimeType.toString());
   return postListResponseModelFromJson(response2);

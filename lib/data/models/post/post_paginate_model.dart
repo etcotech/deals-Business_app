@@ -91,6 +91,7 @@ class PaginateLinks {
 
   PaginateLinks({ this.first,  this.last,  this.prev,  this.next});
 PaginateLinks.fromJson(Map<String ,dynamic> data){
+  log(data.toString());
   first = data['first'];
   last = data['last'];
   prev= data['prev']; 

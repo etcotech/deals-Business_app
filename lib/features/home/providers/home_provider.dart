@@ -32,7 +32,8 @@ bool isLoading = false;
 bool isCategoryLoading = false;
 
 bool isCountryLoading = false;
-
+int _currentPage= 1;
+bool loadMore= false;
 bool isCityLoading = false;
 bool isPaginateLoading= false;
 
@@ -91,7 +92,7 @@ errorData = null;
 notifyListeners();
 try {
 
-  var result = await postRepository!.getPosts();
+  var result = await postRepository!.getPosts(currentPage: _currentPage);
   
 result.fold((failure){
     log("FAILURE$failure");
@@ -110,6 +111,15 @@ logout();
 }, (success){
 posts =[];
 paginateLinks = success.postPaginateModel.paginateLinks;
+// _currentPage = success.postPaginateModel.meta.
+if (_currentPage<success.postPaginateModel.meta!.lastPage!) {
+  loadMore = true;
+  _currentPage++;
+}else{
+    loadMore=false;
+
+}
+// if()
 posts.addAll(success.postPaginateModel.posts!);
 });
 
@@ -139,14 +149,15 @@ Future<void> getMorePosts(BuildContext context)async{
 errorData = null;
 notifyListeners();
 try {
-  log(paginateLinks!.last.toString());
-if (paginateLinks?.next!=null) {
+
+log("CURRENT: ${_currentPage}  ");
+if (loadMore) {
     isPaginateLoading = true;
 notifyListeners();
-   var result = await postRepository!.getMorePosts(
-    paginateLinks!.next.toString() 
-  );
-  
+  //  var result = await postRepository!.getMorePosts(
+  //   "${paginateLinks!.last}op=search,latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10"
+  // );
+  var result = await postRepository!.getPosts(currentPage: _currentPage);
 result.fold((failure){
     log("FAILURE GET MORE $failure");
 
@@ -164,8 +175,13 @@ logout();
 }, (success){
 // posts =[];
 
-log(success.postPaginateModel.posts!.length.toString());
 paginateLinks = success.postPaginateModel.paginateLinks;
+if (_currentPage<success.postPaginateModel.meta!.lastPage!) {
+  loadMore = true;
+  _currentPage++;
+}else{
+  loadMore=false;
+}
 posts.addAll(success.postPaginateModel.posts!);
 notifyListeners();
 });

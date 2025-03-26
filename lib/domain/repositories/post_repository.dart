@@ -11,7 +11,7 @@ import 'package:deals_and_business/data/models/post/user_post_list_response_mode
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 
 abstract class PostRepository {
-  Future<Either<ApiException, PostListResponseModel>> getPosts();
+  Future<Either<ApiException, PostListResponseModel>> getPosts( {int currentPage=1});
     Future<Either<ApiException, UserPostListResponseModel>> getUserPosts(String userId);
 
   Future<Either<ApiException, PostListResponseModel>> getMorePosts(String url);
