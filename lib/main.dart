@@ -40,12 +40,12 @@ try {
   if (Platform.isAndroid) {
   await Firebase.initializeApp(
     // name: 'SecondaryApp',
-    options: const FirebaseOptions(
-        appId: '1:1031436334714:android:cf1a2e0cbb9190f1786dc3',
-        apiKey: 'AIzaSyAuHUkWGjuUbx9e9X0uQMmgzAWNV_eS8_Q',
-        messagingSenderId: '1031436334714',
-        projectId: 'newapps-f7e05'
-    )
+    // options: const FirebaseOptions(
+    //     appId: '1:1031436334714:android:cf1a2e0cbb9190f1786dc3',
+    //     apiKey: 'AIzaSyAuHUkWGjuUbx9e9X0uQMmgzAWNV_eS8_Q',
+    //     messagingSenderId: '1031436334714',
+    //     projectId: 'newapps-f7e05'
+    // )
 );
 }else{
 await Firebase.initializeApp(
