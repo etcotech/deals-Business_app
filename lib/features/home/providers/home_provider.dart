@@ -112,9 +112,10 @@ logout();
 posts =[];
 paginateLinks = success.postPaginateModel.paginateLinks;
 // _currentPage = success.postPaginateModel.meta.
-if (_currentPage<success.postPaginateModel.meta!.lastPage!) {
-  loadMore = true;
   _currentPage++;
+
+if (_currentPage<=success.postPaginateModel.meta!.lastPage!) {
+  loadMore = true;
 }else{
     loadMore=false;
 
@@ -176,9 +177,10 @@ logout();
 // posts =[];
 
 paginateLinks = success.postPaginateModel.paginateLinks;
-if (_currentPage<success.postPaginateModel.meta!.lastPage!) {
-  loadMore = true;
   _currentPage++;
+
+if (_currentPage<=success.postPaginateModel.meta!.lastPage!) {
+  loadMore = true;
 }else{
   loadMore=false;
 }
