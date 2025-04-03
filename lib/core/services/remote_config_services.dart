@@ -48,4 +48,8 @@ String getValue(String key){
   log(_remoteConfig!.pluginConstants.toString());
  return _remoteConfig!.getString(key);
 }
+bool getBoolValue(String key){
+ return _remoteConfig!.getBool(key);
+}
+
 }

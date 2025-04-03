@@ -45,6 +45,7 @@ initHome();
   }
 
 initHome(){
+     context.read<HomeProvider>().isVersionOld();
   context.read<HomeProvider>().getCategories(context);
 context.read<HomeProvider>().getPosts(context);
 }
@@ -141,6 +142,43 @@ initHome();
           
           HomeSearchContainer()
           ,
+          Visibility(
+            visible: provider.isOldVersion,
+            child: GestureDetector(
+              onTap: (){
+                 context.read<HomeProvider>().launchStore();
+              },
+              child: Container(
+                width: MediaQuery.sizeOf(context).width,
+                height: 35, 
+                decoration: BoxDecoration(
+                  color: Colors.orange
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Center(
+                  child: 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+              
+                       Text(        getTranslated("new_update_available", context)!,
+                       
+                       
+                       style: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w400
+                    ),
+                       )
+                , Icon(Icons.warning_rounded , color: Colors.white,),
+                    ],
+                  )
+                  
+                  
+                  
+                ),
+              ),
+            ),
+          ),
           SizedBox(height: 24,),
           HomeCategories(),
           SizedBox(height: 24,),

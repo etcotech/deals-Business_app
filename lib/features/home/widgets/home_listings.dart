@@ -26,7 +26,7 @@ class HomeListings extends StatefulWidget {
 }
 
 class _HomeListingsState extends State<HomeListings> {
-  bool isList= true;
+  bool isList= false;
   final ScrollController _listScrollController = ScrollController();
   final ScrollController _gridtScrollController = ScrollController();
 
