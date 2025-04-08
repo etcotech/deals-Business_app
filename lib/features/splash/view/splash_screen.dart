@@ -72,6 +72,10 @@ bool isOldVersion= Platform.isIOS?
 : 
 "$googleRemoteVersion+$googleRemoteBuild" !=  "$localVersion+$localBuild"
 ;
+final isRequiredVersion = remoteConfig.getBoolValue(Strings.isVersionRequired);
+if (!isRequiredVersion) {
+  return false;
+}
 
 
  

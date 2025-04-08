@@ -82,7 +82,7 @@ class PostRemoteDatasourceImpl implements PostRemoteDatasource {
 
 
     //&belongLoggedUser=1
-  var response2 = await apiClient!.get("$postsApi?op=search,latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=$currentPage");
+  var response2 = await apiClient!.get("$postsApi?op=latest&embed=user,category,parent,postType,city,currency,savedByLoggedUser,pictures,payment,package&sort=created_at&perPage=10&page=$currentPage");
  
  log(response2.runtimeType.toString());
   return postListResponseModelFromJson(response2);

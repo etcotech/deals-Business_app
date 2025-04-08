@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deals_and_business/core/constants/images.dart';
+import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/features/auth/providers/auth_provider.dart';
 import 'package:deals_and_business/features/contact/views/contact_with_admins_screen.dart';
 import 'package:deals_and_business/features/favourite/view/favourite_screen.dart';
+import 'package:deals_and_business/features/home/providers/home_provider.dart';
 import 'package:deals_and_business/features/language/view/language_screen.dart';
 import 'package:deals_and_business/features/posts/views/add_post_screen.dart';
 import 'package:deals_and_business/features/profile/providers/profile_provider.dart';
@@ -12,6 +16,7 @@ import 'package:deals_and_business/features/settings/views/settings_screen.dart'
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -21,6 +26,16 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      //  context.read<HomeProvider>().isVersionOld();
+    });
+  }
   @override
   Widget build(BuildContext context) {
       var authProvider = Provider.of<AuthProvider>(context);
@@ -267,7 +282,49 @@ Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
         , 
 
         SizedBox(height: 8,),
-
+  Visibility(
+            visible: context.read<HomeProvider>()    .isOldVersion,
+  child: GestureDetector(
+    onTap: (){
+                 context.read<HomeProvider>().launchStore();
+    },
+    child: Padding(padding: 
+    
+    EdgeInsets.symmetric(
+      horizontal: 20, 
+    ), 
+    
+    child: Container(
+      height:  150, width: MediaQuery.sizeOf(context).width,
+      decoration: BoxDecoration(
+    color: Theme.of(context).primaryColor.withOpacity(.10) , 
+    borderRadius: BorderRadius.circular(20)
+      ),
+      padding: EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.warning_rounded , color: Colors.amber,size: 50,),
+          Text(
+    
+            Platform.isAndroid? 
+            getTranslated("update_from_store_google", context)!: 
+    
+                  getTranslated("update_from_store_apple", context)!,
+    
+          textAlign: TextAlign.justify,
+          style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w400
+          ),
+          ),
+        ],
+      ),
+    ),
+    
+    ),
+  ),
+), 
          ListTile(
                 leading:  Icon(Icons.share , 
                 color: Theme.of(context).primaryColor,
@@ -279,14 +336,8 @@ Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
                 
                 ),
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => const MyHomePage(
-                  //       title: 'Houses',
-                  //     ),
-                  //   ),
-                  // );
+                   shareApp();
+                 
                 },
               ),
 
@@ -301,6 +352,9 @@ Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
                 
                 ),
                 onTap: () {
+                  // onTap: (){
+                 context.read<HomeProvider>().launchStore();
+              // },
                   // Navigator.pushReplacement(
                   //   context,
                   //   MaterialPageRoute<void>(
@@ -321,7 +375,11 @@ Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor,),
     );
   }
 
-
+void shareApp() {
+  
+  final appUrl = Platform.isAndroid ?Strings. playStoreUrl :Strings. appStoreUrl;
+  Share.share(appUrl);
+}
   drawerItem(BuildContext context, IconData icon , String title , Function? onTap, {bool? isLoading=false}){
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),

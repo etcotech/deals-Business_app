@@ -147,6 +147,8 @@ static const String areYouSureDeletePost ="are_you_sure_delete_post";
 
 static const String reportSent ="report_sent_succssfully";
 
+static const String appStoreUrl ='https://apps.apple.com/sa/app/deals-and-business/id6689515680?l=ar'; // iOS
+static const String playStoreUrl ='https://play.google.com/store/apps/details?id=com.dealsandbusiness.app'; // Android
 
 
 
@@ -157,6 +159,7 @@ static const String appleCurrentVersion ="apple_current_version";
 static const String googleCurrentVersion ="google_current_version";
 static const String googleCurrentBuild ="google_current_build";
 static const String appleCurrentBuild ="apple_current_build";
+static const String isVersionRequired ="is_required_update";
 
 
 }

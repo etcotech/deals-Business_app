@@ -1,7 +1,10 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/error/error_handler.dart';
 import 'package:deals_and_business/core/error/failure.dart';
+import 'package:deals_and_business/core/services/remote_config_services.dart';
 import 'package:deals_and_business/data/models/category/category_model.dart';
 import 'package:deals_and_business/data/models/category/category_subcategoory_model.dart';
 import 'package:deals_and_business/data/models/country/city_model.dart';
@@ -17,7 +20,9 @@ import 'package:deals_and_business/features/splash/view/splash_screen.dart';
 import 'package:deals_and_business/main.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeProvider extends ChangeNotifier {
 final UserRepository? userRepository;
@@ -35,6 +40,7 @@ bool isCountryLoading = false;
 int _currentPage= 1;
 bool loadMore= false;
 bool isCityLoading = false;
+bool isOldVersion= false;
 bool isPaginateLoading= false;
 
 List<CategorySubcategoryModel> categoris =[];
@@ -151,7 +157,7 @@ errorData = null;
 notifyListeners();
 try {
 
-log("CURRENT: ${_currentPage}  ");
+log("CURRENT: $_currentPage  ");
 if (loadMore) {
     isPaginateLoading = true;
 notifyListeners();
@@ -369,4 +375,57 @@ logout(){
     (v)=> false
   );
  }
+Future<bool> isVersionRequired()async{
+  final remoteConfig = RemoteConfigServices();
+var isRequired =remoteConfig.getBoolValue(Strings.appleCurrentBuild);
+return isRequired;
+}
+Future<String> getVersion()async{
+   final remoteConfig = RemoteConfigServices();
+var appleRevarmoteBuild =remoteConfig.getValue(Strings.appleCurrentBuild);
+var googleRemoteBuild=remoteConfig.getValue(Strings.googleCurrentBuild);
+var googleRemoteVersion=remoteConfig.getValue(Strings.googleCurrentVersion);
+var appleRemoteVersion= remoteConfig.getValue(Strings.appleCurrentVersion);
+String version= Platform.isIOS?
+"$appleRemoteVersion.$appleRevarmoteBuild"
+: 
+"$googleRemoteVersion.$googleRemoteBuild"
+;
+return version;
+
+}
+
+ Future<void> isVersionOld()async{
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+final remoteConfig = RemoteConfigServices();
+
+var appleRevarmoteBuild =remoteConfig.getValue(Strings.appleCurrentBuild);
+var googleRemoteBuild=remoteConfig.getValue(Strings.googleCurrentBuild);
+var googleRemoteVersion=remoteConfig.getValue(Strings.googleCurrentVersion);
+var appleRemoteVersion= remoteConfig.getValue(Strings.appleCurrentVersion);
+var localBuild = packageInfo.buildNumber;
+var localVersion = packageInfo.version;
+bool isOldVersion= Platform.isIOS?
+"$appleRemoteVersion+$appleRevarmoteBuild" !=  "$localVersion+$localBuild"
+: 
+"$googleRemoteVersion+$googleRemoteBuild" !=  "$localVersion+$localBuild"
+;
+
+
+ this.isOldVersion = isOldVersion;
+notifyListeners();
+
+ }
+
+
+ void launchStore() async {
+
+  final url = Platform.isAndroid ?Strings. playStoreUrl :Strings. appStoreUrl;
+  
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launchUrl(Uri.parse(url));
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }
