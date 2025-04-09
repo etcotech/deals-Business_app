@@ -1,3 +1,4 @@
+import 'package:deals_and_business/core/constants/images.dart';
 import 'package:deals_and_business/core/constants/strings.dart';
 import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/core/constants/validators.dart';
@@ -98,7 +99,8 @@ var formKey = GlobalKey<FormState>();
                     )
                     , 
                     InputField(controller: priceController,
-                    iconData: Icons.paid,
+                    // iconData: Icons.paid,
+                    iconAsset: Images.currency,
                      hintText:  getTranslated(Strings.price, context)!, 
                      validator: priceValidator,
                      keyboardType: TextInputType.number,

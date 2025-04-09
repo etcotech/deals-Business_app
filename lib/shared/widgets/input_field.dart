@@ -4,6 +4,7 @@ class InputField extends StatelessWidget {
   final TextEditingController controller;
 final   String? errorText;
   final String hintText;
+  final String? iconAsset;
   final TextInputType keyboardType;
   final String? Function(String?)? validator; // Validator function as a parameter
   final IconData? iconData;
@@ -13,12 +14,16 @@ final Function(String?)? onTextChange;
     required this.controller,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    this.validator,  this.iconData, this.onTextChange, this.errorText, // Nullable validator function
+    this.validator,  this.iconData, this.onTextChange, this.errorText, this.iconAsset, // Nullable validator function
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
+       onTapOutside: (event) {
+        FocusManager.instance.primaryFocus?.unfocus();
+    },
       controller: controller,
       keyboardType: keyboardType,
       
@@ -39,7 +44,22 @@ contentPadding: EdgeInsets.symmetric(
           color: Colors.grey ,
           fontSize: 15
         ),
-        prefixIcon:Icon(iconData, color: Theme.of(context).primaryColor, 
+        prefixIcon:
+        
+        iconAsset!=null? 
+      
+        SizedBox(
+          width: 40,
+          child: Center(
+            child: ImageIcon(AssetImage(iconAsset!), 
+            
+            color: Theme.of(context).primaryColor
+            , size: 20
+             ,),
+          ),
+        ) 
+        :
+        Icon(iconData, color: Theme.of(context).primaryColor, 
         size: 18,
         
         ) ,

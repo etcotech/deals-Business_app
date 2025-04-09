@@ -76,12 +76,12 @@ body: SizedBox.expand(
               
               provider.setISFistTime(false);
               
-              if (!widget.fromSplash!) {
-                // Navigator.pop(context);
-                return;
-              }
+              // if (!widget.fromSplash!) {
+              //   // Navigator.pop(context);
+              //   return;
+              // }
                 
-                Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
+              //   Navigator.push(context, PageTransition(type: PageTransitionType.fade ,child:    LoginScreen()));
               
               
                 },
@@ -130,7 +130,15 @@ body: SizedBox.expand(
               ),
             child: MainButton(
               onTap: (){
-                Navigator.pop(context);
+                if (widget.fromSplash!) {
+                  Navigator.push(context, PageTransition(type: PageTransitionType.fade ,
+                  child:    LoginScreen()));
+                } else {
+                  Navigator.pop(context);  
+                  return;
+                  
+                }
+                // Navigator.pop(context);
               },
               title: getTranslated('continue', context),
               color: Theme.of(context).primaryColor,
