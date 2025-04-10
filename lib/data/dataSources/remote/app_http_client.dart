@@ -50,7 +50,7 @@ class ApiClient {
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
+      rethrow;
     }
   }
  Future<dynamic> getPaginate(String url) async {
@@ -79,8 +79,7 @@ class ApiClient {
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
-    }
+rethrow;    }
   }
   Future<dynamic> post(String endpoint, {Map<String, dynamic>? body}) async {
    
@@ -109,7 +108,7 @@ class ApiClient {
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
+      rethrow;
     }
   }
  Future<dynamic> delete(String endpoint, {Map<String, dynamic>? body}) async {
@@ -140,7 +139,7 @@ class ApiClient {
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
+      rethrow;
     }
   }
 
@@ -213,7 +212,7 @@ var response = await http.Response.fromStream(res);
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
+      rethrow;
     }
   }
   
@@ -299,7 +298,7 @@ var response = await http.Response.fromStream(res);
       throw TimeoutException('Request TimeOut');
     }
     catch (e) {
-      throw HttpException(e.toString(), 500);
+      rethrow;
     }
   }
   
@@ -319,6 +318,8 @@ var response = await http.Response.fromStream(res);
       case 404:
         throw NotFoundException(message);
       case 422:
+            log("VALI ERROR  ${json.decode(response.body)}");
+
        final errors = json.decode(response.body)['errors'] as Map<String, dynamic>;
       throw ValidationException(json.encode(errors));
       case 500:

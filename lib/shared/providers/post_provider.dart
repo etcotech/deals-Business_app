@@ -101,7 +101,10 @@ void remoteFile(file){
   files.removeWhere((xfile)=> xfile.path==file);
   notifyListeners();
 }
-
+clearFiles(){
+  files = [];
+  notifyListeners();
+}
 void setCountry(CountryModel country){
   selectedCountry =country;
   selectedCity=null;
@@ -149,18 +152,18 @@ pictures: files.map((file)=> File(file.path)).toList()
   var result = await  postRepository!.addPost(newPost);
 
   result.fold((failure){
-showErrorMessage(context, failure.message.toString());
+    log("FAIDIFJIDJFID ${failure.message}");
 if (failure is UnauthorizedException) {
   logout();
 }
 if(failure is ValidationException){
 //handle validation errors
 
-
+log("VALIDATION EXCEPTION");
   final errors = Map<String, dynamic>.
   from(json.decode(failure.message));
   for (var error in errors.keys) {
-    
+    log("$error   ${errors[error]}");
     if (error == 'title') {
        titleError ='';
   for (var titleValidationError in  errors[error]) {
@@ -175,7 +178,7 @@ if(failure is ValidationException){
   if (error == 'description') {
        bodyError ='';
   for (var bodyValidationError in  errors[error]) {
-    log(bodyValidationError);
+    // log(bodyValidationError);
    
      bodyError =  bodyValidationError +"\n";
   }
@@ -191,9 +194,10 @@ if(failure is ValidationException){
   }).join('\n');
 
     notifyListeners();
-
+return;
 }
 
+showErrorMessage(context, failure.message.toString());
 
 
 
@@ -223,12 +227,11 @@ notifyListeners();
 } 
 
 catch (e) {
-  log("FASFas$e");
 
     isLoading =false;
   notifyListeners();
 
-  showErrorMessage(context, e.toString());
+  // showErrorMessage(context, e.toString());
 }
 
   isLoading =false;

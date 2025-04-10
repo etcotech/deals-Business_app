@@ -92,9 +92,14 @@ isCategoryLoading = false;
 notifyListeners();
 }
 
-Future<void> getPosts(BuildContext context)async{
+Future<void> getPosts(BuildContext context, {bool isRefresh=false})async{
   isLoading = true;
 errorData = null;
+if(isRefresh){
+  _currentPage=1;
+  posts = [];
+  paginateLinks = null;
+}
 notifyListeners();
 try {
 

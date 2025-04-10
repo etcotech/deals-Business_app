@@ -175,6 +175,21 @@ Future<Either<ApiException, Map<String,dynamic>>> _addPostProvider(
   }
   @override
   Future<Either<ApiException, Map<String, dynamic>>> addPost(NewPostModel newPostModel) async{
+    
+     try {
+        final remoteResponse = await  postRemoteDatasource.addPost(newPostModel, localDataSource.getToken()??'');();
+        // localDataSource.saveToken(remoteResponse.token);
+        // localDataSource.saveUser(remoteResponse.user);
+       
+        return Right(remoteResponse);
+      } 
+       
+   
+      
+      on ApiException catch (failure) {
+        return Left(failure);
+      }
+    
     return  await _addPostProvider((){
 
         return    postRemoteDatasource.addPost(newPostModel, localDataSource.getToken()??'');

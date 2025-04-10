@@ -47,7 +47,7 @@ initHome();
 initHome(){
      context.read<HomeProvider>().isVersionOld();
   context.read<HomeProvider>().getCategories(context);
-context.read<HomeProvider>().getPosts(context);
+context.read<HomeProvider>().getPosts(context, isRefresh: true);
 }
 @override
   void dispose() {
