@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:deals_and_business/core/constants/translate.dart';
 import 'package:deals_and_business/shared/providers/post_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -166,7 +167,11 @@ openStudio((image){
 
   }
 });
-}, label: Text('add more', style: TextStyle(
+}, label: Text(
+  getCurrentLang(context)=="ar"?
+  'اضف المزيد' :
+  
+  'add more', style: TextStyle(
   color: Colors.grey
 ),)),
 

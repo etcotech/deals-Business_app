@@ -36,7 +36,18 @@ class _AddPostScreenState extends State<AddPostScreen> {
 bool acceptedTerms =false;
 bool showAcceptError = false;
 var formKey = GlobalKey<FormState>();
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();  
+WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PostProvider>().clearErrors();
+            context.read<PostProvider>().clearErrors();
+            context.read<PostProvider>().clearFiles();
 
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
