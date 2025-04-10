@@ -68,7 +68,7 @@ log("BOTTOM OF GRID");
     var size = MediaQuery.of(context).size;    
 /*24 is for notification bar on Android*/
 final double itemHeight = (size.height - kToolbarHeight - 24) *.35; 
-final double itemWidth = size.width*.45;
+final double itemWidth = size.width*.43;
     return  Consumer<HomeProvider>(
      builder: (context, provider, child)=>  Builder(
         builder: (context) {
@@ -331,7 +331,7 @@ class HomePost extends StatelessWidget {
   Widget build(BuildContext context) {
 var size = MediaQuery.of(context).size;    
 final double itemHeight = (size.height - kToolbarHeight - 24) *.35; 
-final double itemWidth = size.width*.45;
+final double itemWidth = size.width*.43;
 var provider = Provider.of<PostProvider>(context);
 var userProvider =  Provider.of<ProfileProvider>(context);
 var homeProvider =  Provider.of<HomeProvider>(context);
