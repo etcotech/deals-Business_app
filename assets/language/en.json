@@ -216,6 +216,8 @@
 "update_from_store_apple":"A new version of Deals & Business is available on App store, please update your app to use all of our amazing features",
 "update_from_store_google":"A new version of Deals & Business is available on Google play, please update your app to use all of our amazing features",
 
-"update_now":"Update now!"
+"update_now":"Update now!"  , 
+
+"only_english_numbers":"Only English numbers are allowed" 
 }
   

@@ -227,7 +227,9 @@ physics: NeverScrollableScrollPhysics(),
                   isList: true,postModel: post,
                 )).toList(),)
 , 
-secondChild:             GridView.count(
+secondChild:     
+
+        GridView.count(
                   controller: _gridtScrollController,
                   shrinkWrap: true,
                   crossAxisSpacing: 5,
@@ -750,6 +752,9 @@ homeProvider.refreshPosts(context);
        
        ),
      )
+   
+   
+   
     , crossFadeState: 
     isList!?CrossFadeState.showFirst: 
     CrossFadeState.showSecond, duration: Duration(milliseconds: 500));

@@ -67,7 +67,10 @@ String? phoneFieldValidator(String? value) {
 
        'Price cannot be empty';
     } 
-    
+        final containsNonEnglish = RegExp(r'[٠١٢٣٤٥٦٧٨٩]').hasMatch(value);
+     if (containsNonEnglish) {
+      return getTranslated("only_english_numbers", navigatorKey.currentContext!);
+    }
     return null;
   }
 

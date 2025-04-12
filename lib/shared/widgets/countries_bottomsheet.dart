@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 import '../../features/home/providers/home_provider.dart';
 
 class CountriesBottomsheet extends StatefulWidget {
+  final bool? fromAddPost;
   final Function(CountryModel)? onSelectCountry;
-  const CountriesBottomsheet({super.key, this.onSelectCountry});
+  const CountriesBottomsheet({super.key, this.onSelectCountry, this.fromAddPost=false});
 
   @override
   State<CountriesBottomsheet> createState() => _CountriesBottomsheetState();

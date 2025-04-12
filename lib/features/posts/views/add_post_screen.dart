@@ -14,6 +14,7 @@ import 'package:deals_and_business/shared/widgets/input_area.dart';
 import 'package:deals_and_business/shared/widgets/input_field.dart';
 import 'package:deals_and_business/shared/widgets/input_field_no_icon.dart';
 import 'package:deals_and_business/shared/widgets/main_button.dart';
+import 'package:deals_and_business/shared/widgets/price_input_field.dart';
 import 'package:deals_and_business/shared/widgets/select_category_bottomsheet.dart';
 import 'package:deals_and_business/shared/widgets/toasts.dart';
 import 'package:flutter/gestures.dart';
@@ -30,6 +31,18 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
+
+
+  String convertArabicToWestern(String input) {
+  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  const westernDigits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  
+  String result = input;
+  for (int i = 0; i < arabicDigits.length; i++) {
+    result = result.replaceAll(arabicDigits[i], westernDigits[i]);
+  }
+  return result;
+}
   var adressController = TextEditingController();
     var descriptionController = TextEditingController();
     var priceController = TextEditingController();
@@ -109,7 +122,7 @@ WidgetsBinding.instance.addPostFrameCallback((_) {
 
                     )
                     , 
-                    InputField(controller: priceController,
+                    PriceInputField(controller: priceController,
                     // iconData: Icons.paid,
                     iconAsset: Images.currency,
                      hintText:  getTranslated(Strings.price, context)!, 
