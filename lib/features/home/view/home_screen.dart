@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
+
+
 void _gridScrollListener() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
@@ -123,7 +125,13 @@ initHome();
             isGuest: widget.asGuest!
           ),
         
-        drawer: AppDrawer(),
+        drawer: AppDrawer(
+          onRefresh: (){
+                        provider.refreshPosts(context);
+                        provider.refreshCategories(context);
+            
+          },
+        ),
         drawerEnableOpenDragGesture: false, 
         
         body: RefreshIndicator(

@@ -29,7 +29,9 @@ class PostDetailsScreen extends StatefulWidget {
 }
 
 class _PostDetailsScreenState extends State<PostDetailsScreen> {
-
+    final PageController _pageController = PageController();
+  bool _isCarouselVisible = true;
+  double _dragStartPosition = 0;
 @override
   void initState() {
     // TODO: implement initState
@@ -139,42 +141,160 @@ Navigator.pop(context);
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 SizedBox(height: 16,),
-ClipRRect(
-  borderRadius: BorderRadius.circular(15),
-child: SizedBox(
-  width: MediaQuery.sizeOf(context).width,
-    height: MediaQuery.sizeOf(context).height*.35,
+SizedBox(
 
-  child:
+   width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height*.35,
+  child: GestureDetector(
+    onVerticalDragStart: (details) {
+            _dragStartPosition = details.globalPosition.dy;
+          },
+          onVerticalDragUpdate: (details) {
+            final dragDistance = details.globalPosition.dy - _dragStartPosition;
+            if (dragDistance > 20 && _isCarouselVisible) {
+              setState(() => _isCarouselVisible = false);
+            } else if (dragDistance < -20 && !_isCarouselVisible) {
+              setState(() => _isCarouselVisible = true);
+            }
+          },
   
-  Hero(tag: 
   
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+    child: Stack(
+      children: [
   
-   provider.postDetailsModel!.picture!.url!.full.toString()
-  
-  
-  ,
-    child: CachedNetworkImage(
-    imageUrl:  provider.postDetailsModel!.picture!.url!.full!,
-      width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
-    placeholder: (context, url) => CircularProgressIndicator(),
-    errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined,size:100),
+        /*
+        SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height*.35,
+        
+          child:
+          
+          Hero(tag: 
+          
+          
+           provider.postDetailsModel!.picture!.url!.full.toString()
+          
+          
+          ,
+            child: CachedNetworkImage(
+            imageUrl:  provider.postDetailsModel!.picture!.url!.full!,
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.photo_camera_outlined,size:100),
+            ),
+          )
+          
+          //  Image.network(
+          //   provider.postDetailsModel!.picture!.url!.full!,
+          
+          //  width: MediaQuery.sizeOf(context).width,
+          //   height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
+          
+          
+          // ),
+        ),
+     
+  */
+     
+     AnimatedPositioned(
+        // width: MediaQuery.sizeOf(context).width,
+        //     height: MediaQuery.sizeOf(context).height*.35,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                bottom: _isCarouselVisible ? 0 : -200,
+                // left: 0,
+                // right: 0,
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height*.35,
+                  color: Colors.black.withOpacity(0.8),
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: provider.postDetailsModel!.pictures!.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          // Handle image tap if needed
+                        },
+                        child: Hero(
+                          tag: provider.postDetailsModel!.pictures![index].url!.full.toString(),
+                          child: CachedNetworkImage(
+                            imageUrl: provider.postDetailsModel!.pictures![index].url!.full!,
+                          width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
+                            placeholder: (context, url) => Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) => Icon(Icons.error, color: Colors.white),
+                          ),
+                        ),
+                      );
+                      return Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                            provider.postDetailsModel!.pictures![index].url!.full!,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child: Icon(Icons.error, color: Colors.white),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+     if (_isCarouselVisible)
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(provider.postDetailsModel!.pictures!.length, (index) {
+                      return Container(
+                        width: 8,
+                        height: 8,
+                        margin: EdgeInsets.symmetric(horizontal: 4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _pageController.hasClients
+                              ? (_pageController.page?.round() == index
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.5))
+                              : Colors.white.withOpacity(0.5),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                    
+     
+      ],
     ),
-  )
-  
-  //  Image.network(
-  //   provider.postDetailsModel!.picture!.url!.full!,
-  
-  //  width: MediaQuery.sizeOf(context).width,
-  //   height: MediaQuery.sizeOf(context).height*.35,fit: BoxFit.fill,
-  
-  
-  // ),
-),
-
-
-
+    
+    
+    
+    ),
+  ),
 ), 
 
 SizedBox(height: 16,),

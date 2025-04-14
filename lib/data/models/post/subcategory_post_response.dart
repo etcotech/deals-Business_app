@@ -5,25 +5,25 @@ import 'package:deals_and_business/data/models/post/post_model.dart';
 
 import 'post_paginate_model.dart';
 
-CategoryPostResponse categoryPostListResponseModelFromJson(Map<String,dynamic> str) =>
-    CategoryPostResponse.fromJson(str);
+SubcategoryPostResponse subCategoryPostListResponseModelFromJson(Map<String,dynamic> str) =>
+    SubcategoryPostResponse.fromJson(str);
 
-String  categoryPostListResponseModelToJson(CategoryPostResponse data) =>
+String  subCategoryPostListResponseModelToJson(SubcategoryPostResponse data) =>
     json.encode(data.toJson());
 
-class CategoryPostResponse {
+class SubcategoryPostResponse {
   final List<PostModel> posts;
 
-  const CategoryPostResponse({ 
+  const SubcategoryPostResponse({
     required this.posts,
   });
 
-  factory CategoryPostResponse.fromJson(Map<String, dynamic> json) {
+  factory SubcategoryPostResponse.fromJson(Map<String, dynamic> json) {
 
     log("NO PREOM REPSONE MODEL ${ json["result"]['posts'].runtimeType}");
-    return CategoryPostResponse(
+    return SubcategoryPostResponse(
         posts: json["result"]['posts'] != null
-            ? List<PostModel>.from(json["result"]['children_posts'].map((x) => 
+            ? List<PostModel>.from(json["result"]['posts'].map((x) => 
               PostModel.fromJson(x)))       
             : [],
   

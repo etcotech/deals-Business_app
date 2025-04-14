@@ -5,11 +5,16 @@ import 'package:deals_and_business/data/models/category/category_list_response_m
 import 'package:deals_and_business/data/models/category/category_sub_category_list_response_model.dart';
 import 'package:deals_and_business/data/models/post/category_post_response.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
+import 'package:deals_and_business/data/models/post/subcategory_post_response.dart';
 
 abstract class CategoryRepository {
   Future<Either<ApiException, CategorySubCategoryListResponseModel>> getCategories();
   Future<Either<Failure, CategorySubCategoryListResponseModel>> getCategoriesDetailed();
-    Future<Either<Failure, CategoryPostResponse>> getCategoryPosts(
+    Future<Either<ApiException, CategoryPostResponse>> getCategoryPosts(
+      String? categoryId,
+      
+      {String? lang ='ar'});
+       Future<Either<ApiException, SubcategoryPostResponse>> getSubCategoryPosts(
       String? categoryId,
       
       {String? lang ='ar'});

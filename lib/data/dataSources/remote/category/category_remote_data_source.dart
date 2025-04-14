@@ -9,6 +9,7 @@ import 'package:deals_and_business/data/models/category/category_sub_category_li
 import 'package:deals_and_business/data/models/country/country_list_reponse_model.dart';
 import 'package:deals_and_business/data/models/post/category_post_response.dart';
 import 'package:deals_and_business/data/models/post/post_list_response_model.dart';
+import 'package:deals_and_business/data/models/post/subcategory_post_response.dart';
 import 'package:http/http.dart' as http;
 abstract class CategoryRemoteDataSource {
     Future<CategorySubCategoryListResponseModel> getCategories({String? lang ='ar'});
@@ -17,7 +18,10 @@ abstract class CategoryRemoteDataSource {
       String? categoryId,
       
       {String? lang ='ar'});
-
+Future<SubcategoryPostResponse> getSubCategoryPosts(
+      String? categoryId,
+      
+      {String? lang ='ar'});
 }
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   final http.Client client;
@@ -84,11 +88,22 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   
   @override
   Future<CategoryPostResponse> getCategoryPosts(String? categoryId, {String? lang = 'ar'})async {
-   var respone2 = await apiClient!.get('$categoriesApi$categoryId?embed=posts');
+   log( "CATEGORY ID $categoryId");  
+   var respone2 = await apiClient!.get('$categoriesApi$categoryId?embed=posts,chidlren,childrenPosts');
         
-        log("CATEGIRY DATA${respone2['result']['posts']}");
+        log("CATEGIRY DATA${respone2['result']}");
         
          return categoryPostListResponseModelFromJson(respone2);
+  }
+  
+  @override
+  Future<SubcategoryPostResponse> getSubCategoryPosts(String? categoryId, {String? lang = 'ar'})async {
+       log( "CATEGORY ID $categoryId");  
+   var respone2 = await apiClient!.get('$categoriesApi$categoryId?embed=posts,');
+        
+        log("CATEGIRY DATA${respone2['result']}");
+        
+         return subCategoryPostListResponseModelFromJson(respone2);
   }
 
 }

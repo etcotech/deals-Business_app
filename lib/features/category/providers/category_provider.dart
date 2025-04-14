@@ -124,7 +124,7 @@ notifyListeners();
 
             
     try {
-      var result = await categoryRepository!.getCategoryPosts(categoryId);
+      var result = await categoryRepository!.getSubCategoryPosts(categoryId);
 result.fold(
   
   (failre)

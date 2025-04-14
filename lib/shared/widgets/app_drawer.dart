@@ -19,7 +19,8 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AppDrawer extends StatefulWidget {
-  const AppDrawer({super.key});
+  final Function? onRefresh;
+  const AppDrawer({super.key, this.onRefresh});
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
@@ -232,7 +233,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   PageTransition(type: PageTransitionType.fade ,child:  
     LanguageScreen(
       fromSplash: false,
-    )));
+    )))
+    .then( (value){
+      widget.onRefresh!();
+    })
+    
+    ;
                 },
               ),
  ListTile(
