@@ -86,7 +86,7 @@ result.fold(
   
   (failre)
 {
-  errorData = ErrorData(message: failre.toString(), icon: getErrorIcon(failre.message.toString()));
+  errorData = ErrorData(message: failre.message.toString(), icon: getErrorIcon(failre.message.toString()));
 }
 , (success){           
 
@@ -129,7 +129,7 @@ result.fold(
   
   (failre)
 {
-  errorData = ErrorData(message: failre.toString(), icon: getErrorIcon(failre.message.toString()));
+  errorData = ErrorData(message: failre.message.toString(), icon: getErrorIcon(failre.message.toString()));
 }
 , (success){           
 
