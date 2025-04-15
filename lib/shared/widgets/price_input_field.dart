@@ -25,6 +25,11 @@ final Function(String?)? onTextChange;
     return TextFormField(
       controller: controller,
       // keyboardType: keyboardType,
+      onTapOutside: (_) {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+
+
     onChanged: onTextChange,
     keyboardType: TextInputType.numberWithOptions(
     decimal: true,  // if you need decimal input

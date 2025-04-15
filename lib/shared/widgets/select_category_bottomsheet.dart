@@ -158,20 +158,24 @@ Colors.grey
 
                              Colors.grey,), 
                             
-                            Text(child.name!, 
-                            style: TextStyle(
-                                   color:
-                            
-                            children != null? 
-children!.id== child.id?
-Theme.of(context).primaryColor:
-Colors.grey
-
-                            :
-
-                             Colors.grey
-                            ),
-                            
+                            SizedBox(width: 200,
+                              child: Text(child.name!, 
+                              maxLines: 1, 
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                     color:
+                              
+                              children != null? 
+                              children!.id== child.id?
+                              Theme.of(context).primaryColor:
+                              Colors.grey
+                              
+                              :
+                              
+                               Colors.grey
+                              ),
+                              
+                              ),
                             )
                               ],
                             ),
